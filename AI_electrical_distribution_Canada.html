@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Same Voltage, Two Outcomes — AI, Change and Electrical Distribution in Canada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F2F0E9;--ink:#0F1E2E;--copper:#B96A3C;--circuit:#1E5BBF;--muted:#5B6670;--hair:#D6D2C7;--paper-dim:#E7E4DA;}
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:19px;line-height:1.62;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  .masthead{background:#0A1622;color:var(--paper);border-bottom:1px solid rgba(255,255,255,.10);}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:13px;padding-bottom:13px;}
+  .masthead .brand{font-family:"Spline Sans Mono",monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--paper);}
+  .masthead .brand b{color:var(--copper);font-weight:600;}
+  .masthead .meta{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:#8794A1;}
+  @media(max-width:560px){.masthead .meta{display:none;}}
+  .hero{background:var(--ink);color:var(--paper);padding:54px 0 60px;position:relative;overflow:hidden;}
+  .hero .wrap{position:relative;z-index:2;}
+  .kicker{font-family:"Spline Sans Mono",monospace;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--copper);margin:0 0 22px;display:flex;align-items:center;gap:12px;}
+  .kicker::before{content:"";display:block;width:30px;height:1px;background:var(--copper);}
+  h1{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(33px,6vw,55px);line-height:1.04;letter-spacing:-0.02em;margin:0 0 22px;}
+  h1 .blue{color:#7FB0FF;} h1 .cop{color:#E0935F;}
+  .dek{font-size:clamp(18px,2.4vw,22px);line-height:1.5;color:#C9D2DC;max-width:640px;margin:0 0 30px;font-style:italic;}
+  .byline{font-family:"Spline Sans Mono",monospace;font-size:13px;letter-spacing:.04em;color:#9AA6B2;margin-top:4px;}
+  .byline strong{color:var(--paper);font-weight:600;}
+  .herostats{display:flex;flex-wrap:wrap;gap:30px;margin-top:34px;border-top:1px solid rgba(255,255,255,.16);padding-top:24px;}
+  .herostats .hs{min-width:120px;}
+  .herostats .hsfig{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(26px,4vw,34px);line-height:1;letter-spacing:-0.02em;color:var(--paper);}
+  .herostats .hsfig.cop{color:#E0935F;} .herostats .hsfig.blu{color:#7FB0FF;}
+  .herostats .hslab{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.04em;color:#9AA6B2;margin-top:9px;line-height:1.45;max-width:185px;}
+  .busline{position:absolute;left:0;right:0;bottom:30px;height:60px;z-index:1;opacity:.5;}
+  .article{padding:50px 0 20px;position:relative;}
+  .article .wrap{position:relative;}
+  @media(min-width:980px){.article .wrap{padding-left:64px;}.conductor{position:absolute;left:24px;top:8px;bottom:40px;width:2px;background:linear-gradient(var(--copper),var(--hair) 70%,transparent);}}
+  .conductor{display:none;}
+  @media(min-width:980px){.conductor{display:block;}}
+  .lead{font-size:22px;line-height:1.5;color:var(--ink);margin:0 0 30px;}
+  .lead::first-letter{font-family:"Archivo",sans-serif;font-weight:800;float:left;font-size:74px;line-height:.78;padding:6px 12px 0 0;color:var(--copper);}
+  p{margin:0 0 22px;}
+  a{color:var(--circuit);text-decoration:none;border-bottom:1px solid rgba(30,91,191,.35);}
+  a:hover{border-bottom-color:var(--circuit);}
+  h2{font-family:"Archivo",sans-serif;font-weight:700;font-size:clamp(23px,3.4vw,30px);line-height:1.12;letter-spacing:-0.01em;margin:48px 0 18px;position:relative;}
+  @media(min-width:980px){h2::before{content:"";position:absolute;left:-46px;top:.42em;width:13px;height:13px;border-radius:50%;background:var(--paper);border:3px solid var(--copper);}}
+  h2 .num{font-family:"Spline Sans Mono",monospace;font-size:13px;color:var(--circuit);font-weight:600;letter-spacing:.1em;display:block;margin-bottom:6px;}
+  .stat{margin:34px 0;border-left:3px solid var(--circuit);padding:4px 0 4px 22px;}
+  .stat .fig{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(38px,7vw,54px);line-height:.95;color:var(--ink);letter-spacing:-0.02em;}
+  .stat .lab{font-family:"Spline Sans Mono",monospace;font-size:13px;color:var(--muted);margin-top:8px;line-height:1.45;}
+  .pull{font-family:"Archivo",sans-serif;font-weight:600;font-size:clamp(22px,3.6vw,30px);line-height:1.22;letter-spacing:-0.01em;color:var(--copper);margin:40px 0;}
+  .chart{margin:36px 0;background:#FBFAF6;border:1px solid var(--hair);border-radius:4px;padding:24px 22px 18px;}
+  .chart-title{font-family:"Archivo",sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:var(--ink);margin:0 0 2px;}
+  .chart-sub{font-family:"Spline Sans Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.02em;margin:0 0 20px;line-height:1.4;}
+  .chart svg{width:100%;height:auto;display:block;overflow:visible;}
+  .c-bar{fill:var(--copper);} .c-bar.alt{fill:var(--circuit);} .c-bar.dim{fill:#CDBBA9;}
+  .c-val{font-family:"Spline Sans Mono",monospace;font-size:13px;font-weight:600;fill:var(--ink);}
+  .c-lab{font-family:"Spline Sans Mono",monospace;font-size:12px;fill:var(--muted);}
+  .c-axis{stroke:var(--hair);stroke-width:1;} .c-grid{stroke:#E9E5DB;stroke-width:1;}
+  .c-area{fill:rgba(30,91,191,.10);} .c-line{fill:none;stroke:var(--circuit);stroke-width:2.5;} .c-dot{fill:var(--circuit);}
+  .chart-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-family:"Spline Sans Mono",monospace;font-size:11.5px;color:var(--muted);}
+  .chart-legend span{display:inline-flex;align-items:center;gap:7px;} .chart-legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .chart-src{font-family:"Spline Sans Mono",monospace;font-size:10.5px;color:#9AA0A6;margin:14px 0 0;letter-spacing:.02em;}
+  .sources{background:var(--ink);color:#C9D2DC;margin-top:64px;padding:48px 0 56px;}
+  .sources h2{color:var(--paper);margin-top:0;} .sources h2::before{display:none;}
+  .sources .wrap{padding-left:24px;}
+  .sources ol{font-family:"Spline Sans Mono",monospace;font-size:13px;line-height:1.7;padding-left:22px;margin:0;color:#A9B4C0;}
+  .sources li{margin-bottom:11px;}
+  .sources a{color:#7FB0FF;border-bottom-color:rgba(127,176,255,.3);word-break:break-word;}
+  .sources .note{font-family:"Newsreader",serif;font-size:15px;color:#8794A1;margin-top:28px;font-style:italic;}
+  footer{padding:30px 0 50px;text-align:center;}
+  footer p{font-family:"Spline Sans Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:0;}
+  ::selection{background:var(--copper);color:var(--paper);}
+  .fade{opacity:0;transform:translateY(10px);animation:rise .8s ease forwards;}
+  .fade.d1{animation-delay:.08s;} .fade.d2{animation-delay:.16s;} .fade.d3{animation-delay:.24s;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+  .pulse{stroke-dasharray:6 10;animation:flow 3s linear infinite;}
+  @keyframes flow{to{stroke-dashoffset:-160;}}
+  @media(prefers-reduced-motion:reduce){.fade{animation:none;opacity:1;transform:none;}.pulse{animation:none;}}
+</style>
+</head>
+<body>
+
+<div class="masthead"><div class="wrap">
+  <div class="brand">The <b>Electrical</b> World</div>
+  <div class="meta">AI &amp; Distribution Feature · Summer 2026</div>
+</div></div>
+
+<header class="hero">
+  <svg class="busline" viewBox="0 0 760 60" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="0" y1="30" x2="760" y2="30" stroke="#B96A3C" stroke-width="1.4"/>
+    <line class="pulse" x1="0" y1="30" x2="760" y2="30" stroke="#7FB0FF" stroke-width="1.4"/>
+    <circle cx="120" cy="30" r="4" fill="#B96A3C"/><line x1="120" y1="30" x2="120" y2="12" stroke="#B96A3C" stroke-width="1.2"/>
+    <circle cx="320" cy="30" r="4" fill="#B96A3C"/><line x1="320" y1="30" x2="320" y2="48" stroke="#B96A3C" stroke-width="1.2"/>
+    <circle cx="520" cy="30" r="4" fill="#B96A3C"/><line x1="520" y1="30" x2="520" y2="12" stroke="#B96A3C" stroke-width="1.2"/>
+    <circle cx="680" cy="30" r="4" fill="#B96A3C"/><line x1="680" y1="30" x2="680" y2="48" stroke="#B96A3C" stroke-width="1.2"/>
+  </svg>
+  <div class="wrap">
+    <p class="kicker fade">Commercial Strategy · Electrical Distribution</p>
+    <h1 class="fade d1">Same voltage, two outcomes: why AI in electrical distribution is won on <span class="cop">change</span>, not technology</h1>
+    <p class="dek fade d2">Every distributor plugs in the same technology. What sets them apart isn't the algorithm — it's their ability to bring their people along. And the correlation is relentless.</p>
+    <p class="byline fade d3">By <strong>Jérôme Potvin</strong>, Director, Commercial Strategy</p>
+    <div class="herostats fade d3">
+      <div class="hs"><div class="hsfig">$17.6B</div><div class="hslab">Canadian electrical distribution market (2025)</div></div>
+      <div class="hs"><div class="hsfig blu">70%</div><div class="hslab">of transformations fail — human resistance is the cause</div></div>
+      <div class="hs"><div class="hsfig cop">6×</div><div class="hslab">more success with excellent change management</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="article">
+  <div class="wrap">
+    <span class="conductor" aria-hidden="true"></span>
+
+    <p class="lead">In electrical distribution, we know one thing better than anyone: a conductor, however high-performance, is useless until the circuit is closed. Artificial intelligence obeys exactly the same law. The technology is ready, the data exists, vendors are knocking at the door — but the circuit only closes the moment field teams adopt it. And that is precisely where everything is decided: in change management.</p>
+
+    <p>Canada's electrical products distribution market closed 2025 at <strong>$17.6&nbsp;billion</strong> in sales, up 3.9%, according to the benchmark Pathfinder study. Ontario accounts for 36.5% of national volume, followed by Quebec and Alberta. Behind these figures lies a structural reality: more than 82% of the market is now in the hands of multinational distributors, spread across 1,536&nbsp;branches and nearly 22,000&nbsp;employees nationwide.<sup>1</sup></p>
+
+    <p>Concretely, this market has a face. In Quebec, names like <strong>Guillevin</strong> — an electrical distributor founded in Montreal in 1906, today some 140&nbsp;points of sale, with a transactional website and a Greentech division dedicated to sustainable products — or <strong>Lumen</strong>, Sonepar's Quebec banner. Elsewhere in the country, Westburne and Nedco (Rexel), EECOL (Wesco) or Texcan (Sonepar) blanket the territory. Most of these names, once independent, have become banners of global giants — which explains the market's concentration.<sup>4</sup></p>
+
+    <h2><span class="num">01 / THE MARKET</span>A sector under tension</h2>
+
+    <p>The backdrop has never been more favourable. The electrification of Canada's economy is driving unprecedented demand: national forecasts project electricity demand rising <strong>62 to 112%</strong> by 2050, which will require roughly doubling supply. Cumulative investment in transmission and distribution networks could approach <strong>$700&nbsp;billion</strong> by 2050.<sup>2</sup> In April 2026, Ottawa formalized this trajectory with its national strategy <em>Powering Canada Strong</em>, placing grid modernization, data centres and EV charging infrastructure at the heart of economic growth.<sup>3</sup></p>
+
+    <p>For the distributor, this means more volume, but also more complexity: longer project cycles, pressure on raw materials like copper, and customers — contractors, integrators, data-centre operators — who demand a buying experience as smooth as B2C. It is precisely this complexity that AI promises to absorb.</p>
+
+    <p>And Quebec — the country's second-largest distribution market — embodies this transition better than any other province. With its <em>2035 Action Plan</em>, Hydro-Québec projects demand rising <strong>60&nbsp;TWh by 2035</strong> and a doubling of consumption by 2050, backed by <strong>$155 to 185&nbsp;billion</strong> in investment — three to four times the annual average of the past five years.<sup>5</sup> The plan explicitly aims to transform how buildings are heated, in a province where electricity already provides most residential heating. Hydro-Québec is even distributing smart thermostats free of charge: a clear signal that the future of heating will be both electric and data-driven.</p>
+
+    <div class="stat"><div class="fig">$155–185B</div><div class="lab">investments planned by Hydro-Québec through 2035 — 3 to 4&nbsp;times the recent annual average<sup>5</sup></div></div>
+
+    <h2><span class="num">02 / HVAC</span>The same wave hits heating and cooling</h2>
+
+    <p>You cannot discuss electrical distribution in Canada without discussing HVAC. Heating, ventilation and air conditioning are the natural extension of electrification: as the country moves away from fossil fuels, heat itself becomes an electric product. Canada's HVAC market is estimated at <strong>US$12.2&nbsp;billion in 2025</strong> and is expected to reach $15.7&nbsp;billion by 2030, a 5.2% annual growth rate.<sup>6</sup> Heating alone absorbs nearly two-thirds of the country's residential energy — a playground directly adjacent to our aisles.</p>
+
+    <div class="chart">
+      <p class="chart-title">Canada's HVAC market keeps climbing</p>
+      <p class="chart-sub">Market value, US$ billions — 2025 to 2030 (CAGR: 5.2%)</p>
+      <svg viewBox="0 0 600 240" role="img" aria-label="Canadian HVAC market growing from 12.2 to 15.7 billion dollars between 2025 and 2030">
+        <line class="c-grid" x1="56" y1="65.8" x2="576" y2="65.8"/><line class="c-grid" x1="56" y1="27.2" x2="576" y2="27.2"/>
+        <path class="c-area" d="M56,200 L56,65.8 L160,58.9 L264,51.5 L368,43.8 L472,35.7 L576,27.2 L576,200 Z"/>
+        <path class="c-line" d="M56,65.8 L160,58.9 L264,51.5 L368,43.8 L472,35.7 L576,27.2"/>
+        <circle class="c-dot" cx="56" cy="65.8" r="4.5"/><circle class="c-dot" cx="576" cy="27.2" r="4.5"/>
+        <line class="c-axis" x1="56" y1="200" x2="576" y2="200"/>
+        <text class="c-val" x="56" y="55" text-anchor="start">$12.2B</text><text class="c-val" x="576" y="18" text-anchor="end">$15.7B</text>
+        <text class="c-lab" x="56" y="218" text-anchor="middle">2025</text><text class="c-lab" x="160" y="218" text-anchor="middle">2026</text>
+        <text class="c-lab" x="264" y="218" text-anchor="middle">2027</text><text class="c-lab" x="368" y="218" text-anchor="middle">2028</text>
+        <text class="c-lab" x="472" y="218" text-anchor="middle">2029</text><text class="c-lab" x="576" y="218" text-anchor="middle">2030</text>
+      </svg>
+      <p class="chart-src">Source: Mordor Intelligence, Canada HVAC Market, 2025.<sup>6</sup></p>
+    </div>
+
+    <p>The engine of this growth has a name: the heat pump. Boosted by carbon pricing and a stack of federal and provincial subsidies, heat-pump sales in Canada jumped <strong>19% in 2025</strong>. The Oil to Heat Pump Affordability Program alone had funded 274,000&nbsp;residential installations as of November&nbsp;2025, 68% of them cold-climate units (−25&nbsp;°C).<sup>7</sup> In Quebec, the <em>Chauffez vert</em> program brought the homeowner's net cost down to about $3,500, propelling regional installations up 34% in a year.<sup>7</sup></p>
+
+    <div class="chart">
+      <p class="chart-title">Electrifying heat: the rise of heat pumps</p>
+      <p class="chart-sub">Annual unit sales in Canada — thousands of units (CAGR 2025-2030: 8.1%)</p>
+      <svg viewBox="0 0 600 240" role="img" aria-label="Heat-pump sales rising from 487,000 units in 2024 to 762,000 in 2030">
+        <line class="c-axis" x1="56" y1="200" x2="576" y2="200"/>
+        <rect class="c-bar dim" x="96" y="96.5" width="88" height="103.5"/><rect class="c-bar" x="268" y="76.75" width="88" height="123.25"/><rect class="c-bar alt" x="440" y="38.1" width="88" height="161.9"/>
+        <text class="c-val" x="140" y="88" text-anchor="middle">487k</text><text class="c-val" x="312" y="68" text-anchor="middle">≈580k</text><text class="c-val" x="484" y="30" text-anchor="middle">762k</text>
+        <text class="c-lab" x="140" y="218" text-anchor="middle">2024</text><text class="c-lab" x="312" y="218" text-anchor="middle">2025&nbsp;(+19%)</text><text class="c-lab" x="484" y="218" text-anchor="middle">2030&nbsp;(proj.)</text>
+      </svg>
+      <div class="chart-legend"><span><i style="background:#CDBBA9"></i>Actual</span><span><i style="background:var(--copper)"></i>2025 jump</span><span><i style="background:var(--circuit)"></i>Projection</span></div>
+      <p class="chart-src">Source: Euromonitor / MarkSpark Solutions, Canada Heat Pump Market, 2025.<sup>8</sup></p>
+    </div>
+
+    <p>For the distributor, this shift redraws inventory: inverter compressors, cold-climate heat pumps, baseboards and hybrid systems now sit alongside traditional electrical products. And AI is already moving in: smart controls that dynamically tune the heat pump to weather and grid demand, predictive maintenance, energy optimization.<sup>9</sup> But HVAC also shares the sector's Achilles' heel: an acute shortage of qualified technicians is already slowing timelines in Ontario, British Columbia and Quebec.</p>
+
+    <p>Quebec's HVAC industry, for that matter, isn't watching AI from afar. The <strong>Master Group</strong> — Canada's largest independent HVAC-R distributor, based in Boucherville, with 68&nbsp;branches — turned its 2026 MPower Summit in Montreal into a showcase where "AI in distribution" shared the bill with decarbonization… and managing stress and change.<sup>10</sup> <strong>Wolseley Canada</strong>, a national plumbing and HVAC distributor with more than 200&nbsp;branches, is betting on Wolseley Express, which it bills as the industry's most robust e-commerce platform.<sup>11</sup></p>
+
+    <h2><span class="num">03 / RETAIL AND DIGITAL</span>The customer is already buying online</h2>
+
+    <p>While we debate AI, our customers have already changed. Business-to-business (B2B) e-commerce in North America is worth <strong>US$6.14&nbsp;trillion in 2026</strong> and is growing nearly 19% a year.<sup>12</sup> Better still: <strong>87% of B2B buyers</strong> say they will pay more for a supplier with an excellent online portal, and 94% feel a unified (omnichannel) buying experience makes them more productive.<sup>12</sup> The average B2B company now derives 82% of its revenue from remote interactions, and Amazon Business alone generated some <strong>US$83&nbsp;billion</strong> in 2025.<sup>13</sup></p>
+
+    <p>Electrical and HVAC distribution is no exception. The giant Grainger already makes <strong>75% of its sales</strong> digitally; Sonepar, as noted, reaches 45% in Europe and 33% in the United States; at home, Guillevin and Wolseley Express are building transactional platforms tailored to tradespeople.<sup>14</sup> The maturity gap is enormous — and it already separates the winners from the rest.</p>
+
+    <div class="chart">
+      <p class="chart-title">Digital penetration varies enormously</p>
+      <p class="chart-sub">Share of sales made through digital channels</p>
+      <svg viewBox="0 0 600 240" role="img" aria-label="Digital sales: Grainger 75%, Sonepar Europe 45%, Sonepar U.S. 33%">
+        <line class="c-axis" x1="56" y1="200" x2="576" y2="200"/>
+        <rect class="c-bar alt" x="96" y="56.1" width="88" height="143.9"/><rect class="c-bar" x="268" y="113.7" width="88" height="86.3"/><rect class="c-bar dim" x="440" y="136.7" width="88" height="63.3"/>
+        <text class="c-val" x="140" y="48" text-anchor="middle">75%</text><text class="c-val" x="312" y="105" text-anchor="middle">45%</text><text class="c-val" x="484" y="128" text-anchor="middle">33%</text>
+        <text class="c-lab" x="140" y="218" text-anchor="middle">Grainger</text><text class="c-lab" x="312" y="218" text-anchor="middle">Sonepar Europe</text><text class="c-lab" x="484" y="218" text-anchor="middle">Sonepar U.S.</text>
+      </svg>
+      <p class="chart-src">Sources: Mordor Intelligence; Digital Commerce 360, 2025-2026.<sup>12,&nbsp;14</sup></p>
+    </div>
+
+    <p>The trap would be to pit the click against the counter. The best distributors instead see a <em>blended</em> journey: the customer starts online, consults a rep, then picks up at the branch — physical and digital interweave within a single transaction. And maturity pays: according to Deloitte, the most digitally mature B2B suppliers beat their sales targets by a <strong>110% greater margin</strong> than the least mature.<sup>15</sup> Yet reaching that maturity isn't an IT project: it's a change project.</p>
+
+    <h2><span class="num">04 / THE TECHNOLOGY</span>AI is no longer a hypothesis</h2>
+
+    <p>Adoption has tipped. In the United States, about 18% of firms were using AI in late 2025, and more than 20% planned to in the first half of 2026; generative-AI use already reaches nearly 41% of the workforce.<sup>16</sup> In B2B sales, organizations deploying AI post revenue growth of <strong>13 to 15%</strong> and a 10 to 20% improvement in commercial performance.<sup>17</sup></p>
+
+    <p>The sector is deploying. Sonepar, the world's leading electrical distributor, posted record sales of <strong>$37.9&nbsp;billion</strong> in 2025, including $13.9&nbsp;billion online — a 50% jump in one year via its omnichannel platform Spark.<sup>14</sup> In 2026, the company is rolling out worldwide, with Microsoft, an <em>agentic</em> AI it describes as an "exoskeleton" for its 24,000&nbsp;sales advisors.<sup>18</sup> At Rexel, present in 26&nbsp;countries, a demand-forecasting model combines weather data, permit calendars and seasonality to pre-position stock 6 to 8&nbsp;weeks ahead; in France and Germany, contractors finding product available at peak shifted a share of their purchases on their own — without any rep ever having to ask.<sup>19</sup></p>
+
+    <p class="pull">The technology works. The real variable is whether your people know how — and want — to use it.</p>
+
+    <h2><span class="num">05 / THE BOTTLENECK</span>Change, the conductor we forget</h2>
+
+    <p>Here is the statistic every executive should pin to the wall: <strong>70% of major transformations fail</strong>, and employee resistance accounts for up to 72% of those failures.<sup>20</sup> In other words, AI almost never fails for technical reasons — it fails because change is neglected. The knowledge has existed for twenty years; it's the execution that's missing.</p>
+
+    <p>And the ground has hardened. Only 38% of employees say they're ready to support organizational change today, versus 74% in 2016 — a halving in less than a decade.<sup>21</sup> Change fatigue is real, and each new technology wave makes it worse.</p>
+
+    <div class="chart">
+      <p class="chart-title">Willingness to change is collapsing — at the worst possible time</p>
+      <p class="chart-sub">Share of employees ready to support organizational change</p>
+      <svg viewBox="0 0 600 220" role="img" aria-label="Willingness to support change falling from 74% in 2016 to 38% in 2026">
+        <line class="c-axis" x1="56" y1="180" x2="544" y2="180"/>
+        <rect class="c-bar dim" x="125" y="69" width="110" height="111"/><rect class="c-bar" x="365" y="123" width="110" height="57"/>
+        <text class="c-val" x="180" y="60" text-anchor="middle">74%</text><text class="c-val" x="420" y="114" text-anchor="middle">38%</text>
+        <text class="c-lab" x="180" y="200" text-anchor="middle">2016</text><text class="c-lab" x="420" y="200" text-anchor="middle">2026</text>
+        <path d="M250,80 C300,90 320,110 350,120" fill="none" stroke="#B96A3C" stroke-width="1.6" stroke-dasharray="4 4"/><path d="M350,120 l-9,-3 l4,8 z" fill="#B96A3C"/>
+      </svg>
+      <p class="chart-src">Source: Gartner, cited in Mooncamp, Change Management Statistics, 2026.<sup>21</sup></p>
+    </div>
+
+    <p>In electrical distribution, this resistance has a precise face. It's the seasoned rep who has managed 80&nbsp;accounts on instinct for 25&nbsp;years and is suddenly asked to trust a "next best action" generated by an algorithm. It's the counter clerk who sees automation and hears "replacement." Change isn't a module you bolt on at the end of an AI project: it's the main conductor, the one without which no current flows.</p>
+
+    <h2><span class="num">06 / THE CORRELATION</span>What the data proves</h2>
+
+    <p>If resistance causes failure, the reverse is just as true — and measurable. The correlation between the quality of change management and a transformation's success is one of the most robust in the management literature. Projects with excellent change management are <strong>six times more likely</strong> to meet their objectives, with returns reaching as high as 143%.<sup>20</sup></p>
+
+    <div class="chart">
+      <p class="chart-title">The decisive correlation</p>
+      <p class="chart-sub">Relative likelihood of meeting a transformation's objectives</p>
+      <svg viewBox="0 0 600 240" role="img" aria-label="Projects with excellent change management are six times more likely to succeed">
+        <line class="c-axis" x1="56" y1="200" x2="544" y2="200"/>
+        <rect class="c-bar dim" x="115" y="175.8" width="120" height="24.2"/><rect class="c-bar alt" x="365" y="54.5" width="120" height="145.5"/>
+        <text class="c-val" x="175" y="166" text-anchor="middle">1×</text><text class="c-val" x="425" y="45" text-anchor="middle">6×</text>
+        <text class="c-lab" x="175" y="220" text-anchor="middle">Weak change mgmt</text><text class="c-lab" x="425" y="220" text-anchor="middle">Excellent change mgmt</text>
+      </svg>
+      <p class="chart-src">Source: McKinsey &amp; Company / Speakwise, Change Management Statistics 2026.<sup>20</sup></p>
+    </div>
+
+    <p>This correlation has a direct consequence for anyone deploying AI: the decisive variable isn't the model, it's the adoption method. And AI can itself serve change management — organizations that apply it there report up to 30% fewer project delays and 25% higher productivity.<sup>22</sup> The loop closes: you use AI to better drive the adoption of AI.</p>
+
+    <div class="stat"><div class="fig">6×</div><div class="lab">more success for projects with excellent change management<sup>20</sup></div></div>
+
+    <h2><span class="num">07 / THE OPERATING ROOM</span>Roles played to the letter</h2>
+
+    <p>An operating room doesn't succeed because of the best scalpel. It succeeds because every role is defined and executed to the letter: the surgeon leads, the anesthesiologist watches the vital signs, the nurses manage the surgical field, the scrub tech hands over the right instrument at the right second. No one improvises; a checklist frames every move; responsibilities are crystal clear. An AI-driven transformation is exactly that theatre — and the leading cause of failure is blurred roles.</p>
+
+    <p><strong>The executive sponsor</strong> is the lead surgeon. Since 1998, in <em>every one</em> of Prosci's benchmark studies, active and visible sponsorship by a leader has been the number-one success factor — cited three times more often than the next. The figures are unequivocal: a project with a highly effective sponsor meets its objectives 79% of the time, versus 27% with an ineffective one. Yet nearly half of executives don't understand their role as sponsor.<sup>23</sup></p>
+
+    <div class="chart">
+      <p class="chart-title">The sponsor: the top success factor</p>
+      <p class="chart-sub">Share of projects meeting their objectives, by sponsor effectiveness</p>
+      <svg viewBox="0 0 600 240" role="img" aria-label="Projects meeting objectives: 27% with an ineffective sponsor, 79% with an effective sponsor">
+        <line class="c-axis" x1="56" y1="200" x2="544" y2="200"/>
+        <rect class="c-bar dim" x="115" y="150.5" width="120" height="49.5"/><rect class="c-bar alt" x="365" y="55.2" width="120" height="144.8"/>
+        <text class="c-val" x="175" y="141" text-anchor="middle">27%</text><text class="c-val" x="425" y="46" text-anchor="middle">79%</text>
+        <text class="c-lab" x="175" y="220" text-anchor="middle">Ineffective sponsor</text><text class="c-lab" x="425" y="220" text-anchor="middle">Effective sponsor</text>
+      </svg>
+      <p class="chart-src">Source: Prosci, Best Practices in Change Management, 2026.<sup>23</sup></p>
+    </div>
+
+    <p>Around the sponsor, every role counts. <strong>The change manager</strong> plays the anesthesiologist: neutral and dedicated, monitoring the vital signs of adoption and holding the course — and a dedicated change resource multiplies the odds of success sixfold. <strong>Branch managers and front-line managers</strong> are the nurses at the team's bedside: they translate, reassure, accompany — all the more so since managers alone account for 70% of the variance in engagement, while often being the most resistant group. <strong>Field champions</strong>, finally, are the scrub tech: operational credibility, the right move at the right moment. And the surgical checklist has its equivalent: a clear responsibility matrix — who decides, who executes, who is consulted, who is informed.<sup>23</sup></p>
+
+    <p class="pull">In an operating room, no one improvises. A transformation that succeeds doesn't either: everyone plays their role to the letter.</p>
+
+    <h2><span class="num">08 / THE EUROPEAN MIRROR</span>What Europe teaches us</h2>
+
+    <p>To guess the next 18 Canadian months, it's often enough to look at Europe — a more digitally mature market, and a mirror of what awaits us. Concrete examples abound. Rexel — €19.4&nbsp;billion in sales in 2025, nearly half of it in Europe — appointed a chief digital officer to its executive committee in 2025 and is rolling out its <em>Energeasy Solar</em> platform (self-consumption management, EV charging, heat pumps) under its Rexel France and Elektroskandia banners in the Nordics.<sup>24</sup> On the HVAC side, Rexel absorbed the Dutch firm <strong>Wasco</strong> — 35&nbsp;branches — for €485&nbsp;million, betting on the Netherlands' heating market.<sup>25</sup> Sonepar, for its part, is building a genuine HVAC vertical in France through acquisitions (Hydeclim, CD Sud), a segment that already topped €320&nbsp;million as early as 2022.<sup>26</sup></p>
+
+    <p>The context there is also more pressing. The European Union and Norway will need to invest an average of <strong>€67&nbsp;billion a year</strong> through 2050 to modernize their distribution networks, while only about €33&nbsp;billion is spent today.<sup>27</sup> In December&nbsp;2025, Brussels unveiled its <em>European Grids Package</em> to speed up connections and permits.<sup>28</sup> Europe's smart-grid market is growing nearly 16% a year and could quadruple by 2034;<sup>29</sup> low-voltage distribution there is rising 4.5 to 6% a year, driven by REPowerEU.<sup>30</sup></p>
+
+    <p>But Europe also offers a warning. Despite its digital lead, the margins of the four global distribution giants — Sonepar, Rexel, Graybar, Wesco — have compressed, falling from around 7% in 2022 to 5.5% in 2024.<sup>31</sup> The lesson is clear: technology and volume aren't enough to protect profitability. What sets you apart for the long run is the ability to transform the organization — so, once again, change.</p>
+
+    <p class="pull">Europe doesn't prove that AI is enough. It proves the lead goes to those who know how to manage change.</p>
+
+    <h2><span class="num">09 / LESSONS LEARNED</span>What to take away</h2>
+
+    <p>The next 12 to 18 months will see the shift from <em>assistant</em> to <em>agent</em>: a February 2026 Deloitte study reveals that while 45% of B2B suppliers use AI in sales, only 24% have touched agentic AI — the kind that actually executes workflows.<sup>15</sup> The gap will widen fast, in a two-speed market. Here, in summary, is what the data and the field teach us.</p>
+
+    <p><strong>1. Technology is the easy part.</strong> AI almost never fails for technical reasons. It fails when change is neglected. That's the thread running through everything above.</p>
+
+    <p><strong>2. The correlation is proven, not intuitive.</strong> Excellent change management means six times more success. Treat it as a measurable investment, with its own adoption metrics.</p>
+
+    <p><strong>3. Define roles to the letter.</strong> As in an operating room, it all starts with an active, visible sponsor, surrounded by a dedicated change manager, equipped front-line managers and credible champions. Blurred roles kill more projects than technology does.</p>
+
+    <p><strong>4. Digital is no longer optional.</strong> When 87% of B2B buyers pay more for an excellent portal, starting where friction is low — demand forecasting, project quoting, product recommendation — proves value before scaling.</p>
+
+    <p><strong>5. Augment, don't replace — and stay clear-eyed.</strong> Human plus AI always beats AI alone or human alone. But beware the hype: Gartner predicts more than 40% of agentic-AI projects will be abandoned by 2027, for lack of demonstrated value or controlled costs.<sup>32</sup> The pilot that never reaches production is the most common trap.</p>
+
+    <p class="pull">Same voltage, two outcomes: it won't be the distributor with the best model who wins, but the one who best managed the change.</p>
+
+    <p>In our trade, you learn early that an open circuit carries no energy, however elegant the wiring. AI changes the game for Canadian electrical distribution — on one condition. The current doesn't flow on its own.</p>
+
+  </div>
+</main>
+
+<section class="sources">
+  <div class="wrap">
+    <h2>Sources</h2>
+    <ol>
+      <li>Channel Marketing Group / <em>Electrical Trends</em>, "The Size of the Canadian Electrical Market" (Pathfinder Benchmark, vol.&nbsp;41), 2025. <a href="https://electricaltrends.com/2025/09/28/oh-canada-the-size-of-the-canadian-electrical-market/">electricaltrends.com</a></li>
+      <li>Electro-Federation Canada, <em>Grid Technology Roadmap — Final Report</em>, April 2026. <a href="https://www.electrofed.com/wp-content/uploads/2026/04/EFC_Grid-Technology-Roadmap_Final-Report_2026-04-07-v2.pdf">electrofed.com</a></li>
+      <li>Natural Resources Canada, <em>Powering Canada Strong</em>, 2026. <a href="https://natural-resources.canada.ca/energy-sources/electricity-infrastructure/powering-canada-strong-national-strategy-electrified-canadian-economy">natural-resources.canada.ca</a></li>
+      <li><em>Canadian Electrical Wholesaler</em>, Guillevin International profile, 2025. <a href="https://www.canadianelectricalwholesaler.ca/guillevin-trusted-distributor/">canadianelectricalwholesaler.ca</a></li>
+      <li>Hydro-Québec, <em>2035 Action Plan</em>, 2023-2024. <a href="https://www.hydroquebec.com/a-propos/publications-rapports/plan-action-2035.html">hydroquebec.com</a></li>
+      <li>Mordor Intelligence, <em>Canada HVAC Market</em>, 2025. <a href="https://www.mordorintelligence.com/industry-reports/canada-hvac-market">mordorintelligence.com</a></li>
+      <li>Mordor Intelligence, <em>Canada HVAC Equipment Market</em> (oil-to-heat-pump conversion; Chauffez vert), January 2026. <a href="https://www.mordorintelligence.com/industry-reports/canada-hvac-heating-ventilation-and-air-conditioning-equipment-market">mordorintelligence.com</a></li>
+      <li>Euromonitor International / MarkSpark Solutions, <em>Canada Heat Pump Market</em>, 2025. <a href="https://marksparksolutions.com/reports/canada-heat-pump-market">marksparksolutions.com</a></li>
+      <li>Insights Leader, <em>Canada Heat Pump Market — Technology &amp; Innovation Impact</em>, 2025. <a href="https://www.insightsleader.com/ildata/canada-heat-pump-market/">insightsleader.com</a></li>
+      <li>Master Group, <em>MPower Summit 2026</em> (program: AI in distribution, decarbonization, stress management), February 2026. <a href="https://www.master.ca/">master.ca</a></li>
+      <li>Wolseley Canada, Wolseley Express e-commerce platform, 2026. <a href="https://www.wolseleyinc.ca/">wolseleyinc.ca</a></li>
+      <li>Mordor Intelligence, <em>North America B2B E-commerce Market</em> (US$6.14T; 87% pay more; Grainger 75%), January 2026. <a href="https://www.mordorintelligence.com/industry-reports/north-america-b2b-ecommerce-market">mordorintelligence.com</a></li>
+      <li>Capital One Shopping Research, <em>B2B eCommerce Statistics</em> (Amazon Business; 82% of revenue remote), 2026. <a href="https://capitaloneshopping.com/research/b2b-ecommerce-statistics/">capitaloneshopping.com</a></li>
+      <li>Digital Commerce 360, "Sonepar digital sales jump 50% to $13.9 billion in 2025" (digital: 33% U.S., 45% Europe), March 2026. <a href="https://www.digitalcommerce360.com/2026/03/24/sonepar-digital-sales-2025/">digitalcommerce360.com</a></li>
+      <li>Deloitte Digital, B2B study on AI and digital maturity (+110% margin; agentic AI 24%), February 2026. <a href="https://www.uncap.com/post/b2b-ecommerce-statistics-growth-or-decline">via uncap.com</a></li>
+      <li>U.S. Federal Reserve, <em>Monitoring AI Adoption in the U.S. Economy</em>, April 2026. <a href="https://www.federalreserve.gov/econres/notes/feds-notes/monitoring-ai-adoption-in-the-u-s-economy-20260403.html">federalreserve.gov</a></li>
+      <li>McKinsey, cited in MarketBetter, "AI in B2B Sales: What's Actually Working in 2026," March 2026. <a href="https://www.marketbetter.ai/blog/ai-b2b-sales-meta-analysis-whats-working-2026/">marketbetter.ai</a></li>
+      <li><em>Electrical Trends</em>, "Sonepar and AI," February 2026. <a href="https://electricaltrends.com/2026/02/19/sonepar-and-ai/">electricaltrends.com</a></li>
+      <li><em>Canadian Electrical Wholesaler</em>, "How AI is Reshaping Channel Sales and Distributor Relationships," 2026. <a href="https://www.canadianelectricalwholesaler.ca/ai-reshaping-channel-sales-distributor-relationships/">canadianelectricalwholesaler.ca</a></li>
+      <li>McKinsey&nbsp;&amp;&nbsp;Company / Speakwise, <em>Change Management Statistics 2026</em>. <a href="https://speakwiseapp.com/blog/change-management-statistics">speakwiseapp.com</a></li>
+      <li>Gartner (2022), cited in Mooncamp, <em>Change Management Statistics</em>, 2026. <a href="https://mooncamp.com/blog/change-management-statistics">mooncamp.com</a></li>
+      <li>PwC, cited in AMS Consulting, "AI and Change Management," 2025. <a href="https://amsconsulting.com/articles/ai-and-change-management/">amsconsulting.com</a></li>
+      <li>Prosci, <em>Best Practices in Change Management</em> / roles and sponsorship (effective sponsor 79% vs 27%; dedicated resource 6×), 2026. <a href="https://www.prosci.com/change-management-success">prosci.com</a></li>
+      <li>Rexel, <em>Energeasy Solar</em> platform and digital strategy (Rexel France, Elektroskandia), 2026. <a href="https://www.ad-hoc-news.de/boerse/news/ueberblick/smart-load-management-gets-practical-with-rexel-energeasy-solar-home-and/69549099">ad-hoc-news.de</a></li>
+      <li>HVACR Trends, "Rexel buys HVACR distributor in Europe" (Wasco acquisition, Netherlands, €485M), 2023. <a href="https://hvacrtrends.com/opinion-rexel-buys-hvacr-distributor-in-europe-what-does-that-mean-for-their-north-american-distribution-strategy/">hvacrtrends.com</a></li>
+      <li>Sonepar, "Sonepar Reinforces its HVAC Expertise with the Acquisition of Hydeclim" (France HVAC vertical &gt; €320M). <a href="https://www.sonepar.com/en/newsroom/-sonepar-reinforces-its-hvac-expertise-with-the-acquisition-of-hydeclim-75742">sonepar.com</a></li>
+      <li>Eurelectric, <em>Grids for Speed</em> (€67B/yr grid investment through 2050), 2024. <a href="https://www.eurelectric.org/in-detail/distributiongridsforspeed/">eurelectric.org</a></li>
+      <li>European Commission, <em>European Grids Package</em> (COM/2025/1005), December 2025. <a href="https://energy.ec.europa.eu/topics/infrastructure/european-grids_en">energy.ec.europa.eu</a></li>
+      <li>Market Data Forecast, <em>Europe Smart Grid Market</em> (CAGR 15.67%), 2026. <a href="https://www.marketdataforecast.com/market-reports/europe-smart-grid-market">marketdataforecast.com</a></li>
+      <li>IndexBox, <em>European Union 380V/400V Power Distribution Market</em> (4.5–6%), 2026. <a href="https://www.indexbox.io/store/european-union-380v-400v-power-distribution-market-analysis-forecast-size-trends-and-insights/">indexbox.io</a></li>
+      <li>EthiFinance, Sonepar SAS rating (sector EBIT margins 7.0% in 2022 to 5.5% in 2024), 2025. <a href="https://www.ethifinance.com/en/ratings/company/1501/8163">ethifinance.com</a></li>
+      <li>Gartner, agentic-AI forecast, cited in MarketBetter, 2026. <a href="https://www.marketbetter.ai/blog/ai-b2b-sales-meta-analysis-whats-working-2026/">marketbetter.ai</a></li>
+    </ol>
+    <p class="note">Data accessed June 2026. Market statistics reflect the reference periods indicated by each source.</p>
+  </div>
+</section>
+
+<footer><p>© 2026 — Opinion piece. Reproduction subject to the authorization of the author and the magazine.</p></footer>
+
+</body>
+</html>

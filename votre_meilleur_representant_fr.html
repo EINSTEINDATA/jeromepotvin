@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Votre meilleur représentant ne peut pas se souvenir de 10 000 comptes — Jérôme Potvin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#0A1622; --navy:#0F1B33; --paper:#F2F0E9; --paper-dim:#E7E4DA;
+    --copper:#B96A3C; --copper-bright:#E8622C; --teal:#2E7D6B; --muted:#5B6670; --hair:#D6D2C7;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Newsreader',Georgia,serif; font-size:19px; line-height:1.62; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 24px; }
+
+  .masthead{ background:var(--ink); color:var(--paper); border-bottom:1px solid rgba(255,255,255,.10); }
+  .masthead .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:13px 24px; }
+  .brand{ font-family:'Spline Sans Mono',monospace; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; }
+  .brand b{ color:var(--copper-bright); }
+  .masthead a.toggle{ font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--paper); text-decoration:none; border:1px solid rgba(255,255,255,.25); padding:5px 12px; border-radius:20px; }
+  .masthead a.toggle:hover{ border-color:var(--copper-bright); color:var(--copper-bright); }
+  .masthead a.back{ font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:.05em; color:rgba(242,240,233,.6); text-decoration:none; }
+  .masthead a.back:hover{ color:var(--copper-bright); }
+
+  .hero{ background:linear-gradient(160deg, var(--ink) 0%, var(--navy) 100%); color:var(--paper); padding:52px 0 44px; }
+  .kicker{ font-family:'Spline Sans Mono',monospace; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--copper-bright); margin:0 0 20px; display:flex; align-items:center; gap:10px; }
+  .kicker::before{ content:""; width:26px; height:1px; background:var(--copper-bright); }
+  .hero h1{ font-size:clamp(28px,5vw,40px); font-weight:600; line-height:1.18; margin:0 0 18px; }
+  .byline{ font-family:'Spline Sans Mono',monospace; font-size:12.5px; color:rgba(242,240,233,.68); line-height:1.7; }
+  .byline b{ color:var(--paper); }
+
+  article h2{ font-size:23px; font-weight:600; margin:44px 0 14px; color:var(--navy); }
+  article h3{ font-size:18px; font-weight:600; margin:32px 0 10px; color:var(--navy); }
+  article h4{ font-family:'Spline Sans Mono',monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--copper); margin:30px 0 10px; }
+  article p{ margin:0 0 18px; }
+  article ul, article ol{ margin:0 0 18px; padding-left:22px; }
+  article li{ margin-bottom:8px; }
+  article em{ color:var(--muted); }
+  article strong{ color:var(--ink); }
+
+  blockquote{ border-left:3px solid var(--copper); background:#fff; margin:28px 0; padding:16px 22px; font-size:17px; color:var(--navy); font-style:italic; }
+  blockquote p{ margin:0; }
+
+  .stat-solo{ background:var(--ink); color:var(--paper); border-radius:4px; padding:20px 22px; margin:24px 0; }
+  .stat-solo .stat-num{ font-family:'Spline Sans Mono',monospace; font-size:30px; font-weight:600; color:var(--copper-bright); margin-bottom:6px; }
+  .stat-solo .stat-label{ font-size:14.5px; color:rgba(242,240,233,.8); font-style:normal; line-height:1.5; }
+
+  .stat-row{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:28px 0; }
+  @media(max-width:560px){ .stat-row{ grid-template-columns:1fr; } }
+  .stat-row .stat-solo{ margin:0; }
+
+  table{ width:100%; border-collapse:collapse; margin:24px 0; font-size:14px; font-family:'Spline Sans Mono',monospace; }
+  th{ background:var(--ink); color:var(--paper); text-align:left; padding:10px 12px; font-weight:500; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; }
+  td{ padding:9px 12px; border-bottom:1px solid var(--hair); vertical-align:top; }
+  tr:nth-child(even) td{ background:var(--paper-dim); }
+  .table-scroll{ overflow-x:auto; }
+
+  hr{ border:none; border-top:1px solid var(--hair); margin:44px 0; }
+
+  .footer{ border-top:1px solid var(--hair); margin-top:20px; padding:32px 24px 56px; text-align:center; }
+  .footer p{ font-size:13.5px; color:var(--muted); margin:0 0 6px; }
+  .footer a{ color:var(--copper-bright); text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="brand"><b>JP</b> · Groupe Innovair</div>
+    <div style="display:flex; gap:14px; align-items:center;">
+      <a class="back" href="portfolio.html">← Portfolio</a>
+      <a class="toggle" href="your-best-rep-cant-remember-en.html">EN</a>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="kicker">Stratégie commerciale · IA & distribution</div>
+    <h1>Votre meilleur représentant ne peut pas se souvenir de 10 000 comptes — Jérôme Potvin</h1>
+    <div class="byline">Par <b>Jérôme Potvin</b> · Directeur, Stratégie Commerciale, Groupe Innovair<br>Juin 2026 · 10 min de lecture</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <article>
+<p>Pendant des décennies, les ventes indirectes reposaient sur les relations. Les meilleurs distributeurs gagnaient non pas parce qu'ils avaient les systèmes les plus intelligents — mais parce qu'ils avaient les représentants les plus fiables, les carnets d'adresses les plus fournis et des instincts forgés par des années sur le terrain. Ce modèle garde toute sa valeur. Mais il ne suffit plus.</p>
+<div class="stat-row">
+<div class="stat-solo"><div class="stat-num">62%</div><div class="stat-label">des distributeurs B2B affirment que les prévisions basées sur l'IA ont amélioré leurs taux de service en moins de 12 mois — McKinsey B2B Pulse 2024</div></div>
+<div class="stat-solo"><div class="stat-num">3×</div><div class="stat-label">meilleure rétention des partenaires pour les entreprises utilisant la détection prédictive du désengagement — Forrester Channel Report 2025</div></div>
+<div class="stat-solo"><div class="stat-num">40%</div><div class="stat-label">de réduction du temps de traitement manuel des commandes avec les flux de travail assistés par IA — Gartner Supply Chain 2025</div></div>
+</div>
+<h2 id="lancien-modèle-sessouffle">L’ancien modèle s’essouffle</h2>
+<p>L’environnement des ventes indirectes est aujourd’hui plus rapide, plus fragmenté et plus concurrentiel que jamais. Les entrepreneurs et les revendeurs ont davantage de choix. Les marges sont plus étroites. Les attentes des clients — façonnées par des expériences numériques dignes du grand public — ont migré vers le B2B. Les distributeurs qui s’appuient encore uniquement sur l’intuition et les relations commerciales commencent à ressentir l’écart.</p>
+<p>L’IA n’arrive pas pour remplacer la relation. Elle arrive pour libérer le représentant de tout ce qui l’empêche de l’entretenir.</p>
+<h3 id="lécart-dadoption-de-lia-en-distribution-b2b">L’écart d’adoption de l’IA en distribution B2B</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Cas d’usage</th>
+<th>Grands distributeurs (500M$+)</th>
+<th>Marché intermédiaire</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prévision de la demande</td>
+<td>75%</td>
+<td>42%</td>
+</tr>
+<tr class="even">
+<td>Scoring des partenaires</td>
+<td>55%</td>
+<td>30%</td>
+</tr>
+<tr class="odd">
+<td>Détection du désengagement</td>
+<td>45%</td>
+<td>21%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lévolution-de-lia-dans-la-distribution-en-réseau">L’évolution de l’IA dans la distribution en réseau</h3>
+<p><strong>Hier — Réactif.</strong> Axé sur les relations, guidé par l’intuition : les reps gèrent les comptes selon leur ancienneté et leur familiarité; l’inventaire est réapprovisionné après les ruptures de stock; la santé des partenaires est évaluée en revues annuelles; les promotions uniformes sont envoyées à tous les comptes.</p>
+<p><strong>Aujourd’hui — Prédictif.</strong> Basé sur les données, axé sur les tendances : l’IA classe les partenaires par potentiel de croissance, pas seulement par volume; les prévisions intègrent météo, saisonnalité et tendances; les signaux de désengagement sont détectés des semaines à l’avance; les reps reçoivent une liste d’actions prioritaires quotidienne.</p>
+<p><strong>Demain — Prescriptif.</strong> Autonome, auto-optimisant : les agents IA négocient automatiquement les conditions de réassort; des portails partenaires hyper-personnalisés s’adaptent en temps réel; la tarification dynamique s’ajuste aux signaux de demande; des recommandations de ventes croisées sont générées par profil d’entrepreneur.</p>
+<h2 id="de-linstinct-aux-décisions-fondées-sur-les-données">De l’instinct aux décisions fondées sur les données</h2>
+<p>Demandez à n’importe quel directeur de comptes expérimenté comment il priorise ses comptes, et la réponse honnête est généralement : ceux que je connais le mieux, ceux qui appellent le plus, ceux qui sont là depuis le plus longtemps. Cet instinct a de la valeur — mais il est aussi biaisé en faveur de la visibilité plutôt que du potentiel.</p>
+<p>L’IA analyse des modèles à travers des milliers de transactions qu’aucun humain ne peut tenir en tête simultanément : quels partenaires augmentent silencieusement leur panier, quels comptes montrent des signes précoces de défection, quelles catégories de produits sont sous-exploitées dans des régions spécifiques.</p>
+<blockquote>
+<p><strong>Exemple réel — Wesco International, distribution électrique</strong></p>
+<p>Wesco, l’un des plus grands distributeurs B2B de produits électriques et industriels d’Amérique du Nord, a déployé une segmentation des partenaires basée sur l’IA sur sa base de plus de 20 000 comptes. Plutôt que de s’appuyer uniquement sur le jugement des représentants, le modèle évaluait les comptes selon leur trajectoire d’achat, la diversité de leur gamme produits et leur fréquence d’engagement.</p>
+<p>Les représentants recevaient une liste quotidienne de comptes prioritaires — classés non pas par taille, mais selon le calcul de l’IA indiquant où leur temps générerait le plus de revenus incrémentaux. Les comptes intermédiaires à fort potentiel, jusque-là sous-servis, étaient systématiquement mis en lumière pour la première fois.</p>
+<p>↑18% revenus des comptes intermédiaires · ↓30% temps sur appels peu rentables · Intégration plus rapide des nouveaux partenaires</p>
+</blockquote>
+<p><em>« Les meilleurs directeurs de comptes ne sont pas remplacés par l’IA — ils en sont amplifiés. Leur jugement devient plus affûté lorsqu’il est éclairé par des données qu’ils n’auraient jamais pu assembler manuellement. »</em></p>
+<h2 id="la-prévision-prédictive-remplace-le-réapprovisionnement-réactif">La prévision prédictive remplace le réapprovisionnement réactif</h2>
+<p>Dans les catégories de produits saisonniers — le chauffage électrique en étant un exemple parfait — le timing est déterminant. Un coup de froid en octobre peut déclencher une vague de commandes d’entrepreneurs en quelques jours. Les distributeurs qui l’ont anticipé et prépositionné leur inventaire saisissent la vente. Ceux qui attendent encore les bons de commande se retrouvent à courir après.</p>
+<p>Le réapprovisionnement traditionnel est réactif par conception : on recommande quand le stock baisse. La prévision basée sur l’IA inverse totalement cette logique en intégrant les tendances météorologiques, les cycles de ventes historiques, l’activité de construction régionale et le comportement de commande des partenaires pour anticiper la demande avant qu’elle se matérialise.</p>
+<blockquote>
+<p><strong>Exemple réel — Rexel Group, distribution électrique mondiale</strong></p>
+<p>Rexel, présent dans 26 pays avec une forte exposition à la distribution de produits HVAC et électriques, a mis en place des prévisions de demande basées sur l’IA dans ses centres de distribution européens. Le modèle intégrait des API météorologiques régionales, des pipelines de projets d’entrepreneurs issus de données de permis de construire et la saisonnalité historique des commandes pour prévoir la demande 6 à 8 semaines à l’avance.</p>
+<p>En France et en Allemagne — des marchés avec des saisons de chauffage sévères — le système prépositionnait systématiquement l’inventaire avant les distributeurs concurrents. Les entrepreneurs qui trouvaient les produits disponibles en période de pointe ont transféré une plus grande part de leur portefeuille vers Rexel, sans que l’équipe commerciale n’ait jamais eu à le demander.</p>
+<p>↑22% amélioration du taux de service · ↓35% coûts de fret d’urgence · ↑ Part de portefeuille entrepreneur</p>
+</blockquote>
+<p><em>« En distribution saisonnière, l’entreprise qui prévoit le mieux gagne — pas celle qui a le plus grand entrepôt. »</em></p>
+<h2 id="lengagement-personnalisé-à-grande-échelle">L’engagement personnalisé — à grande échelle</h2>
+<p>L’une des tensions structurelles des ventes indirectes a toujours été l’opposition entre échelle et proximité. Un représentant qui gère 80 comptes ne peut pas accorder à chacun l’attention qu’il mérite. Inévitablement, les 15 premiers obtiennent la majeure partie du temps, et les autres reçoivent des suivis ponctuels et des communications génériques.</p>
+<p>L’IA brise ce compromis. Avec les bons outils, une équipe commerciale peut livrer des recommandations personnalisées, des promotions opportunes et des communications contextuellement pertinentes à des centaines de comptes simultanément — chaque message informé par l’historique d’achat réel du partenaire, ses habitudes saisonnières et sa gamme de produits.</p>
+<blockquote>
+<p><strong>Exemple réel — Grainger, distribution industrielle B2B</strong></p>
+<p>Grainger, qui sert plus de 4,5 millions de clients B2B en Amérique du Nord, a déployé un moteur de recommandation basé sur l’IA sur son canal numérique. Plutôt que de mettre en avant des « meilleures ventes » génériques, le système analysait l’historique d’achat de chaque client, son secteur d’activité et ses habitudes d’utilisation saisonnière pour générer des recommandations de produits hyper-personnalisées à chaque point de contact — courriel, site web et appels assistés par les représentants.</p>
+<p>Pour les partenaires de distribution spécifiquement, le moteur identifiait des opportunités de ventes croisées en se basant sur ce que des entreprises comparables du même secteur achetaient — une technique empruntée au commerce électronique grand public et appliquée avec précision à la distribution industrielle.</p>
+<p>↑15% taux de conversion ventes croisées · ↑ Valeur moyenne de commande par partenaire · ↓ Plaintes de prospection non pertinente</p>
+</blockquote>
+<p><em>« L’échelle signifiait autrefois la standardisation. L’IA rend l’échelle personnelle — et les partenaires qui se sentent connus restent plus longtemps. »</em></p>
+<h2 id="le-système-dalerte-précoce-que-vous-naviez-jamais-eu">Le système d’alerte précoce que vous n’aviez jamais eu</h2>
+<p>Perdre un partenaire de distribution se produit rarement du jour au lendemain. Cela arrive progressivement — une commande légèrement plus petite ici, un intervalle plus long entre les achats là, un glissement discret vers une marque concurrente. Au moment où la relation prend fin, les signaux étaient présents depuis des mois.</p>
+<p>L’IA donne aux équipes commerciales quelque chose qu’elles n’ont jamais eu auparavant : un système d’alerte précoce pour le désengagement des partenaires.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Partenaire</th>
+<th>Score santé</th>
+<th>Signal</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Électrique Montréal inc.</td>
+<td>26/100 ↓</td>
+<td>Commandes −42% · Aucun contact depuis 38 jours</td>
+<td>Appeler aujourd’hui</td>
+</tr>
+<tr class="even">
+<td>Chauffage Laval SENC</td>
+<td>52/100 ↓</td>
+<td>Panier −18% · Glissement vers SKU concurrent</td>
+<td>Envoyer offre</td>
+</tr>
+<tr class="odd">
+<td>Distribution Brossard</td>
+<td>82/100 ↑</td>
+<td>Commandes +24% · Adoption nouveaux produits</td>
+<td>Vente additionnelle</td>
+</tr>
+<tr class="even">
+<td>Matériaux Rive-Nord</td>
+<td>66/100 →</td>
+<td>Stable · Lacune thermostat intelligent détectée</td>
+<td>Vente croisée</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Exemple réel — Schneider Electric, gestion du réseau de partenaires</strong></p>
+<p>Schneider Electric, qui gère des milliers de distributeurs électriques et d’entrepreneurs certifiés dans le monde entier, a mis en œuvre un modèle de scoring de santé des partenaires dans le cadre de son portail mySchneider. L’IA signalait les comptes présentant un modèle défini de désengagement — baisse de participation aux formations, réduction de l’activité d’enregistrement des produits et ralentissement de la cadence des commandes — et transmettait des alertes aux directeurs de comptes régionaux avec des scripts d’intervention recommandés.</p>
+<p>Surtout, le système priorisait les alertes selon le revenu estimé à risque, aidant les directeurs régionaux à décider quels comptes méritaient un appel téléphonique plutôt qu’une séquence de réengagement par courriel ciblé.</p>
+<p>↑28% amélioration de la rétention partenaires · Intervention précoce sur 40% des comptes à risque · ↓ Coût de remplacement des partenaires</p>
+</blockquote>
+<p><em>« Perdre un partenaire de distribution se produit rarement du jour au lendemain. L’IA le voit venir des mois à l’avance — et vous donne le temps d’agir. »</em></p>
+<h2 id="le-paradoxe-de-la-confiance">Le paradoxe de la confiance</h2>
+<p>Voici la vérité contre-intuitive au cœur de tout cela : plus l’IA automatise les interactions dans les ventes indirectes, plus la relation humaine devient un facteur de différenciation concurrentielle.</p>
+<p>Lorsque la friction transactionnelle est éliminée — les commandes sont fluides, les prévisions sont précises, la communication est ponctuelle — ce qui différencie un distributeur d’un autre n’est plus opérationnel. Cela devient relationnel. La qualité de la conversation. La rapidité de résolution des problèmes. Le sentiment que quelqu’un comprend vraiment votre entreprise.</p>
+<p>L’IA n’élimine pas le besoin de confiance dans les ventes indirectes. Elle en hausse les enjeux.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>L’IA prend en charge</th>
+<th>Les humains conservent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prévision de la demande et gestion des stocks</td>
+<td>Conversations de création de confiance</td>
+</tr>
+<tr class="even">
+<td>Scoring et priorisation des partenaires</td>
+<td>Résolution de conflits et négociation</td>
+</tr>
+<tr class="odd">
+<td>Détection des signaux de désengagement</td>
+<td>Développement stratégique des comptes</td>
+</tr>
+<tr class="even">
+<td>Acheminement et confirmation des commandes</td>
+<td>Intelligence commerciale et contexte marché</td>
+</tr>
+<tr class="odd">
+<td>Suggestions de produits personnalisées</td>
+<td>Défense des intérêts et fidélisation des partenaires</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Exemple réel — Johnstone Supply, réseau de distribution HVAC</strong></p>
+<p>Johnstone Supply, un des principaux distributeurs HVAC nord-américains opérant selon un modèle de franchise, faisait face à une tension classique : l’automatisation des commandes et des inventaires réduisait le trafic au comptoir, qui avait toujours été le principal vecteur de création de relations avec les entrepreneurs HVAC.</p>
+<p>Plutôt que de résister à l’automatisation, Johnstone a misé encore plus sur l’IA pour le transactionnel — en développant une application pour entrepreneurs avec recherche de produits, disponibilité et commande assistées par IA — et a réinvesti le temps libéré au comptoir dans des formations techniques, des événements de connaissance produits et des visites terrain.</p>
+<p>↑ Score NPS entrepreneur · ↑ Participation aux sessions de formation · Relations plus fortes avec les reps au comptoir</p>
+</blockquote>
+<p><em>« Les distributeurs qui gagneront la prochaine décennie ne sont pas ceux qui automatisent le plus — ce sont ceux qui utilisent l’IA pour gérer le transactionnel, et libèrent leurs meilleurs talents pour faire ce que seuls les humains peuvent faire. »</em></p>
+<h2 id="leçons-tirées-des-premiers-adopteurs-de-lia-en-distribution">Leçons tirées des premiers adopteurs de l’IA en distribution</h2>
+<p><strong>1. La qualité des données est le vrai obstacle — pas la technologie.</strong> Chaque entreprise qui a réussi a commencé par nettoyer et structurer ses données de transactions existantes avant de toucher à un outil d’IA. « Garbage in, garbage out » n’est pas un cliché — c’est la raison la plus fréquente d’échec des pilotes IA en distribution.</p>
+<p><strong>2. L’adoption par les représentants est déterminante.</strong> Les déploiements les plus réussis ont traité les représentants en première ligne comme des co-concepteurs — en leur montrant comment les résultats du système facilitaient l’atteinte de leurs propres objectifs, plutôt qu’en menaçant leur jugement.</p>
+<p><strong>3. Commencer étroitement, prouver la valeur, puis étendre.</strong> Aucune de ces entreprises n’a déployé l’IA sur tous les cas d’usage simultanément. Une victoire petite et visible génère une crédibilité interne bien plus rapidement qu’une feuille de route de transformation globale.</p>
+<p><strong>4. Le meilleur ROI vient souvent de la rétention, pas de l’acquisition.</strong> Remplacer un partenaire distributeur coûte typiquement 5 à 7 fois plus que d’en conserver un. Les systèmes d’alerte précoce qui préviennent le désengagement génèrent des retours importants mais invisibles dans les rapports de revenus standard.</p>
+<p><strong>5. L’IA identifie l’occasion d’avoir une conversation — elle ne la remplace pas.</strong> Le rôle de l’outil est de dire au représentant quand décrocher le téléphone — pas de passer l’appel à sa place.</p>
+<h2 id="ce-que-cela-signifie-pour-les-leaders-commerciaux-en-distribution">Ce que cela signifie pour les leaders commerciaux en distribution</h2>
+<p>Si vous dirigez une fonction commerciale en distribution aujourd’hui, la question n’est plus de savoir si l’IA va remodeler vos relations indirectes. C’est déjà en train de se produire — chez vos concurrents, si ce n’est pas encore chez vous.</p>
+<p><strong>Commencez par les données que vous avez déjà.</strong> La plupart des distributeurs disposent d’années d’historique de transactions qui n’ont jamais été analysées à grande échelle.</p>
+<p><strong>Commencez par un cas d’usage qui résout un vrai problème.</strong> Prévision de la demande, scoring des partenaires, détection précoce du désengagement — choisissez celui qui répond à votre point de douleur le plus aigu.</p>
+<p><strong>Commencez par vos équipes.</strong> Une prévision en laquelle personne n’a confiance est inutile. L’IA fonctionne mieux quand les équipes qui l’utilisent comprennent ce qu’elle fait — et pourquoi.</p>
+<h2 id="sources-lectures-complémentaires">Sources &amp; lectures complémentaires</h2>
+<p>McKinsey &amp; Company · B2B Pulse Survey 2024 — Forrester Research · Channel Program Report 2025 — Gartner Supply Chain Research 2025 — Wesco International, rapport annuel — Rexel Group, présentation investisseurs 2024 — Grainger 2024 Analyst Day — Programme mySchneider, Schneider Electric 2024 — Deloitte Insights 2025 — HARDI 2024 — NAW Digital Research Series 2025.</p>
+
+  </article>
+</div>
+
+<div class="footer">
+  <p>Jérôme Potvin · Directeur, Stratégie Commerciale · Groupe Innovair</p>
+  <p><a href="https://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></p>
+</div>
+
+</body>
+</html>
