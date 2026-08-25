@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wired for Trust: Why AI Governance Is the Missing Circuit in Electrical & HVAC Distribution</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1E6091; --teal:#168AAD; --amber:#F7A400; --coral:#E85D4E;
+    --paper:#FAFAF7; --ink:#141B2D; --grey:#5B6472;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 24px 80px;}
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 55%,var(--teal) 100%);
+    color:#fff; padding:64px 24px 56px; text-align:left;
+  }
+  header.hero .inner{max-width:860px; margin:0 auto;}
+  .kicker{
+    text-transform:uppercase; letter-spacing:.14em; font-size:12.5px; font-weight:700;
+    color:var(--amber); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin:0 0 18px; font-weight:800;}
+  .subtitle{font-size:19px; color:#DCE8F5; max-width:640px; margin:0 0 26px; font-weight:400;}
+  .byline{font-size:14px; color:#B9CBE0; display:flex; gap:8px; flex-wrap:wrap;}
+  .byline b{color:#fff;}
+  h2{
+    font-size:24px; color:var(--navy); margin:52px 0 6px; font-weight:800;
+    border-left:5px solid var(--amber); padding-left:14px;
+  }
+  h3{font-size:18px; color:var(--blue); margin:28px 0 8px; font-weight:700;}
+  p{font-size:16.5px; color:#2A3242;}
+  .lede{font-size:19px; color:var(--navy); font-weight:500; margin-top:34px;}
+  .stat-row{
+    display:flex; gap:16px; flex-wrap:wrap; margin:28px 0;
+  }
+  .stat-card{
+    flex:1 1 220px; background:#fff; border:1px solid #E5E1D8; border-radius:12px;
+    padding:20px 18px; box-shadow:0 2px 10px rgba(11,37,69,0.06);
+  }
+  .stat-card .num{font-size:30px; font-weight:800; color:var(--coral);}
+  .stat-card .lbl{font-size:13.5px; color:var(--grey); margin-top:4px;}
+  .chart-block{
+    background:#fff; border:1px solid #E5E1D8; border-radius:14px; padding:22px 22px 12px;
+    margin:30px 0; box-shadow:0 2px 14px rgba(11,37,69,0.07);
+  }
+  .chart-block .cap{font-size:13px; color:var(--grey); margin-top:10px; text-align:center;}
+  .chart-title{font-size:15px; font-weight:700; color:var(--navy); margin-bottom:10px; text-align:center;}
+  canvas{max-height:320px;}
+  blockquote{
+    border-left:4px solid var(--teal); margin:26px 0; padding:6px 20px; font-style:italic;
+    color:var(--navy); font-size:17px; background:#EFF6F9; border-radius:0 8px 8px 0;
+  }
+  ul{padding-left:22px;}
+  li{font-size:16.5px; color:#2A3242; margin-bottom:8px;}
+  .callout{
+    background:#FFF6E8; border:1px solid #F0D9A6; border-radius:12px; padding:20px 22px; margin:26px 0;
+  }
+  .callout .tag{font-weight:800; color:var(--coral); text-transform:uppercase; font-size:12px; letter-spacing:.08em;}
+  .divider{height:1px; background:linear-gradient(90deg,transparent,#D8D2C4,transparent); margin:48px 0;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .flagbox{
+    border-radius:12px; padding:18px 20px; background:#fff; border:1px solid #E5E1D8;
+  }
+  .flagbox h4{margin:0 0 10px; color:var(--navy); font-size:15.5px;}
+  .flagbox p{font-size:14.5px; margin:0;}
+  footer{
+    margin-top:60px; padding-top:26px; border-top:1px solid #E5E1D8; font-size:14px; color:var(--grey);
+  }
+  .author-box{
+    display:flex; gap:16px; align-items:flex-start; background:#fff; border:1px solid #E5E1D8;
+    border-radius:12px; padding:20px; margin-top:20px;
+  }
+  .author-box .initials{
+    flex:0 0 52px; height:52px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px;
+  }
+  a{color:var(--blue);}
+  .source-note{font-size:12.5px; color:#8A93A3; margin-top:6px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="kicker">AI &amp; Channel Strategy · Electrical &amp; HVAC Distribution</div>
+    <h1>Wired for Trust: Why AI Governance Is the Missing Circuit in Electrical &amp; HVAC Distribution</h1>
+    <p class="subtitle">Across manufacturing and distribution, AI adoption has outrun AI oversight. For an industry built on code compliance and safety margins, that gap is the real risk — and the real opportunity.</p>
+    <div class="byline">By <b>Jerome Potvin</b> · Director, Commercial Strategy · Innovair Group (ED Canada Group)</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<p class="lede">Ask a plant manager whether an unqualified technician should sign off on a panel install. The answer is obvious. Ask the same organization who signs off on the AI model recommending inventory allocations, pricing, or demand forecasts across their distribution network. The room often goes quiet. That silence is the governance gap — and in 2026, it's become measurable.</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="num">88%</div><div class="lbl">of organizations now use AI in at least one business function</div></div>
+  <div class="stat-card"><div class="num">8%</div><div class="lbl">maintain a comprehensive AI governance framework</div></div>
+  <div class="stat-card"><div class="num">&lt;25%</div><div class="lbl">have fully implemented controls for bias, transparency and security, despite 87% claiming they have a framework</div></div>
+</div>
+<p class="source-note">Sources: Aon (2025), Economist Impact, IBM 2026 AI Governance research.</p>
+
+<div class="chart-block">
+  <div class="chart-title">The Governance Gap: Claim vs. Reality</div>
+  <canvas id="gapChart"></canvas>
+  <div class="cap">Adoption has scaled far faster than the controls meant to manage it.</div>
+</div>
+
+<div class="callout" style="background:#EFF6F9; border-color:#C8E1EA;">
+  <span class="tag" style="color:var(--blue);">In this piece</span>
+  <p style="margin-top:8px;">Where Canada and the U.S. actually stand on AI regulation right now · how Schneider Electric built governance into its operating model and turned it into €8M+ in supply chain savings and a 15% yield gain · five governance practices worth stealing · and a governance skeleton sized for a mid-market distributor, not an enterprise AI Hub.</p>
+</div>
+
+<p>For electrical distribution and HVAC manufacturing, this isn't an abstract compliance exercise. Products here carry code stamps, warranties, and liability chains — CSA, UL, CSA-B52, ASHRAE. A bad AI-driven call on stock allocation, pricing, or a safety-adjacent recommendation doesn't stay a technology problem. It becomes a channel-trust problem, fast. Governance is what keeps AI's speed from outrunning the industry's duty of care.</p>
+
+<h2>Two Markets, One Widening Gap</h2>
+<p>Canadian and U.S. distributors operating cross-border in 2026 are navigating genuinely different regulatory terrain — and the gap between them is growing, not shrinking.</p>
+
+<div class="grid2">
+  <div class="flagbox">
+    <h4>🇨🇦 Canada</h4>
+    <p>The proposed Artificial Intelligence and Data Act (AIDA) died on the order paper when Parliament was prorogued in January 2025 and has not been reintroduced. In its absence, PIPEDA federally and Quebec's Law 25 provincially remain the binding guardrails, supplemented by a voluntary Code of Conduct for Generative AI and the federal Directive on Automated Decision-Making — binding only for federal institutions, but increasingly used as a de facto benchmark for private-sector governance.</p>
+  </div>
+  <div class="flagbox">
+    <h4>🇺🇸 United States</h4>
+    <p>Washington has favored sector-by-sector enforcement — FTC, SEC, EEOC and FDA each extending existing authority to AI within their domain — while states move first. Colorado's SB 24-205, in force since February 2026, is the first comprehensive U.S. state AI statute and sets a de facto compliance floor for any distributor selling into that market.</p>
+  </div>
+</div>
+
+<p>The takeaway for a bi-national distributor isn't "wait for the law." It's the opposite: in a patchwork, the organizations that build governance ahead of regulation are the ones who aren't scrambling when Ottawa or a state legislature finally moves. AIDA's core concepts — risk-based classification, human oversight, accountability — remain the direction of travel even without a bill in force, and they map closely to the EU AI Act, which entered enforcement on January 1, 2026, and increasingly sets the global reference standard multinational suppliers are expected to meet regardless of where a shipment lands.</p>
+
+<div class="divider"></div>
+
+<h2>What Governance Actually Buys You</h2>
+<p>Governance is routinely misfiled as a brake on innovation. The data says the opposite: it's an accelerant, because it removes the approval bottleneck that kills most pilots before they scale.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Manufacturing AI: Governance-Ready vs. Ad Hoc Deployment</div>
+  <canvas id="roiChart"></canvas>
+  <div class="cap">Governance-ready manufacturers deploy new AI use cases roughly 40% faster because approval paths are pre-defined, not improvised case by case.</div>
+</div>
+<p class="source-note">Sources: The Thinking Company, 2026 Manufacturing AI Governance Guide; Capgemini Research Institute, Smart Factories Report 2025.</p>
+
+<p>Manufacturers report average returns of 200–400% on AI investment, with predictive maintenance cutting unplanned downtime by 30–50% and computer-vision quality inspection reaching defect-detection accuracy above 99% at line speed. Verified enterprise case studies put EBITDA improvement from well-scoped manufacturing AI programs in the 15–25% range. None of that value is governance-dependent in the sense of needing a committee to approve every pixel — but all of it is governance-<em>enabled</em>, because the pilots that reach return-on-investment within 90 days are almost always single-workflow deployments with a named owner and a pre-defined success metric, not five parallel experiments running without a shared decision framework.</p>
+
+<blockquote>"Explainability matters — but in the boardroom, consequence matters more." — a governance principle echoed across MIT Sloan Management Review's 2025–26 research into industrial AI leaders.</blockquote>
+
+<h2>A Case in Point: Governance Built Into the Operating Model</h2>
+<p>Schneider Electric offers one of the more instructive references for this sector because it sits at the same intersection: electrical infrastructure, industrial manufacturing, and global distribution. Rather than bolting governance onto AI after the fact, the company established an AI Hub in 2021 with a dedicated governance office and a Digital Risk Leader role reporting alongside the data science function — a structural decision, not a policy memo.</p>
+<p>The results are concrete rather than aspirational. Machine-learning-driven routing across 240 manufacturing facilities and 110 distribution centers produced roughly €8 million in supply chain savings. Separately, AI-driven yield optimization on select manufacturing lines delivered an average 15% yield improvement, contributing to more than €100 million in generated value and €30 million in productivity gains, alongside a six-day reduction in delivery time. Leadership has been explicit that the governance structure — not just the models — is what lets those wins scale across a company operating in nationally regulated electrical grids, hospitals, and water utilities, where trust is the actual product being sold alongside the hardware.</p>
+<p>The lesson for a mid-market distributor isn't "build an AI Hub." It's smaller and more portable: name an accountable owner for AI decisions before you scale beyond a pilot, and treat that ownership as an operating-model decision, not a side project bolted onto IT.</p>
+
+<div class="divider"></div>
+
+<h2>Five Governance Practices Worth Stealing</h2>
+<ul>
+  <li><b>Risk-tier your use cases before you build.</b> A demand-forecasting model and a safety-adjacent recommendation engine do not carry the same risk profile, and shouldn't carry the same approval path. Classify first; build second.</li>
+  <li><b>Name one accountable owner per use case</b> — someone with real authority to approve workflow and configuration changes without a multi-week external approval cycle. Governance bottlenecks, not model quality, are the most common reason GenAI pilots stall.</li>
+  <li><b>Establish your baseline before deployment, not after.</b> Fewer than a third of executives can confidently measure AI ROI today, largely because they never captured a "before" number to measure against. In distribution, that baseline is sitting in your ERP: fill rates, forecast error, quote-to-close time.</li>
+  <li><b>Run one workflow at a time.</b> Organizations chasing five simultaneous pilots rarely produce one clean, defensible result. A single, well-instrumented pilot with a 90-day horizon beats a portfolio of unmeasured experiments.</li>
+  <li><b>Audit for shadow AI.</b> Recent research found organizations discovering upward of 150 AI tools in active use against an expected count closer to 30 — untracked spend and unmanaged risk running in parallel with the "official" program. You cannot govern what you haven't inventoried.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">Why it matters for this segment specifically</span>
+  <p style="margin-top:8px;">Electrical and HVAC distribution runs on relationships built over decades and products backed by code compliance. A governance failure here doesn't just cost a project — it costs the credibility that channel partners and contractors have extended to your brand. Governance, done well, is the mechanism that lets AI move fast without spending down that trust.</p>
+</div>
+
+<div class="chart-block">
+  <div class="chart-title">Where the Value Comes From</div>
+  <canvas id="valueChart"></canvas>
+  <div class="cap">Cost reduction is the easiest case to make — and the least complete one. Boards that see only cost savings rarely see AI as strategic.</div>
+</div>
+<p class="source-note">Source: CFO-Ready AI ROI Framework research, 2026 — value channels for enterprise AI business cases.</p>
+
+<div class="divider"></div>
+
+<h2>A Governance Skeleton for Distributors and Manufacturers</h2>
+<p>Most distributors and manufacturers don't need an AI Hub on Schneider Electric's scale to start. They need a lightweight structure that can be stood up in a quarter and tightened as use cases multiply. The skeleton below is a starting template, not a finished policy — it's meant to be resized to the organization.</p>
+
+<h3>1. A three-tier risk classification</h3>
+<div class="grid2">
+  <div class="flagbox" style="border-left:4px solid var(--teal);">
+    <h4>Tier 1 — Low risk</h4>
+    <p>Internal productivity: drafting, summarizing, research support. Light-touch approval; usage guidelines, not case-by-case sign-off.</p>
+  </div>
+  <div class="flagbox" style="border-left:4px solid var(--amber);">
+    <h4>Tier 2 — Business-impacting</h4>
+    <p>Forecasting, pricing support, inventory allocation, marketing content. Named owner, documented baseline, periodic accuracy review.</p>
+  </div>
+</div>
+<div class="flagbox" style="border-left:4px solid var(--coral); margin-top:16px;">
+  <h4>Tier 3 — Safety- or compliance-adjacent</h4>
+  <p>Anything touching product specification, code compliance, safety recommendations, or customer-facing technical guidance. Mandatory human review before output reaches a customer or a job site; documented rationale for every deployment; no autonomous action without sign-off from a named accountable owner.</p>
+</div>
+
+<h3>2. Four roles, not a department</h3>
+<ul>
+  <li><b>Executive sponsor</b> — a leadership-team-level owner who ties AI initiatives to business value and removes cross-functional roadblocks.</li>
+  <li><b>Use-case owner</b> — one accountable person per deployment, with authority to approve configuration changes without an external cycle.</li>
+  <li><b>Risk reviewer</b> — someone (internal or fractional/external) who classifies new use cases against the risk tiers before build starts.</li>
+  <li><b>Data/IT steward</b> — keeps the inventory of what's actually running, closing the shadow-AI gap between the ~30 tools leadership expects and the 150+ often found in practice.</li>
+</ul>
+
+<h3>3. A five-stage lifecycle</h3>
+<div class="chart-block" style="padding:26px 22px;">
+  <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;">
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">1</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Intake</div>
+      <div style="font-size:12.5px; color:var(--grey);">Business case + risk tier</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">2</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Baseline</div>
+      <div style="font-size:12.5px; color:var(--grey);">Capture the "before" metric</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">3</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Pilot</div>
+      <div style="font-size:12.5px; color:var(--grey);">One workflow, 90-day horizon</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">4</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Monitor</div>
+      <div style="font-size:12.5px; color:var(--grey);">Ongoing accuracy &amp; drift checks</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">5</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Scale or retire</div>
+      <div style="font-size:12.5px; color:var(--grey);">Only after stage 4 clears review</div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <span class="tag">The point of the skeleton</span>
+  <p style="margin-top:8px;">None of this requires a large team or a big budget. It requires clarity: who decided this use case was safe to try, what it was measured against, and who's watching it now that it's live. That clarity is exactly what turns a governance conversation from a compliance cost into the thing that lets a distributor move faster than a competitor still debating who's allowed to say yes.</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Conclusion: The Circuit That Closes the Loop</h2>
+<p>None of this argues for slowing down. It argues for wiring governance into the deployment itself, the way a breaker panel is wired into a building before the power gets turned on — not added afterward as a fix. The organizations pulling ahead in electrical and HVAC distribution in 2026 aren't the ones with the most AI pilots. They're the ones who can answer, clearly and quickly, who owns a given AI decision, what data trained it, and what happens when it's wrong.</p>
+
+<h3>Lessons Learned</h3>
+<ul>
+  <li>Governance is a speed advantage, not a tax — the data consistently shows governance-ready organizations scaling faster, not slower.</li>
+  <li>In a Canada–U.S. regulatory patchwork, building to a principled internal standard beats waiting for legislation that keeps stalling.</li>
+  <li>The highest-value AI cases in this sector are boring on purpose: predictive maintenance, forecast accuracy, quality inspection — proven, measurable, and easy to defend to a board.</li>
+  <li>Structure beats sentiment. A named owner and a governance office move the needle more than a values statement ever will.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">Your turn</span>
+  <p style="margin-top:8px;">Who in your organization would you name, right now, as the accountable owner for an AI decision? If the answer isn't immediate, that's the gap worth closing first. I'd genuinely like to hear how others in electrical and HVAC distribution are approaching this — drop a comment or send me a message.</p>
+</div>
+
+<div class="author-box">
+  <div class="initials">JP</div>
+  <div>
+    <div style="font-weight:700; color:var(--navy);">Jerome Potvin</div>
+    <div style="font-size:14px; color:var(--grey); margin:2px 0 8px;">Director, Commercial Strategy, Innovair Group (ED Canada Group)</div>
+    <div style="font-size:14.5px;">Connect on LinkedIn: <a href="http://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></div>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul style="font-size:13.5px; color:var(--grey);">
+  <li>Evolvance Market Research, <a href="https://evolvancemarketresearch.com/statistics/ai-governance-statistics/" target="_blank">"AI Governance Statistics 2026: Key Data &amp; Insights"</a> (Aon, Economist Impact, IBM, ISG data)</li>
+  <li>The Thinking Company, <a href="https://thinking.inc/en/industry-service/manufacturing-ai-governance/" target="_blank">"AI Governance in Manufacturing — 2026 Guide"</a></li>
+  <li>The Thinking Company, <a href="https://thinking.inc/en/industry-service/manufacturing-ai-roi/" target="_blank">"AI ROI in Manufacturing — 2026 Guide"</a></li>
+  <li>The Thinking Company, <a href="https://thinking.inc/en/industry-service/manufacturing-ai-use-cases/" target="_blank">"AI Use Cases in Manufacturing — 2026 Guide"</a> (citing Capgemini Research Institute, Smart Factories Report 2025)</li>
+  <li>MLT Aikins, <a href="https://www.mltaikins.com/insights/ai-governance-what-organizations-need-to-know/" target="_blank">"AI Governance: What Organizations Need to Know in 2026"</a></li>
+  <li>Osler, Hoskin &amp; Harcourt LLP, <a href="https://www.osler.com/en/insights/reports/2025-legal-outlook/canadas-2026-privacy-priorities-data-sovereignty-open-banking-and-ai/" target="_blank">"Canada's 2026 Privacy Priorities: Data Sovereignty, Open Banking and AI"</a></li>
+  <li>Chambers and Partners, <a href="https://practiceguides.chambers.com/practice-guides/artificial-intelligence-2026/canada/trends-and-developments" target="_blank">"Artificial Intelligence 2026 – Canada"</a></li>
+  <li>Agent Liability Co., <a href="https://agentliability.co/articles/canada-ai-regulation-aida-operators-guide-2026" target="_blank">"Canada AI Regulation 2026: AIDA, Privacy Law, and What Operators Must Know"</a> (Colorado SB 24-205 reference)</li>
+  <li>MIT Sloan Management Review, <a href="https://sloanreview.mit.edu/article/how-schneider-electric-scales-ai-in-both-products-and-processes/" target="_blank">"How Schneider Electric Scales AI in Both Products and Processes"</a></li>
+  <li>Best Practice AI, <a href="https://www.bestpractice.ai/ai-case-study-best-practice/schneider_electric_saves_%E2%82%AC8_million_by_optimising_its_supply_chain_using_machine_learning" target="_blank">"Schneider Electric saves €8 million by optimising its supply chain using machine learning"</a></li>
+  <li>Schneider Electric, <a href="https://www.se.com/ww/en/work/solutions/artificial-intelligence/solutions/" target="_blank">Artificial Intelligence Solutions and Use Cases</a></li>
+  <li>AI Assembly Lines, <a href="https://aiassemblylines.com/post/how-to-measure-ai-roi-business-case-enterprise" target="_blank">"How to Measure AI ROI and Build the Board Case"</a> (2026)</li>
+</ul>
+
+</div>
+
+<script>
+const navy='#0B2545', blue='#1E6091', teal='#168AAD', amber='#F7A400', coral='#E85D4E', grey='#C9CFDA';
+
+new Chart(document.getElementById('gapChart'), {
+  type:'bar',
+  data:{
+    labels:['Use AI in ≥1 function','Claim a governance framework','Fully implemented controls','Comprehensive governance framework'],
+    datasets:[{
+      data:[88,87,24,8],
+      backgroundColor:[teal,blue,amber,coral],
+      borderRadius:8,
+      barThickness:46
+    }]
+  },
+  options:{
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ y:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:11}} } }
+  }
+});
+
+new Chart(document.getElementById('roiChart'), {
+  type:'bar',
+  data:{
+    labels:['Avg. manufacturing AI ROI','EBITDA improvement (verified cases)','Downtime reduction (predictive mtc.)','Faster use-case deployment (governance-ready)'],
+    datasets:[{
+      label:'Low end',
+      data:[200,15,30,0],
+      backgroundColor:'#BFE3EC',
+      borderRadius:6
+    },{
+      label:'High end / reported',
+      data:[400,25,50,40],
+      backgroundColor:teal,
+      borderRadius:6
+    }]
+  },
+  options:{
+    plugins:{legend:{position:'bottom', labels:{boxWidth:14,font:{size:11}}}},
+    scales:{ y:{ beginAtZero:true, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:10.5}} } }
+  }
+});
+
+new Chart(document.getElementById('valueChart'), {
+  type:'doughnut',
+  data:{
+    labels:['Cost reduction','Revenue contribution','Risk reduction','Strategic optionality'],
+    datasets:[{
+      data:[40,25,20,15],
+      backgroundColor:[coral,amber,teal,blue],
+      borderColor:'#fff',
+      borderWidth:3
+    }]
+  },
+  options:{
+    plugins:{ legend:{position:'bottom', labels:{boxWidth:14,font:{size:12}}} },
+    cutout:'58%'
+  }
+});
+</script>
+
+</body>
+</html>

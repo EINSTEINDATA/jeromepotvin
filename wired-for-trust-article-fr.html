@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Sous tension : pourquoi la gouvernance de l'IA est le circuit manquant dans la distribution électrique et CVC</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1E6091; --teal:#168AAD; --amber:#F7A400; --coral:#E85D4E;
+    --paper:#FAFAF7; --ink:#141B2D; --grey:#5B6472;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 24px 80px;}
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 55%,var(--teal) 100%);
+    color:#fff; padding:64px 24px 56px; text-align:left;
+  }
+  header.hero .inner{max-width:860px; margin:0 auto;}
+  .kicker{
+    text-transform:uppercase; letter-spacing:.14em; font-size:12.5px; font-weight:700;
+    color:var(--amber); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin:0 0 18px; font-weight:800;}
+  .subtitle{font-size:19px; color:#DCE8F5; max-width:640px; margin:0 0 26px; font-weight:400;}
+  .byline{font-size:14px; color:#B9CBE0; display:flex; gap:8px; flex-wrap:wrap;}
+  .byline b{color:#fff;}
+  h2{
+    font-size:24px; color:var(--navy); margin:52px 0 6px; font-weight:800;
+    border-left:5px solid var(--amber); padding-left:14px;
+  }
+  h3{font-size:18px; color:var(--blue); margin:28px 0 8px; font-weight:700;}
+  p{font-size:16.5px; color:#2A3242;}
+  .lede{font-size:19px; color:var(--navy); font-weight:500; margin-top:34px;}
+  .stat-row{
+    display:flex; gap:16px; flex-wrap:wrap; margin:28px 0;
+  }
+  .stat-card{
+    flex:1 1 220px; background:#fff; border:1px solid #E5E1D8; border-radius:12px;
+    padding:20px 18px; box-shadow:0 2px 10px rgba(11,37,69,0.06);
+  }
+  .stat-card .num{font-size:30px; font-weight:800; color:var(--coral);}
+  .stat-card .lbl{font-size:13.5px; color:var(--grey); margin-top:4px;}
+  .chart-block{
+    background:#fff; border:1px solid #E5E1D8; border-radius:14px; padding:22px 22px 12px;
+    margin:30px 0; box-shadow:0 2px 14px rgba(11,37,69,0.07);
+  }
+  .chart-block .cap{font-size:13px; color:var(--grey); margin-top:10px; text-align:center;}
+  .chart-title{font-size:15px; font-weight:700; color:var(--navy); margin-bottom:10px; text-align:center;}
+  canvas{max-height:320px;}
+  blockquote{
+    border-left:4px solid var(--teal); margin:26px 0; padding:6px 20px; font-style:italic;
+    color:var(--navy); font-size:17px; background:#EFF6F9; border-radius:0 8px 8px 0;
+  }
+  ul{padding-left:22px;}
+  li{font-size:16.5px; color:#2A3242; margin-bottom:8px;}
+  .callout{
+    background:#FFF6E8; border:1px solid #F0D9A6; border-radius:12px; padding:20px 22px; margin:26px 0;
+  }
+  .callout .tag{font-weight:800; color:var(--coral); text-transform:uppercase; font-size:12px; letter-spacing:.08em;}
+  .divider{height:1px; background:linear-gradient(90deg,transparent,#D8D2C4,transparent); margin:48px 0;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .flagbox{
+    border-radius:12px; padding:18px 20px; background:#fff; border:1px solid #E5E1D8;
+  }
+  .flagbox h4{margin:0 0 10px; color:var(--navy); font-size:15.5px;}
+  .flagbox p{font-size:14.5px; margin:0;}
+  footer{
+    margin-top:60px; padding-top:26px; border-top:1px solid #E5E1D8; font-size:14px; color:var(--grey);
+  }
+  .author-box{
+    display:flex; gap:16px; align-items:flex-start; background:#fff; border:1px solid #E5E1D8;
+    border-radius:12px; padding:20px; margin-top:20px;
+  }
+  .author-box .initials{
+    flex:0 0 52px; height:52px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px;
+  }
+  a{color:var(--blue);}
+  .source-note{font-size:12.5px; color:#8A93A3; margin-top:6px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="kicker">Stratégie IA &amp; Canaux de distribution · Électricité &amp; CVC</div>
+    <h1>Sous tension : pourquoi la gouvernance de l'IA est le circuit manquant dans la distribution électrique et CVC</h1>
+    <p class="subtitle">Dans le manufacturier et la distribution, l'adoption de l'IA a devancé sa surveillance. Pour une industrie bâtie sur la conformité aux codes et les marges de sécurité, cet écart est à la fois le vrai risque — et la vraie opportunité.</p>
+    <div class="byline">Par <b>Jerome Potvin</b> · Directeur, Stratégie Commerciale · Groupe Innovair (ED Canada Group)</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<p class="lede">Demandez à un directeur d'usine si un technicien non qualifié devrait approuver l'installation d'un panneau électrique. La réponse est évidente. Demandez à cette même organisation qui approuve le modèle d'IA qui recommande l'allocation des stocks, les prix ou les prévisions de la demande à travers son réseau de distribution. Le silence, souvent, s'installe. Ce silence, c'est l'écart de gouvernance — et en 2026, il est devenu mesurable.</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="num">88 %</div><div class="lbl">des organisations utilisent maintenant l'IA dans au moins une fonction d'affaires</div></div>
+  <div class="stat-card"><div class="num">8 %</div><div class="lbl">maintiennent un cadre de gouvernance de l'IA complet</div></div>
+  <div class="stat-card"><div class="num">&lt; 25 %</div><div class="lbl">ont pleinement mis en œuvre des contrôles sur les biais, la transparence et la sécurité, malgré 87 % qui affirment avoir un cadre</div></div>
+</div>
+<p class="source-note">Sources : Aon (2025), Economist Impact, recherche IBM sur la gouvernance de l'IA 2026.</p>
+
+<div class="chart-block">
+  <div class="chart-title">L'écart de gouvernance : ce qu'on prétend vs la réalité</div>
+  <canvas id="gapChart"></canvas>
+  <div class="cap">L'adoption a progressé bien plus vite que les contrôles censés l'encadrer.</div>
+</div>
+
+<div class="callout" style="background:#EFF6F9; border-color:#C8E1EA;">
+  <span class="tag" style="color:var(--blue);">Dans cet article</span>
+  <p style="margin-top:8px;">Où en sont réellement le Canada et les États-Unis en matière de réglementation de l'IA · comment Schneider Electric a intégré la gouvernance à son modèle d'affaires et généré 8 M€+ d'économies sur sa chaîne d'approvisionnement et un gain de rendement de 15 % · cinq pratiques de gouvernance à emprunter · et un squelette de gouvernance à la taille d'un distributeur de moyenne envergure, pas d'un centre d'excellence IA de grande entreprise.</p>
+</div>
+
+<p>Pour la distribution électrique et le manufacturier CVC, ce n'est pas un exercice de conformité abstrait. Les produits ici portent des estampilles de conformité, des garanties et des chaînes de responsabilité — CSA, UL, CSA-B52, ASHRAE. Une mauvaise décision pilotée par l'IA sur l'allocation des stocks, les prix ou une recommandation liée à la sécurité ne reste pas un problème technologique. Elle devient rapidement un problème de confiance dans le canal. La gouvernance, c'est ce qui empêche la vitesse de l'IA de dépasser le devoir de diligence de l'industrie.</p>
+
+<h2>Deux marchés, un écart qui se creuse</h2>
+<p>Les distributeurs canadiens et américains qui opèrent des deux côtés de la frontière en 2026 naviguent dans des environnements réglementaires réellement différents — et l'écart entre les deux s'élargit, plutôt qu'il ne se referme.</p>
+
+<div class="grid2">
+  <div class="flagbox">
+    <h4>🇨🇦 Canada</h4>
+    <p>Le projet de Loi sur l'intelligence artificielle et les données (LIAD) est mort au feuilleton lors de la prorogation du Parlement en janvier 2025 et n'a pas été redéposé. En son absence, la LPRPDE au fédéral et la Loi 25 au Québec demeurent les balises contraignantes, complétées par un Code de conduite volontaire pour l'IA générative et la Directive fédérale sur la prise de décisions automatisée — contraignante seulement pour les institutions fédérales, mais de plus en plus utilisée comme référence de facto pour la gouvernance du secteur privé.</p>
+  </div>
+  <div class="flagbox">
+    <h4>🇺🇸 États-Unis</h4>
+    <p>Washington a privilégié une application sectorielle — la FTC, la SEC, l'EEOC et la FDA étendent chacune leur autorité existante à l'IA dans leur domaine — pendant que les États prennent les devants. La loi SB 24-205 du Colorado, en vigueur depuis février 2026, est la première loi étatique américaine complète sur l'IA et fixe un plancher de conformité de facto pour tout distributeur qui vend dans ce marché.</p>
+  </div>
+</div>
+
+<p>La leçon pour un distributeur binational n'est pas « attendre la loi ». C'est l'inverse : dans un environnement fragmenté, les organisations qui bâtissent leur gouvernance avant la réglementation sont celles qui ne seront pas prises de court quand Ottawa ou une législature d'État finira par bouger. Les principes fondamentaux de la LIAD — classification par niveau de risque, supervision humaine, imputabilité — demeurent la direction à suivre même sans loi en vigueur, et rejoignent étroitement le Règlement européen sur l'IA, entré en application le 1er janvier 2026, qui s'impose de plus en plus comme la norme de référence mondiale attendue des fournisseurs multinationaux, peu importe où atterrit l'expédition.</p>
+
+<div class="divider"></div>
+
+<h2>Ce que la gouvernance vous procure vraiment</h2>
+<p>La gouvernance est trop souvent perçue comme un frein à l'innovation. Les données démontrent le contraire : c'est un accélérateur, parce qu'elle élimine le goulot d'étranglement des approbations qui tue la plupart des projets pilotes avant qu'ils ne passent à l'échelle.</p>
+
+<div class="chart-block">
+  <div class="chart-title">IA manufacturière : déploiement encadré vs improvisé</div>
+  <canvas id="roiChart"></canvas>
+  <div class="cap">Les manufacturiers dotés d'une gouvernance solide déploient de nouveaux cas d'usage environ 40 % plus vite, parce que les parcours d'approbation sont prédéfinis, pas improvisés au cas par cas.</div>
+</div>
+<p class="source-note">Sources : The Thinking Company, Guide de gouvernance de l'IA manufacturière 2026 ; Capgemini Research Institute, Smart Factories Report 2025.</p>
+
+<p>Les manufacturiers rapportent des rendements moyens de 200 à 400 % sur leurs investissements en IA, la maintenance prédictive réduisant les arrêts non planifiés de 30 à 50 % et l'inspection qualité par vision par ordinateur atteignant une précision de détection des défauts supérieure à 99 % à la vitesse de la ligne. Des études de cas d'entreprise vérifiées situent l'amélioration du BAIIA générée par des programmes d'IA manufacturière bien cadrés dans une fourchette de 15 à 25 %. Rien de tout cela n'est conditionnel à un comité qui approuve chaque détail — mais tout cela est rendu possible par la gouvernance, parce que les projets pilotes qui atteignent un rendement mesurable en 90 jours sont presque toujours des déploiements sur un seul flux de travail, avec un responsable nommé et un indicateur de succès prédéfini, plutôt que cinq expériences parallèles sans cadre décisionnel commun.</p>
+
+<blockquote>« L'explicabilité compte — mais en salle de conseil, les conséquences comptent davantage. » — un principe de gouvernance repris dans les travaux 2025-2026 du MIT Sloan Management Review sur les chefs de file de l'IA industrielle.</blockquote>
+
+<h2>Un cas concret : la gouvernance intégrée au modèle d'affaires</h2>
+<p>Schneider Electric offre l'une des références les plus instructives pour ce secteur, car l'entreprise se situe à la même intersection : infrastructure électrique, manufacturier industriel et distribution mondiale. Plutôt que d'ajouter la gouvernance après coup, l'entreprise a mis sur pied un AI Hub dès 2021, avec un bureau de gouvernance dédié et un rôle de Digital Risk Leader relevant directement de la fonction data science — une décision structurelle, pas un mémo de politique.</p>
+<p>Les résultats sont concrets, pas aspirationnels. L'optimisation des trajets par apprentissage automatique à travers 240 usines de fabrication et 110 centres de distribution a généré environ 8 millions d'euros d'économies sur la chaîne d'approvisionnement. Par ailleurs, l'optimisation du rendement pilotée par l'IA sur certaines lignes de fabrication a livré un gain moyen de 15 %, contribuant à plus de 100 millions d'euros de valeur générée et 30 millions d'euros de gains de productivité, en plus d'une réduction de six jours des délais de livraison. La direction a été claire : c'est la structure de gouvernance — pas seulement les modèles — qui permet à ces gains de passer à l'échelle dans une entreprise qui opère au cœur de réseaux électriques nationaux, d'hôpitaux et de réseaux d'eau, où la confiance est le véritable produit vendu au même titre que le matériel.</p>
+<p>La leçon pour un distributeur de moyenne envergure n'est pas « bâtir un AI Hub ». Elle est plus modeste et plus transposable : nommer un responsable imputable des décisions liées à l'IA avant de dépasser le stade du projet pilote, et traiter cette responsabilité comme une décision de modèle d'affaires, pas comme un projet annexe confié à l'informatique.</p>
+
+<div class="divider"></div>
+
+<h2>Cinq pratiques de gouvernance à emprunter</h2>
+<ul>
+  <li><b>Classifiez vos cas d'usage par niveau de risque avant de bâtir.</b> Un modèle de prévision de la demande et un moteur de recommandation lié à la sécurité ne présentent pas le même profil de risque, et ne devraient pas suivre le même parcours d'approbation. Classifiez d'abord ; bâtissez ensuite.</li>
+  <li><b>Nommez un seul responsable imputable par cas d'usage</b> — quelqu'un ayant l'autorité réelle d'approuver les changements de flux de travail et de configuration sans un cycle d'approbation externe de plusieurs semaines. Les goulots d'étranglement liés à la gouvernance, pas la qualité des modèles, sont la cause la plus fréquente d'échec des projets pilotes en IA générative.</li>
+  <li><b>Établissez votre point de référence avant le déploiement, pas après.</b> Moins d'un tiers des dirigeants peuvent mesurer avec confiance le rendement de leurs investissements en IA aujourd'hui, en grande partie parce qu'ils n'ont jamais capté de chiffre « avant » auquel se comparer. En distribution, ce point de référence se trouve déjà dans votre ERP : taux de service, erreur de prévision, délai devis-à-conclusion.</li>
+  <li><b>Un flux de travail à la fois.</b> Les organisations qui mènent cinq projets pilotes simultanés produisent rarement un seul résultat propre et défendable. Un projet pilote unique, bien instrumenté, sur un horizon de 90 jours, vaut mieux qu'un portefeuille d'expériences non mesurées.</li>
+  <li><b>Faites l'inventaire de l'IA fantôme.</b> Des recherches récentes ont révélé que les organisations découvrent en moyenne plus de 150 outils d'IA en usage actif, contre une trentaine attendue par la direction — des dépenses non suivies et des risques non gérés qui progressent en parallèle du programme « officiel ». On ne peut pas gouverner ce qu'on n'a pas inventorié.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">Pourquoi c'est particulièrement important pour ce segment</span>
+  <p style="margin-top:8px;">La distribution électrique et CVC repose sur des relations bâties sur des décennies et des produits garantis par la conformité aux codes. Un manquement en gouvernance ne coûte pas qu'un projet — il coûte la crédibilité que les partenaires de canal et les entrepreneurs ont accordée à votre marque. Une gouvernance bien faite est le mécanisme qui permet à l'IA d'avancer vite sans entamer cette confiance.</p>
+</div>
+
+<div class="chart-block">
+  <div class="chart-title">D'où vient la valeur</div>
+  <canvas id="valueChart"></canvas>
+  <div class="cap">La réduction des coûts est l'argument le plus facile à défendre — et le moins complet. Les conseils d'administration qui n'y voient que des économies considèrent rarement l'IA comme stratégique.</div>
+</div>
+<p class="source-note">Source : Recherche CFO-Ready AI ROI Framework, 2026 — canaux de valeur pour les dossiers d'affaires IA en entreprise.</p>
+
+<div class="divider"></div>
+
+<h2>Un squelette de gouvernance pour distributeurs et manufacturiers</h2>
+<p>La plupart des distributeurs et manufacturiers n'ont pas besoin d'un AI Hub à l'échelle de Schneider Electric pour commencer. Ils ont besoin d'une structure légère, qu'on peut mettre en place en un trimestre et resserrer à mesure que les cas d'usage se multiplient. Le squelette ci-dessous est un point de départ, pas une politique achevée — il est conçu pour être ajusté à la taille de l'organisation.</p>
+
+<h3>1. Une classification des risques en trois niveaux</h3>
+<div class="grid2">
+  <div class="flagbox" style="border-left:4px solid var(--teal);">
+    <h4>Niveau 1 — Risque faible</h4>
+    <p>Productivité interne : rédaction, résumés, appui à la recherche. Approbation légère ; des lignes directrices d'usage, pas une validation au cas par cas.</p>
+  </div>
+  <div class="flagbox" style="border-left:4px solid var(--amber);">
+    <h4>Niveau 2 — Impact sur les affaires</h4>
+    <p>Prévisions, appui à la tarification, allocation des stocks, contenu marketing. Responsable nommé, point de référence documenté, révision périodique de la précision.</p>
+  </div>
+</div>
+<div class="flagbox" style="border-left:4px solid var(--coral); margin-top:16px;">
+  <h4>Niveau 3 — Lié à la sécurité ou à la conformité</h4>
+  <p>Tout ce qui touche aux spécifications produit, à la conformité aux codes, aux recommandations de sécurité ou aux conseils techniques destinés aux clients. Révision humaine obligatoire avant que la sortie n'atteigne un client ou un chantier ; justification documentée pour chaque déploiement ; aucune action autonome sans l'aval d'un responsable imputable nommé.</p>
+</div>
+
+<h3>2. Quatre rôles, pas un département</h3>
+<ul>
+  <li><b>Répondant exécutif</b> — un responsable au niveau de la direction qui rattache les initiatives d'IA à la valeur d'affaires et lève les obstacles transversaux.</li>
+  <li><b>Responsable de cas d'usage</b> — une personne imputable par déploiement, avec l'autorité d'approuver les changements de configuration sans cycle externe.</li>
+  <li><b>Réviseur de risque</b> — une personne (interne ou externe/à temps partiel) qui classifie les nouveaux cas d'usage selon les niveaux de risque avant le début du développement.</li>
+  <li><b>Gardien données/TI</b> — maintient l'inventaire de ce qui tourne réellement, comblant l'écart d'IA fantôme entre la trentaine d'outils attendus par la direction et les 150+ souvent découverts en pratique.</li>
+</ul>
+
+<h3>3. Un cycle de vie en cinq étapes</h3>
+<div class="chart-block" style="padding:26px 22px;">
+  <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;">
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">1</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Accueil</div>
+      <div style="font-size:12.5px; color:var(--grey);">Dossier d'affaires + niveau de risque</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">2</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Point de référence</div>
+      <div style="font-size:12.5px; color:var(--grey);">Capter l'indicateur « avant »</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">3</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Projet pilote</div>
+      <div style="font-size:12.5px; color:var(--grey);">Un flux de travail, horizon de 90 jours</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">4</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Surveillance</div>
+      <div style="font-size:12.5px; color:var(--grey);">Contrôles continus de précision et de dérive</div>
+    </div>
+    <div style="flex:1 1 150px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">5</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Mise à l'échelle ou retrait</div>
+      <div style="font-size:12.5px; color:var(--grey);">Seulement après validation de l'étape 4</div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <span class="tag">L'essentiel du squelette</span>
+  <p style="margin-top:8px;">Rien de tout cela n'exige une grande équipe ni un budget imposant. Ça exige de la clarté : qui a décidé que ce cas d'usage valait la peine d'être essayé, sur quoi il a été mesuré, et qui le surveille maintenant qu'il est en production. Cette clarté est exactement ce qui transforme une conversation sur la gouvernance en un avantage — celui qui permet à un distributeur d'avancer plus vite qu'un concurrent encore en train de se demander qui a le droit de dire oui.</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Conclusion : le circuit qui boucle la boucle</h2>
+<p>Rien de tout cela ne plaide pour ralentir. Ça plaide pour intégrer la gouvernance dès le déploiement, comme on câble un panneau de disjoncteurs avant de mettre le bâtiment sous tension — pas comme un correctif ajouté après coup. Les organisations qui prennent de l'avance dans la distribution électrique et CVC en 2026 ne sont pas celles qui ont le plus de projets pilotes en IA. Ce sont celles qui peuvent répondre, clairement et rapidement, à qui appartient une décision d'IA donnée, quelles données l'ont entraînée, et ce qui se passe quand elle se trompe.</p>
+
+<h3>Leçons apprises</h3>
+<ul>
+  <li>La gouvernance est un avantage de vitesse, pas une taxe — les données montrent systématiquement que les organisations bien gouvernées passent à l'échelle plus vite, pas plus lentement.</li>
+  <li>Dans un environnement réglementaire fragmenté entre le Canada et les États-Unis, bâtir sur une norme interne bien pensée vaut mieux qu'attendre une législation qui n'en finit pas de piétiner.</li>
+  <li>Les cas d'usage d'IA à plus forte valeur dans ce secteur sont volontairement peu spectaculaires : maintenance prédictive, précision des prévisions, inspection qualité — prouvés, mesurables et faciles à défendre devant un conseil.</li>
+  <li>La structure l'emporte sur les bonnes intentions. Un responsable nommé et un bureau de gouvernance font plus avancer les choses qu'un énoncé de valeurs.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">À vous de jouer</span>
+  <p style="margin-top:8px;">Qui, dans votre organisation, nommeriez-vous, là, maintenant, comme responsable imputable d'une décision d'IA ? Si la réponse ne vient pas immédiatement, c'est exactement l'écart à combler en premier. J'aimerais sincèrement savoir comment d'autres acteurs de la distribution électrique et CVC abordent la question — laissez un commentaire ou écrivez-moi.</p>
+</div>
+
+<div class="author-box">
+  <div class="initials">JP</div>
+  <div>
+    <div style="font-weight:700; color:var(--navy);">Jerome Potvin</div>
+    <div style="font-size:14px; color:var(--grey); margin:2px 0 8px;">Directeur, Stratégie Commerciale, Groupe Innovair (ED Canada Group)</div>
+    <div style="font-size:14.5px;">À suivre sur LinkedIn : <a href="http://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></div>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul style="font-size:13.5px; color:var(--grey);">
+  <li>Evolvance Market Research, <a href="https://evolvancemarketresearch.com/statistics/ai-governance-statistics/" target="_blank">« AI Governance Statistics 2026: Key Data &amp; Insights »</a> (données Aon, Economist Impact, IBM, ISG)</li>
+  <li>The Thinking Company, <a href="https://thinking.inc/en/industry-service/manufacturing-ai-governance/" target="_blank">« AI Governance in Manufacturing — 2026 Guide »</a></li>
+  <li>The Thinking Company, <a href="https://thinking.inc/en/industry-service/manufacturing-ai-roi/" target="_blank">« AI ROI in Manufacturing — 2026 Guide »</a></li>
+  <li>The Thinking Company, <a href="https://thinking.inc/en/industry-service/manufacturing-ai-use-cases/" target="_blank">« AI Use Cases in Manufacturing — 2026 Guide »</a> (citant Capgemini Research Institute, Smart Factories Report 2025)</li>
+  <li>MLT Aikins, <a href="https://www.mltaikins.com/insights/ai-governance-what-organizations-need-to-know/" target="_blank">« AI Governance: What Organizations Need to Know in 2026 »</a></li>
+  <li>Osler, Hoskin &amp; Harcourt LLP, <a href="https://www.osler.com/en/insights/reports/2025-legal-outlook/canadas-2026-privacy-priorities-data-sovereignty-open-banking-and-ai/" target="_blank">« Canada's 2026 Privacy Priorities: Data Sovereignty, Open Banking and AI »</a></li>
+  <li>Chambers and Partners, <a href="https://practiceguides.chambers.com/practice-guides/artificial-intelligence-2026/canada/trends-and-developments" target="_blank">« Artificial Intelligence 2026 – Canada »</a></li>
+  <li>Agent Liability Co., <a href="https://agentliability.co/articles/canada-ai-regulation-aida-operators-guide-2026" target="_blank">« Canada AI Regulation 2026: AIDA, Privacy Law, and What Operators Must Know »</a> (référence à la loi SB 24-205 du Colorado)</li>
+  <li>MIT Sloan Management Review, <a href="https://sloanreview.mit.edu/article/how-schneider-electric-scales-ai-in-both-products-and-processes/" target="_blank">« How Schneider Electric Scales AI in Both Products and Processes »</a></li>
+  <li>Best Practice AI, <a href="https://www.bestpractice.ai/ai-case-study-best-practice/schneider_electric_saves_%E2%82%AC8_million_by_optimising_its_supply_chain_using_machine_learning" target="_blank">« Schneider Electric saves €8 million by optimising its supply chain using machine learning »</a></li>
+  <li>Schneider Electric, <a href="https://www.se.com/ww/en/work/solutions/artificial-intelligence/solutions/" target="_blank">Solutions et cas d'usage en intelligence artificielle</a></li>
+  <li>AI Assembly Lines, <a href="https://aiassemblylines.com/post/how-to-measure-ai-roi-business-case-enterprise" target="_blank">« How to Measure AI ROI and Build the Board Case »</a> (2026)</li>
+</ul>
+
+</div>
+
+<script>
+const navy='#0B2545', blue='#1E6091', teal='#168AAD', amber='#F7A400', coral='#E85D4E', grey='#C9CFDA';
+
+new Chart(document.getElementById('gapChart'), {
+  type:'bar',
+  data:{
+    labels:['Utilisent l\'IA (≥1 fonction)','Prétendent avoir un cadre','Contrôles pleinement implantés','Cadre de gouvernance complet'],
+    datasets:[{
+      data:[88,87,24,8],
+      backgroundColor:[teal,blue,amber,coral],
+      borderRadius:8,
+      barThickness:46
+    }]
+  },
+  options:{
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ y:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:11}} } }
+  }
+});
+
+new Chart(document.getElementById('roiChart'), {
+  type:'bar',
+  data:{
+    labels:['Rendement IA manuf. moyen','Amélioration du BAIIA (cas vérifiés)','Réduction des arrêts (maint. prédictive)','Déploiement plus rapide (gouvernance solide)'],
+    datasets:[{
+      label:'Bas de fourchette',
+      data:[200,15,30,0],
+      backgroundColor:'#BFE3EC',
+      borderRadius:6
+    },{
+      label:'Haut de fourchette / rapporté',
+      data:[400,25,50,40],
+      backgroundColor:teal,
+      borderRadius:6
+    }]
+  },
+  options:{
+    plugins:{legend:{position:'bottom', labels:{boxWidth:14,font:{size:11}}}},
+    scales:{ y:{ beginAtZero:true, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:10.5}} } }
+  }
+});
+
+new Chart(document.getElementById('valueChart'), {
+  type:'doughnut',
+  data:{
+    labels:['Réduction des coûts','Contribution aux revenus','Réduction du risque','Optionnalité stratégique'],
+    datasets:[{
+      data:[40,25,20,15],
+      backgroundColor:[coral,amber,teal,blue],
+      borderColor:'#fff',
+      borderWidth:3
+    }]
+  },
+  options:{
+    plugins:{ legend:{position:'bottom', labels:{boxWidth:14,font:{size:12}}} },
+    cutout:'58%'
+  }
+});
+</script>
+
+</body>
+</html>
