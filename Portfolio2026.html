@@ -54,6 +54,9 @@
   @media(max-width:680px){ .cards{ grid-template-columns:1fr; } }
 
   .card{ background:#fff; border:1px solid var(--hair); border-radius:4px; padding:20px 22px; display:flex; flex-direction:column; gap:9px; }
+  a.card.linked{ text-decoration:none; color:inherit; transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+  a.card.linked:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(15,22,34,0.08); border-color:var(--copper-bright); }
+  .card-link{ font-family:'Spline Sans Mono',monospace; font-size:14px; font-weight:600; color:var(--copper-bright); flex-shrink:0; }
   .card-venue{ font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:var(--teal); font-weight:600; }
   .card-venue .sep{ color:var(--hair); margin:0 3px; }
   .card-title{ line-height:1.32; }
