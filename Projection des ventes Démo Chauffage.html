@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projection des ventes Démo Chauffage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+:root{
+  --ground:#EBF0F2; --surface:#FFFFFF; --surface-2:#F4F7F8;
+  --ink:#0F171C; --ink-2:#3E5058; --muted:#6A7C85; --hair:#D2DCE0; --hair-2:#E3EAED;
+  --steel:#0F6E96; --copper:#C05A1E; --vert:#2E8C63;
+  --field:#FFFFFF; --field-line:#C3D0D6;
+  --shadow:0 1px 2px rgba(15,30,40,.06), 0 8px 24px -12px rgba(15,30,40,.18);
+  --r:3px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1316; --surface:#151E23; --surface-2:#1B262C;
+    --ink:#E6EDF0; --ink-2:#B4C3CA; --muted:#8999A2; --hair:#28363D; --hair-2:#1F2C33;
+    --steel:#2C90BD; --copper:#D2702B; --vert:#39A473;
+    --field:#101A1F; --field-line:#35464E;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1316; --surface:#151E23; --surface-2:#1B262C;
+  --ink:#E6EDF0; --ink-2:#B4C3CA; --muted:#8999A2; --hair:#28363D; --hair-2:#1F2C33;
+  --steel:#2C90BD; --copper:#D2702B; --vert:#39A473;
+  --field:#101A1F; --field-line:#35464E;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:Archivo,"Arial Narrow",Helvetica,sans-serif;font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+
+.top{
+  background:var(--surface); border-bottom:1px solid var(--hair);
+  padding:18px 24px; display:flex; flex-wrap:wrap; align-items:flex-end;
+  gap:16px 26px; position:relative; z-index:5;
+}
+.top .brand{display:flex;flex-direction:column;gap:3px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.top h1{font-size:23px;line-height:1.15}
+.top .spacer{flex:1}
+.datawin{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);
+  border-left:2px solid var(--copper);padding-left:10px;line-height:1.45}
+.btn{font:600 13px/1 "Source Sans 3",sans-serif;color:var(--ink-2);background:var(--surface-2);
+  border:1px solid var(--field-line);border-radius:var(--r);padding:8px 13px;cursor:pointer;transition:.14s}
+.btn:hover{border-color:var(--copper);color:var(--copper)}
+.btn:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.btn.primary{background:var(--copper);border-color:var(--copper);color:#fff}
+.btn.primary:hover{filter:brightness(1.08);color:#fff}
+.btn.sm{padding:5px 9px;font-size:12px}
+
+.shell{display:grid;grid-template-columns:308px minmax(0,1fr);align-items:start;
+  background:linear-gradient(to right,var(--surface) 0 308px,var(--ground) 308px)}
+.rail{background:var(--surface);border-right:1px solid var(--hair);padding:20px;
+  position:sticky;top:0;max-height:100vh;overflow-y:auto}
+.main{padding:22px 24px 60px;min-width:0;display:flex;flex-direction:column;gap:20px}
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr;background:var(--ground)}
+  .rail{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--hair)}
+}
+.rail h2{font-size:11px;font-family:"IBM Plex Mono",monospace;font-weight:500;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);padding-bottom:7px;border-bottom:1px solid var(--hair);margin-bottom:14px}
+.rail section+section{margin-top:26px}
+
+.ctl{margin-bottom:15px}
+.ctl .lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}
+.ctl .lab span:first-child{font-size:13.5px;color:var(--ink-2)}
+.ctl .val{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500;color:var(--copper);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;height:20px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--hair);border-radius:2px}
+input[type=range]::-moz-range-track{height:3px;background:var(--hair);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:var(--copper);border:2px solid var(--surface);box-shadow:0 0 0 1px var(--copper);margin-top:-5.5px}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--copper);
+  border:2px solid var(--surface);box-shadow:0 0 0 1px var(--copper)}
+input[type=range]:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:4px}
+
+select,input[type=search],input[type=text]{
+  width:100%;font:400 13px/1.3 "Source Sans 3",sans-serif;color:var(--ink);background:var(--field);
+  border:1px solid var(--field-line);border-radius:var(--r);padding:7px 9px}
+select:focus-visible,input:focus-visible{outline:2px solid var(--copper);outline-offset:1px}
+.row2{display:flex;gap:7px;align-items:center}
+
+.adjlist{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.adjrow{border-left:2px solid var(--copper);padding-left:9px}
+.adjrow .hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.adjrow .nm{font-size:12.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adjrow .vv{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--copper);flex:none}
+.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;padding:0 2px}
+.x:hover{color:var(--copper)}
+
+.chipbox{max-height:190px;overflow-y:auto;border:1px solid var(--hair);border-radius:var(--r);
+  padding:7px;display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.chip{font:500 11.5px/1 "IBM Plex Mono",monospace;padding:5px 8px;border-radius:var(--r);
+  border:1px solid var(--field-line);background:var(--field);color:var(--muted);cursor:pointer;transition:.13s}
+.chip:hover{border-color:var(--ink-2)}
+.chip:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.chip.on{color:var(--ink);border-color:var(--steel);background:var(--surface-2)}
+.mini{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.45}
+.linkish{color:var(--copper);cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;padding:0;font:inherit}
+
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+.card > header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+.card h2{font-size:16.5px}
+.card .sub{font-size:12.5px;color:var(--muted);flex:1;min-width:200px}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--hair);
+  border:1px solid var(--hair);border-radius:var(--r);overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px 15px;display:flex;flex-direction:column;gap:2px}
+.kpi .k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:Archivo,sans-serif;font-weight:700;font-size:25px;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi .n{font-size:12px;color:var(--muted)}
+.kpi.accent{box-shadow:inset 3px 0 0 var(--copper)}
+.kpi.accent .v{color:var(--copper)}
+
+.plot{width:100%;display:block;overflow:visible}
+.plot text{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.plot .gridline{stroke:var(--hair-2);stroke-width:1}
+.plot .axis{stroke:var(--hair);stroke-width:1}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:2px 0 10px;align-items:center}
+.legend .item{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.legend .sw{width:16px;height:3px;border-radius:2px;flex:none}
+.legend .sw.sq{height:11px;width:11px;border-radius:2px}
+.tip{position:fixed;pointer-events:none;opacity:0;transition:opacity .1s;background:var(--surface);
+  border:1px solid var(--hair);border-radius:var(--r);box-shadow:var(--shadow);padding:9px 11px;
+  font-size:12.5px;z-index:50;min-width:158px}
+.tip .t{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.tip .row{display:flex;justify-content:space-between;gap:16px;line-height:1.7}
+.tip .row b{font-variant-numeric:tabular-nums;font-weight:600}
+.tip .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+
+.tw{overflow-x:auto;max-height:520px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:7px 10px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--hair);
+  position:sticky;top:0;background:var(--surface);z-index:1}
+tbody td{border-bottom:1px solid var(--hair-2);font-variant-numeric:tabular-nums}
+tbody tr:hover td{background:var(--surface-2)}
+tfoot td{border-top:1px solid var(--hair);font-weight:600;font-variant-numeric:tabular-nums;
+  position:sticky;bottom:0;background:var(--surface)}
+.sortable th[data-k]{cursor:pointer;user-select:none}
+.sortable th[data-k]:hover{color:var(--ink)}
+.sortable th.act{color:var(--copper)}
+.pos{color:var(--vert)} .neg{color:var(--copper)}
+.bar{display:block;height:6px;border-radius:2px;background:var(--hair-2);overflow:hidden;min-width:56px}
+.bar i{display:block;height:100%;border-radius:2px;background:var(--steel)}
+
+.drop{border:1px dashed var(--field-line);border-radius:var(--r);padding:14px;text-align:center;
+  font-size:12.5px;color:var(--muted);transition:.15s}
+.drop.over{border-color:var(--copper);background:var(--surface-2);color:var(--copper)}
+.foot{font-size:12px;color:var(--muted);line-height:1.6;max-width:80ch}
+.flag{background:var(--surface-2);border-left:3px solid var(--copper);padding:11px 14px;
+  border-radius:var(--r);font-size:13px;color:var(--ink-2);line-height:1.55}
+.hide{display:none !important}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="eyebrow">Groupe Démo Chauffage · outil de planification commerciale</div>
+    <h1>Projection des ventes</h1>
+  </div>
+  <div class="spacer"></div>
+  <div class="datawin" id="datawin"></div>
+  <button class="btn" id="btnImport">Importer un CSV</button>
+  <button class="btn primary" id="btnExport">Exporter la projection</button>
+  <input type="file" id="file" accept=".csv,text/csv" class="hide">
+</header>
+
+<div class="shell">
+  <aside class="rail">
+    <section>
+      <h2>Hypothèses</h2>
+      <div class="ctl">
+        <div class="lab"><span>Croissance annuelle globale</span><span class="val" id="vG"></span></div>
+        <input type="range" id="g" min="-15" max="35" step="0.5" value="9.5" aria-label="Croissance annuelle globale">
+        <p class="mini" id="gHint"></p>
+      </div>
+      <div class="ctl">
+        <div class="lab"><span id="hLab">Horizon</span><span class="val" id="vH"></span></div>
+        <input type="range" id="h" min="1" max="8" step="1" value="3" aria-label="Horizon de projection">
+      </div>
+      <div class="ctl">
+        <div class="lab"><span>Marge d'incertitude</span><span class="val" id="vS"></span></div>
+        <input type="range" id="s" min="0" max="12" step="0.5" value="3" aria-label="Marge d'incertitude en points de croissance">
+      </div>
+      <p class="mini">La marge trace deux scénarios en écartant la croissance de ± ce nombre de points.</p>
+    </section>
+
+    <section>
+      <h2>Ajustements ciblés</h2>
+      <div class="row2">
+        <select id="adjPick"><option value="">Ajouter un ajustement…</option></select>
+      </div>
+      <div class="adjlist" id="adjList"></div>
+      <p class="mini">Croissance d'un segment = croissance globale + ajustement de sa famille + ajustement de son agence.</p>
+    </section>
+
+    <section>
+      <h2>Familles affichées</h2>
+      <div class="row2">
+        <input type="search" id="qProd" placeholder="Filtrer les familles…" aria-label="Rechercher une famille">
+      </div>
+      <div class="row2" style="margin-top:7px">
+        <button class="btn sm" data-sel="all">Toutes</button>
+        <button class="btn sm" data-sel="none">Aucune</button>
+        <button class="btn sm" data-sel="top">15 plus grosses</button>
+      </div>
+      <div class="chipbox" id="fProd"></div>
+      <p class="mini" id="fProdN"></p>
+    </section>
+
+    <section>
+      <h2>Agences et pays</h2>
+      <div class="chipbox" id="fTerr" style="max-height:none"></div>
+    </section>
+
+    <section>
+      <h2>Données</h2>
+      <div class="drop" id="drop">Glissez ici un export CSV<br>
+        <span class="mono" style="font-size:11px">Mois · Ligne de produit · Territoire · Pays · Ventes</span></div>
+      <p class="mini" id="dataNote"></p>
+      <p class="mini"><button class="linkish" id="tpl">Télécharger le gabarit</button></p>
+    </section>
+  </aside>
+
+  <main class="main">
+    <div class="flag" id="modeFlag"></div>
+    <div class="kpis" id="kpis"></div>
+
+    <section class="card">
+      <header>
+        <h2 id="t1"></h2><span class="sub" id="chartSub"></span>
+        <button class="btn sm" id="toggleTbl">Voir en tableau</button>
+      </header>
+      <div class="legend" id="lg1"></div>
+      <svg class="plot" id="c1" role="img" aria-label="Ventes réelles puis projetées"></svg>
+      <div class="tw hide" id="tbl1"></div>
+    </section>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px">
+      <section class="card">
+        <header><h2 id="t2"></h2><span class="sub" id="s2"></span></header>
+        <svg class="plot" id="c2" role="img"></svg>
+      </section>
+      <section class="card">
+        <header><h2 id="t3"></h2><span class="sub" id="s3"></span></header>
+        <svg class="plot" id="c3" role="img"></svg>
+      </section>
+    </div>
+
+    <section class="card">
+      <header><h2>Totaux par période</h2><span class="sub" id="anSub"></span>
+        <button class="btn sm" id="anAll">Afficher toutes les familles</button></header>
+      <div class="tw" id="tblAn"></div>
+    </section>
+
+    <section class="card sortable">
+      <header><h2>Détail par segment</h2><span class="sub" id="segSub"></span>
+        <button class="btn sm" id="segAll">Afficher tout</button></header>
+      <div class="tw" id="tblSeg"></div>
+    </section>
+
+    <p class="foot" id="method"></p>
+  </main>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+/* ============================================================
+   MOTEUR DE PROJECTION — identique au classeur Excel livré.
+   Deux modes, une seule formule :
+     perYear = 12 (données mensuelles) ou 1 (exercices annuels)
+     base    = ventes de la dernière année close / ancrage(famille, g)
+     ancrage = somme sur cette même fenêtre de (1+g)^(j/perYear) x indice
+     val(k)  = base x (1+g)^(k/perYear) x indice de la période visée
+   En mode annuel les indices valent 1 et l'ancrage vaut 1 : on retombe
+   sur base x (1+g)^k, la projection annuelle classique.
+   ============================================================ */
+/*<<<ENGINE>>>*/
+function per(s){
+  const t=String(s).trim();
+  if(/^\d{4}$/.test(t)) return (+t)*12+12;            // exercice annuel
+  const [y,m]=t.split("-"); return (+y)*12+(+m);
+}
+function ymOf(p){ const y=Math.floor((p-1)/12); return {y,m:p-12*y,s:y+"-"+String(p-12*y).padStart(2,"0")}; }
+
+function buildModel(rows,mode){
+  const perYear = mode==="mensuel" ? 12 : 1;
+  const step    = mode==="mensuel" ? 1  : 12;
+  const prods=[],terrs=[],pays={};
+  for(const r of rows){
+    if(!prods.includes(r.prod)) prods.push(r.prod);
+    if(!terrs.includes(r.terr)){ terrs.push(r.terr); pays[r.terr]=r.pays; }
+  }
+  prods.sort((a,b)=>a.localeCompare(b,"fr"));
+  terrs.sort((a,b)=>(pays[a]+a).localeCompare(pays[b]+b,"fr"));
+  const pers=rows.map(r=>r.p);
+  const pMin=Math.min(...pers), pMax=Math.max(...pers);
+
+  // indices saisonniers : uniquement en mode mensuel, sur les années civiles complètes
+  const idx={}; for(const p of prods) idx[p]=Array(13).fill(1);
+  let sMin=pMin,sMax=pMax,pleines=[];
+  if(mode==="mensuel"){
+    const parAn={};
+    for(const r of rows){ const {y,m}=ymOf(r.p); (parAn[y]=parAn[y]||new Set()).add(m); }
+    pleines=Object.keys(parAn).map(Number).filter(y=>parAn[y].size===12).sort((a,b)=>a-b);
+    sMin = pleines.length? pleines[0]*12+1 : pMin;
+    sMax = pleines.length? pleines[pleines.length-1]*12+12 : pMax;
+    const tot={},mo={};
+    for(const p of prods){ tot[p]=0; mo[p]=Array(13).fill(0); }
+    for(const r of rows){ if(r.p<sMin||r.p>sMax) continue;
+      tot[r.prod]+=r.v; mo[r.prod][ymOf(r.p).m]+=r.v; }
+    for(const p of prods) for(let m=1;m<=12;m++)
+      idx[p][m] = tot[p]>0 ? mo[p][m]*12/tot[p] : 1;
+  }
+
+  // fenêtre de base : la dernière année close
+  const wMin = pMax-(perYear-1)*step;
+  const ttm={}; let ttmTot=0;
+  const ttmProd={}, ttmTerr={};
+  for(const r of rows){
+    if(r.p<wMin||r.p>pMax) continue;
+    const k=r.prod+"|"+r.terr;
+    ttm[k]=(ttm[k]||0)+r.v; ttmTot+=r.v;
+    ttmProd[r.prod]=(ttmProd[r.prod]||0)+r.v;
+    ttmTerr[r.terr]=(ttmTerr[r.terr]||0)+r.v;
+  }
+  return {rows,mode,perYear,step,prods,terrs,pays,pMin,pMax,wMin,sMin,sMax,pleines,idx,
+          ttm,ttmProd,ttmTerr,ttmTot};
+}
+
+function ancrage(M,prod,g){
+  let s=0;
+  for(let j=0;j<M.perYear;j++)
+    s += Math.pow(1+g,-j/M.perYear) * M.idx[prod][ymOf(M.pMax-j*M.step).m];
+  return s;
+}
+
+function project(M,par){
+  const {gGlobal,adjP,adjT,horizon}=par, out=[], cache={};
+  for(const prod of M.prods) for(const terr of M.terrs){
+    const ttm=M.ttm[prod+"|"+terr];
+    if(!ttm) continue;
+    const g=gGlobal+(adjP[prod]||0)+(adjT[terr]||0);
+    const ck=prod+"|"+g.toFixed(10);
+    if(!(ck in cache)) cache[ck]=ancrage(M,prod,g);
+    const base=ttm/cache[ck];
+    for(let k=1;k<=horizon;k++){
+      const p=M.pMax+k*M.step;
+      out.push({p,prod,terr,pays:M.pays[terr],g,
+                v:base*Math.pow(1+g,k/M.perYear)*M.idx[prod][ymOf(p).m]});
+    }
+  }
+  return out;
+}
+/*<<<ENGINE-END>>>*/
+
+const DATA_CSV = "Mois,Ligne de produit,Territoire,Pays,Ventes\n2022,DEMO-0001,Territoire Alpha,CA,36937.14\n2023,DEMO-0001,Territoire Alpha,CA,27846.99\n2024,DEMO-0001,Territoire Alpha,CA,6004.26\n2025,DEMO-0001,Territoire Alpha,CA,19507.44\n2026,DEMO-0001,Territoire Alpha,CA,12316.21\n2022,DEMO-0003,Territoire Alpha,CA,85115.27\n2023,DEMO-0003,Territoire Alpha,CA,157020.55\n2024,DEMO-0003,Territoire Alpha,CA,105883.79\n2025,DEMO-0003,Territoire Alpha,CA,132008.18\n2026,DEMO-0003,Territoire Alpha,CA,170224.22\n2022,DEMO-0007,Territoire Alpha,CA,4455.47\n2023,DEMO-0007,Territoire Alpha,CA,9176.96\n2024,DEMO-0007,Territoire Alpha,CA,2772.11\n2025,DEMO-0007,Territoire Alpha,CA,13518.73\n2026,DEMO-0007,Territoire Alpha,CA,15138.53\n2022,DEMO-0008,Territoire Alpha,CA,12082.29\n2023,DEMO-0008,Territoire Alpha,CA,4426.88\n2024,DEMO-0008,Territoire Alpha,CA,5305.29\n2025,DEMO-0008,Territoire Alpha,CA,36615.99\n2026,DEMO-0008,Territoire Alpha,CA,20550.89\n2022,DEMO-0009,Territoire Alpha,CA,3639.79\n2023,DEMO-0009,Territoire Alpha,CA,7414.76\n2024,DEMO-0009,Territoire Alpha,CA,1184.15\n2025,DEMO-0009,Territoire Alpha,CA,2680.3\n2026,DEMO-0009,Territoire Alpha,CA,18265.1\n2022,DEMO-0012,Territoire Alpha,CA,15740.67\n2023,DEMO-0012,Territoire Alpha,CA,24851.99\n2024,DEMO-0012,Territoire Alpha,CA,16196.01\n2025,DEMO-0012,Territoire Alpha,CA,13795.72\n2026,DEMO-0012,Territoire Alpha,CA,25150.3\n2022,DEMO-0014,Territoire Alpha,CA,684.64\n2023,DEMO-0014,Territoire Alpha,CA,5180.49\n2024,DEMO-0014,Territoire Alpha,CA,4130.68\n2025,DEMO-0014,Territoire Alpha,CA,2880.36\n2022,DEMO-0016,Territoire Alpha,CA,1475.38\n2023,DEMO-0016,Territoire Alpha,CA,13101.1\n2024,DEMO-0016,Territoire Alpha,CA,831.28\n2025,DEMO-0016,Territoire Alpha,CA,5299.34\n2026,DEMO-0016,Territoire Alpha,CA,27033.44\n2022,DEMO-0017,Territoire Alpha,CA,-980.36\n2023,DEMO-0017,Territoire Alpha,CA,2642.71\n2024,DEMO-0017,Territoire Alpha,CA,-316.77\n2025,DEMO-0017,Territoire Alpha,CA,1249.21\n2026,DEMO-0017,Territoire Alpha,CA,2003.82\n2022,DEMO-0018,Territoire Alpha,CA,-2860.55\n2022,DEMO-0019,Territoire Alpha,CA,17041.44\n2023,DEMO-0019,Territoire Alpha,CA,44686.83\n2024,DEMO-0019,Territoire Alpha,CA,36284.14\n2025,DEMO-0019,Territoire Alpha,CA,26049.3\n2026,DEMO-0019,Territoire Alpha,CA,32334.99\n2022,DEMO-0022,Territoire Alpha,CA,10278.52\n2023,DEMO-0022,Territoire Alpha,CA,23383.65\n2024,DEMO-0022,Territoire Alpha,CA,4335.72\n2025,DEMO-0022,Territoire Alpha,CA,3008.17\n2026,DEMO-0022,Territoire Alpha,CA,5519.34\n2023,DEMO-0023,Territoire Alpha,CA,1647.55\n2024,DEMO-0023,Territoire Alpha,CA,13825.37\n2025,DEMO-0023,Territoire Alpha,CA,838.77\n2022,DEMO-0025,Territoire Alpha,CA,-464.41\n2023,DEMO-0025,Territoire Alpha,CA,573.62\n2024,DEMO-0025,Territoire Alpha,CA,7003.61\n2025,DEMO-0025,Territoire Alpha,CA,800.05\n2026,DEMO-0025,Territoire Alpha,CA,18840.29\n2022,DEMO-0027,Territoire Alpha,CA,2841.68\n2023,DEMO-0027,Territoire Alpha,CA,7879.94\n2024,DEMO-0027,Territoire Alpha,CA,798.14\n2025,DEMO-0027,Territoire Alpha,CA,8739.08\n2026,DEMO-0027,Territoire Alpha,CA,3167.54\n2022,DEMO-0029,Territoire Alpha,CA,331.83\n2023,DEMO-0029,Territoire Alpha,CA,1306.98\n2024,DEMO-0029,Territoire Alpha,CA,712.58\n2025,DEMO-0029,Territoire Alpha,CA,1235.11\n2026,DEMO-0029,Territoire Alpha,CA,3249.2\n2022,DEMO-0031,Territoire Alpha,CA,13064.83\n2023,DEMO-0031,Territoire Alpha,CA,54483.8\n2024,DEMO-0031,Territoire Alpha,CA,59437.23\n2025,DEMO-0031,Territoire Alpha,CA,86207.46\n2026,DEMO-0031,Territoire Alpha,CA,53287.28\n2022,DEMO-0033,Territoire Alpha,CA,157112.05\n2023,DEMO-0033,Territoire Alpha,CA,237246.42\n2024,DEMO-0033,Territoire Alpha,CA,255262.22\n2025,DEMO-0033,Territoire Alpha,CA,281705.3\n2026,DEMO-0033,Territoire Alpha,CA,375924.01\n2022,DEMO-0034,Territoire Alpha,CA,13179.23\n2023,DEMO-0034,Territoire Alpha,CA,19060.54\n2024,DEMO-0034,Territoire Alpha,CA,24593.46\n2025,DEMO-0034,Territoire Alpha,CA,17793.82\n2026,DEMO-0034,Territoire Alpha,CA,28362.08\n2022,DEMO-0035,Territoire Alpha,CA,15597.11\n2023,DEMO-0035,Territoire Alpha,CA,15516.83\n2024,DEMO-0035,Territoire Alpha,CA,31222.78\n2025,DEMO-0035,Territoire Alpha,CA,63588.54\n2026,DEMO-0035,Territoire Alpha,CA,31563.93\n2022,DEMO-0036,Territoire Alpha,CA,5549.4\n2023,DEMO-0036,Territoire Alpha,CA,4699.77\n2024,DEMO-0036,Territoire Alpha,CA,17941.92\n2025,DEMO-0036,Territoire Alpha,CA,4616.17\n2026,DEMO-0036,Territoire Alpha,CA,1596.29\n2022,DEMO-0037,Territoire Alpha,CA,19249.43\n2023,DEMO-0037,Territoire Alpha,CA,46944.89\n2024,DEMO-0037,Territoire Alpha,CA,38394.82\n2025,DEMO-0037,Territoire Alpha,CA,30139.77\n2026,DEMO-0037,Territoire Alpha,CA,73772.19\n2022,DEMO-0039,Territoire Alpha,CA,-966.82\n2023,DEMO-0039,Territoire Alpha,CA,2540.79\n2024,DEMO-0039,Territoire Alpha,CA,1441.93\n2026,DEMO-0039,Territoire Alpha,CA,4433.22\n2022,DEMO-0040,Territoire Alpha,CA,144559.45\n2023,DEMO-0040,Territoire Alpha,CA,421767.55\n2024,DEMO-0040,Territoire Alpha,CA,569522.47\n2025,DEMO-0040,Territoire Alpha,CA,511144.09\n2026,DEMO-0040,Territoire Alpha,CA,787905.04\n2022,DEMO-0042,Territoire Alpha,CA,2983.35\n2023,DEMO-0042,Territoire Alpha,CA,4622.69\n2024,DEMO-0042,Territoire Alpha,CA,91689.52\n2025,DEMO-0042,Territoire Alpha,CA,34333.28\n2026,DEMO-0042,Territoire Alpha,CA,8297.25\n2022,DEMO-0043,Territoire Alpha,CA,25257.97\n2023,DEMO-0043,Territoire Alpha,CA,37286.94\n2024,DEMO-0043,Territoire Alpha,CA,105201.11\n2025,DEMO-0043,Territoire Alpha,CA,94778.77\n2026,DEMO-0043,Territoire Alpha,CA,73774.28\n2022,DEMO-0044,Territoire Alpha,CA,44431.84\n2023,DEMO-0044,Territoire Alpha,CA,57855.29\n2024,DEMO-0044,Territoire Alpha,CA,59807.35\n2025,DEMO-0044,Territoire Alpha,CA,23805.2\n2026,DEMO-0044,Territoire Alpha,CA,45757.42\n2022,DEMO-0045,Territoire Alpha,CA,450.67\n2023,DEMO-0045,Territoire Alpha,CA,-48.7\n2025,DEMO-0046,Territoire Alpha,CA,2631.61\n2026,DEMO-0046,Territoire Alpha,CA,3993.51\n2022,DEMO-0047,Territoire Alpha,CA,737.36\n2023,DEMO-0047,Territoire Alpha,CA,-676.02\n2024,DEMO-0047,Territoire Alpha,CA,13715.45\n2025,DEMO-0047,Territoire Alpha,CA,8696.08\n2026,DEMO-0047,Territoire Alpha,CA,13041.66\n2024,DEMO-0048,Territoire Alpha,CA,75856.1\n2025,DEMO-0048,Territoire Alpha,CA,63098.15\n2026,DEMO-0048,Territoire Alpha,CA,4521.39\n2022,DEMO-0049,Territoire Alpha,CA,23374.88\n2023,DEMO-0049,Territoire Alpha,CA,10457.97\n2024,DEMO-0049,Territoire Alpha,CA,152183.1\n2025,DEMO-0049,Territoire Alpha,CA,77937.35\n2026,DEMO-0051,Territoire Alpha,CA,14237.25\n2024,DEMO-0052,Territoire Alpha,CA,1614.7\n2022,DEMO-0053,Territoire Alpha,CA,2715.84\n2023,DEMO-0053,Territoire Alpha,CA,12774.35\n2024,DEMO-0053,Territoire Alpha,CA,33911.04\n2025,DEMO-0053,Territoire Alpha,CA,10238.88\n2026,DEMO-0053,Territoire Alpha,CA,4167.75\n2022,DEMO-0054,Territoire Alpha,CA,412.45\n2024,DEMO-0054,Territoire Alpha,CA,691.39\n2025,DEMO-0054,Territoire Alpha,CA,872.33\n2022,DEMO-0055,Territoire Alpha,CA,26790.52\n2023,DEMO-0055,Territoire Alpha,CA,26864.07\n2024,DEMO-0055,Territoire Alpha,CA,3249.6\n2025,DEMO-0055,Territoire Alpha,CA,40306.03\n2026,DEMO-0055,Territoire Alpha,CA,1831.54\n2022,DEMO-0056,Territoire Alpha,CA,440.27\n2023,DEMO-0056,Territoire Alpha,CA,4754.96\n2026,DEMO-0056,Territoire Alpha,CA,6228.73\n2022,DEMO-0057,Territoire Alpha,CA,952.09\n2023,DEMO-0057,Territoire Alpha,CA,530.11\n2025,DEMO-0057,Territoire Alpha,CA,1872.3\n2026,DEMO-0057,Territoire Alpha,CA,104.11\n2022,DEMO-0058,Territoire Alpha,CA,13873.89\n2024,DEMO-0058,Territoire Alpha,CA,2916.41\n2022,DEMO-0059,Territoire Alpha,CA,-219.44\n2024,DEMO-0059,Territoire Alpha,CA,3976.06\n2025,DEMO-0059,Territoire Alpha,CA,17294.27\n2022,DEMO-0060,Territoire Alpha,CA,20424.31\n2023,DEMO-0060,Territoire Alpha,CA,45674.87\n2024,DEMO-0060,Territoire Alpha,CA,61543.34\n2025,DEMO-0060,Territoire Alpha,CA,32872.97\n2026,DEMO-0060,Territoire Alpha,CA,4216.94\n2026,DEMO-0061,Territoire Alpha,CA,4525.44\n2022,DEMO-0062,Territoire Alpha,CA,6211.68\n2023,DEMO-0062,Territoire Alpha,CA,18379.39\n2024,DEMO-0062,Territoire Alpha,CA,8282.17\n2025,DEMO-0062,Territoire Alpha,CA,19883.91\n2026,DEMO-0062,Territoire Alpha,CA,814.02\n2022,DEMO-0063,Territoire Alpha,CA,132629.5\n2023,DEMO-0063,Territoire Alpha,CA,14754.73\n2024,DEMO-0063,Territoire Alpha,CA,12796.29\n2025,DEMO-0063,Territoire Alpha,CA,23060.87\n2026,DEMO-0063,Territoire Alpha,CA,23777.51\n2025,DEMO-0064,Territoire Alpha,CA,1107.7\n2026,DEMO-0064,Territoire Alpha,CA,73764.5\n2022,DEMO-0066,Territoire Alpha,CA,10422.73\n2023,DEMO-0066,Territoire Alpha,CA,2233.05\n2025,DEMO-0066,Territoire Alpha,CA,24381.94\n2026,DEMO-0066,Territoire Alpha,CA,5461.19\n2022,DEMO-0067,Territoire Alpha,CA,2265.56\n2024,DEMO-0067,Territoire Alpha,CA,2132.55\n2022,DEMO-0068,Territoire Alpha,CA,2452.2\n2023,DEMO-0068,Territoire Alpha,CA,21677.16\n2024,DEMO-0068,Territoire Alpha,CA,26204.93\n2025,DEMO-0068,Territoire Alpha,CA,15155.6\n2026,DEMO-0068,Territoire Alpha,CA,10942.15\n2022,DEMO-0069,Territoire Alpha,CA,314.1\n2024,DEMO-0069,Territoire Alpha,CA,-351.25\n2022,DEMO-0070,Territoire Alpha,CA,7531.03\n2023,DEMO-0070,Territoire Alpha,CA,259.04\n2024,DEMO-0070,Territoire Alpha,CA,-5177.25\n2026,DEMO-0070,Territoire Alpha,CA,809.34\n2025,DEMO-0072,Territoire Alpha,CA,613.04\n2026,DEMO-0072,Territoire Alpha,CA,9656.64\n2026,DEMO-0074,Territoire Alpha,CA,8228.42\n2026,DEMO-0075,Territoire Alpha,CA,2140.81\n2025,DEMO-0078,Territoire Alpha,CA,7015.6\n2026,DEMO-0078,Territoire Alpha,CA,9482.93\n2022,DEMO-0081,Territoire Alpha,CA,535.8\n2023,DEMO-0081,Territoire Alpha,CA,623.42\n2024,DEMO-0081,Territoire Alpha,CA,257.73\n2025,DEMO-0081,Territoire Alpha,CA,351.78\n2026,DEMO-0081,Territoire Alpha,CA,1208.3\n2022,DEMO-0082,Territoire Alpha,CA,978.01\n2023,DEMO-0082,Territoire Alpha,CA,910.65\n2024,DEMO-0083,Territoire Alpha,CA,273.76\n2026,DEMO-0083,Territoire Alpha,CA,283.33\n2023,DEMO-0084,Territoire Alpha,CA,3349.06\n2024,DEMO-0084,Territoire Alpha,CA,287.2\n2022,DEMO-0085,Territoire Alpha,CA,147.55\n2023,DEMO-0085,Territoire Alpha,CA,109.39\n2026,DEMO-0085,Territoire Alpha,CA,294.12\n2022,DEMO-0086,Territoire Alpha,CA,2033.94\n2023,DEMO-0086,Territoire Alpha,CA,9861.59\n2024,DEMO-0086,Territoire Alpha,CA,7582.25\n2025,DEMO-0086,Territoire Alpha,CA,563.88\n2026,DEMO-0086,Territoire Alpha,CA,5760.57\n2022,DEMO-0087,Territoire Alpha,CA,4588.71\n2023,DEMO-0087,Territoire Alpha,CA,7110.23\n2024,DEMO-0087,Territoire Alpha,CA,5325.22\n2022,DEMO-0088,Territoire Alpha,CA,2341801.5\n2023,DEMO-0088,Territoire Alpha,CA,3260662.96\n2024,DEMO-0088,Territoire Alpha,CA,2158054.73\n2025,DEMO-0088,Territoire Alpha,CA,984997.88\n2026,DEMO-0088,Territoire Alpha,CA,659669.13\n2022,DEMO-0089,Territoire Alpha,CA,-101358.81\n2023,DEMO-0089,Territoire Alpha,CA,217783.09\n2024,DEMO-0089,Territoire Alpha,CA,307664.39\n2025,DEMO-0089,Territoire Alpha,CA,122687.93\n2026,DEMO-0089,Territoire Alpha,CA,139069.2\n2022,DEMO-0090,Territoire Alpha,CA,4161124.93\n2023,DEMO-0090,Territoire Alpha,CA,3366763.33\n2024,DEMO-0090,Territoire Alpha,CA,2156756.98\n2025,DEMO-0090,Territoire Alpha,CA,1177415.36\n2026,DEMO-0090,Territoire Alpha,CA,1035479.87\n2022,DEMO-0091,Territoire Alpha,CA,241817.77\n2023,DEMO-0091,Territoire Alpha,CA,442729.76\n2024,DEMO-0091,Territoire Alpha,CA,453815.28\n2025,DEMO-0091,Territoire Alpha,CA,641323.98\n2026,DEMO-0091,Territoire Alpha,CA,839064.03\n2022,DEMO-0092,Territoire Alpha,CA,2081527.45\n2023,DEMO-0092,Territoire Alpha,CA,2893081.49\n2024,DEMO-0092,Territoire Alpha,CA,2557599.22\n2025,DEMO-0092,Territoire Alpha,CA,1875814.39\n2026,DEMO-0092,Territoire Alpha,CA,1718697.79\n2022,DEMO-0093,Territoire Alpha,CA,6817.4\n2023,DEMO-0093,Territoire Alpha,CA,45861.9\n2024,DEMO-0093,Territoire Alpha,CA,2469.99\n2025,DEMO-0093,Territoire Alpha,CA,1745.19\n2022,DEMO-0094,Territoire Alpha,CA,522.36\n2023,DEMO-0094,Territoire Alpha,CA,346.09\n2022,DEMO-0095,Territoire Alpha,CA,80.27\n2022,DEMO-0097,Territoire Alpha,CA,4034.85\n2023,DEMO-0097,Territoire Alpha,CA,11831.29\n2025,DEMO-0097,Territoire Alpha,CA,4155.52\n2026,DEMO-0097,Territoire Alpha,CA,2752.02\n2023,DEMO-0098,Territoire Alpha,CA,1630.12\n2024,DEMO-0098,Territoire Alpha,CA,10130.01\n2025,DEMO-0098,Territoire Alpha,CA,0.0\n2026,DEMO-0098,Territoire Alpha,CA,-4505.74\n2022,DEMO-0099,Territoire Alpha,CA,-813.26\n2023,DEMO-0099,Territoire Alpha,CA,-762.47\n2022,DEMO-0100,Territoire Alpha,CA,635.42\n2023,DEMO-0100,Territoire Alpha,CA,3260.38\n2024,DEMO-0100,Territoire Alpha,CA,-594.11\n2025,DEMO-0100,Territoire Alpha,CA,1030.3\n2026,DEMO-0100,Territoire Alpha,CA,2914.46\n2022,DEMO-0101,Territoire Alpha,CA,8819.36\n2023,DEMO-0101,Territoire Alpha,CA,15263.03\n2024,DEMO-0101,Territoire Alpha,CA,8577.89\n2025,DEMO-0101,Territoire Alpha,CA,8836.36\n2026,DEMO-0101,Territoire Alpha,CA,6902.2\n2022,DEMO-0102,Territoire Alpha,CA,3530.78\n2023,DEMO-0102,Territoire Alpha,CA,3496.49\n2024,DEMO-0102,Territoire Alpha,CA,-135.65\n2025,DEMO-0102,Territoire Alpha,CA,24507.69\n2026,DEMO-0102,Territoire Alpha,CA,6094.54\n2022,DEMO-0103,Territoire Alpha,CA,48.17\n2023,DEMO-0103,Territoire Alpha,CA,-172.23\n2024,DEMO-0103,Territoire Alpha,CA,346.77\n2025,DEMO-0103,Territoire Alpha,CA,276.94\n2026,DEMO-0103,Territoire Alpha,CA,848.83\n2022,DEMO-0104,Territoire Alpha,CA,1371.13\n2023,DEMO-0104,Territoire Alpha,CA,-2270.88\n2024,DEMO-0104,Territoire Alpha,CA,136.06\n2025,DEMO-0104,Territoire Alpha,CA,124.46\n2022,DEMO-0105,Territoire Alpha,CA,27532.8\n2023,DEMO-0105,Territoire Alpha,CA,13840.61\n2024,DEMO-0105,Territoire Alpha,CA,14877.8\n2025,DEMO-0105,Territoire Alpha,CA,13814.93\n2026,DEMO-0105,Territoire Alpha,CA,25199.72\n2022,DEMO-0106,Territoire Alpha,CA,924.81\n2023,DEMO-0106,Territoire Alpha,CA,2855.71\n2024,DEMO-0106,Territoire Alpha,CA,5174.7\n2025,DEMO-0106,Territoire Alpha,CA,9569.12\n2026,DEMO-0106,Territoire Alpha,CA,18313.28\n2022,DEMO-0107,Territoire Alpha,CA,9.85\n2023,DEMO-0107,Territoire Alpha,CA,795.36\n2024,DEMO-0107,Territoire Alpha,CA,443.43\n2025,DEMO-0107,Territoire Alpha,CA,1280.89\n2026,DEMO-0107,Territoire Alpha,CA,744.81\n2026,DEMO-0111,Territoire Alpha,CA,3164.76\n2026,DEMO-0112,Territoire Alpha,CA,15808.2\n2022,DEMO-0120,Territoire Alpha,CA,103221.03\n2023,DEMO-0120,Territoire Alpha,CA,86126.91\n2024,DEMO-0120,Territoire Alpha,CA,219717.3\n2025,DEMO-0120,Territoire Alpha,CA,213931.78\n2026,DEMO-0120,Territoire Alpha,CA,244643.59\n2022,DEMO-0001,Territoire Beta,CA,131127.51\n2023,DEMO-0001,Territoire Beta,CA,156957.48\n2024,DEMO-0001,Territoire Beta,CA,59515.3\n2025,DEMO-0001,Territoire Beta,CA,120829.8\n2026,DEMO-0001,Territoire Beta,CA,306492.23\n2022,DEMO-0003,Territoire Beta,CA,28089509.24\n2023,DEMO-0003,Territoire Beta,CA,22622684.37\n2024,DEMO-0003,Territoire Beta,CA,21139742.41\n2025,DEMO-0003,Territoire Beta,CA,30724711.57\n2026,DEMO-0003,Territoire Beta,CA,33613520.78\n2024,DEMO-0004,Territoire Beta,CA,136.92\n2025,DEMO-0004,Territoire Beta,CA,78.96\n2022,DEMO-0005,Territoire Beta,CA,900.11\n2023,DEMO-0005,Territoire Beta,CA,-459.04\n2024,DEMO-0005,Territoire Beta,CA,-518.6\n2025,DEMO-0005,Territoire Beta,CA,-58.95\n2022,DEMO-0006,Territoire Beta,CA,29011.45\n2023,DEMO-0006,Territoire Beta,CA,44143.03\n2022,DEMO-0007,Territoire Beta,CA,616727.52\n2023,DEMO-0007,Territoire Beta,CA,624382.91\n2024,DEMO-0007,Territoire Beta,CA,609412.27\n2025,DEMO-0007,Territoire Beta,CA,403962.19\n2026,DEMO-0007,Territoire Beta,CA,625266.68\n2022,DEMO-0008,Territoire Beta,CA,950219.52\n2023,DEMO-0008,Territoire Beta,CA,1018459.92\n2024,DEMO-0008,Territoire Beta,CA,1179552.01\n2025,DEMO-0008,Territoire Beta,CA,1182027.22\n2026,DEMO-0008,Territoire Beta,CA,1346515.33\n2022,DEMO-0009,Territoire Beta,CA,1585593.15\n2023,DEMO-0009,Territoire Beta,CA,1554204.75\n2024,DEMO-0009,Territoire Beta,CA,1787846.38\n2025,DEMO-0009,Territoire Beta,CA,1994262.19\n2026,DEMO-0009,Territoire Beta,CA,2243419.96\n2022,DEMO-0010,Territoire Beta,CA,-166.31\n2025,DEMO-0010,Territoire Beta,CA,187.03\n2026,DEMO-0010,Territoire Beta,CA,210.58\n2022,DEMO-0011,Territoire Beta,CA,140.99\n2023,DEMO-0011,Territoire Beta,CA,134.4\n2022,DEMO-0012,Territoire Beta,CA,805335.71\n2023,DEMO-0012,Territoire Beta,CA,854928.55\n2024,DEMO-0012,Territoire Beta,CA,775285.6\n2025,DEMO-0012,Territoire Beta,CA,915454.46\n2026,DEMO-0012,Territoire Beta,CA,892064.77\n2024,DEMO-0013,Territoire Beta,CA,525.28\n2022,DEMO-0014,Territoire Beta,CA,3598198.17\n2023,DEMO-0014,Territoire Beta,CA,2696348.16\n2024,DEMO-0014,Territoire Beta,CA,2268018.75\n2025,DEMO-0014,Territoire Beta,CA,2174455.98\n2026,DEMO-0014,Territoire Beta,CA,2308238.11\n2022,DEMO-0016,Territoire Beta,CA,1292939.94\n2023,DEMO-0016,Territoire Beta,CA,1233504.25\n2024,DEMO-0016,Territoire Beta,CA,1136564.37\n2025,DEMO-0016,Territoire Beta,CA,1270643.89\n2026,DEMO-0016,Territoire Beta,CA,1525643.0\n2022,DEMO-0017,Territoire Beta,CA,448031.27\n2023,DEMO-0017,Territoire Beta,CA,458660.87\n2024,DEMO-0017,Territoire Beta,CA,308448.64\n2025,DEMO-0017,Territoire Beta,CA,320128.24\n2026,DEMO-0017,Territoire Beta,CA,398498.88\n2022,DEMO-0018,Territoire Beta,CA,-6943.16\n2023,DEMO-0018,Territoire Beta,CA,-2372.94\n2024,DEMO-0018,Territoire Beta,CA,-931.0\n2022,DEMO-0019,Territoire Beta,CA,3151999.5\n2023,DEMO-0019,Territoire Beta,CA,2852644.28\n2024,DEMO-0019,Territoire Beta,CA,3586030.37\n2025,DEMO-0019,Territoire Beta,CA,4106430.17\n2026,DEMO-0019,Territoire Beta,CA,4688745.21\n2022,DEMO-0020,Territoire Beta,CA,471.21\n2025,DEMO-0021,Territoire Beta,CA,349.05\n2022,DEMO-0022,Territoire Beta,CA,147943.65\n2023,DEMO-0022,Territoire Beta,CA,126572.96\n2024,DEMO-0022,Territoire Beta,CA,135000.05\n2025,DEMO-0022,Territoire Beta,CA,129173.29\n2026,DEMO-0022,Territoire Beta,CA,174713.5\n2022,DEMO-0023,Territoire Beta,CA,119183.03\n2023,DEMO-0023,Territoire Beta,CA,133372.88\n2024,DEMO-0023,Territoire Beta,CA,135800.67\n2025,DEMO-0023,Territoire Beta,CA,104143.26\n2026,DEMO-0023,Territoire Beta,CA,168739.8\n2022,DEMO-0024,Territoire Beta,CA,-28.14\n2022,DEMO-0025,Territoire Beta,CA,461384.59\n2023,DEMO-0025,Territoire Beta,CA,313593.79\n2024,DEMO-0025,Territoire Beta,CA,336925.68\n2025,DEMO-0025,Territoire Beta,CA,415916.93\n2026,DEMO-0025,Territoire Beta,CA,461180.24\n2022,DEMO-0026,Territoire Beta,CA,909.35\n2023,DEMO-0026,Territoire Beta,CA,-122.62\n2024,DEMO-0026,Territoire Beta,CA,800.94\n2022,DEMO-0027,Territoire Beta,CA,784190.95\n2023,DEMO-0027,Territoire Beta,CA,729548.28\n2024,DEMO-0027,Territoire Beta,CA,730297.09\n2025,DEMO-0027,Territoire Beta,CA,922287.65\n2026,DEMO-0027,Territoire Beta,CA,939054.25\n2022,DEMO-0029,Territoire Beta,CA,654073.13\n2023,DEMO-0029,Territoire Beta,CA,440446.41\n2024,DEMO-0029,Territoire Beta,CA,403598.45\n2025,DEMO-0029,Territoire Beta,CA,399623.06\n2026,DEMO-0029,Territoire Beta,CA,654672.2\n2022,DEMO-0031,Territoire Beta,CA,3104803.68\n2023,DEMO-0031,Territoire Beta,CA,3348110.99\n2024,DEMO-0031,Territoire Beta,CA,3730538.77\n2025,DEMO-0031,Territoire Beta,CA,3780739.28\n2026,DEMO-0031,Territoire Beta,CA,4158966.39\n2025,DEMO-0032,Territoire Beta,CA,11196.52\n2026,DEMO-0032,Territoire Beta,CA,-1238.7\n2022,DEMO-0033,Territoire Beta,CA,2837598.46\n2023,DEMO-0033,Territoire Beta,CA,3919096.41\n2024,DEMO-0033,Territoire Beta,CA,3297797.9\n2025,DEMO-0033,Territoire Beta,CA,4166795.83\n2026,DEMO-0033,Territoire Beta,CA,4922272.18\n2022,DEMO-0034,Territoire Beta,CA,65861.39\n2023,DEMO-0034,Territoire Beta,CA,105845.61\n2024,DEMO-0034,Territoire Beta,CA,118095.57\n2025,DEMO-0034,Territoire Beta,CA,159390.25\n2026,DEMO-0034,Territoire Beta,CA,158515.69\n2022,DEMO-0035,Territoire Beta,CA,119157.38\n2023,DEMO-0035,Territoire Beta,CA,141863.33\n2024,DEMO-0035,Territoire Beta,CA,144370.92\n2025,DEMO-0035,Territoire Beta,CA,148565.56\n2026,DEMO-0035,Territoire Beta,CA,159753.8\n2022,DEMO-0036,Territoire Beta,CA,74385.3\n2023,DEMO-0036,Territoire Beta,CA,119812.38\n2024,DEMO-0036,Territoire Beta,CA,115442.94\n2025,DEMO-0036,Territoire Beta,CA,150199.75\n2026,DEMO-0036,Territoire Beta,CA,199625.56\n2022,DEMO-0037,Territoire Beta,CA,1504491.48\n2023,DEMO-0037,Territoire Beta,CA,1780916.99\n2024,DEMO-0037,Territoire Beta,CA,1623795.37\n2025,DEMO-0037,Territoire Beta,CA,1784771.18\n2026,DEMO-0037,Territoire Beta,CA,2100907.43\n2022,DEMO-0038,Territoire Beta,CA,-8229.07\n2023,DEMO-0038,Territoire Beta,CA,-2245.35\n2022,DEMO-0039,Territoire Beta,CA,150102.57\n2023,DEMO-0039,Territoire Beta,CA,117712.5\n2024,DEMO-0039,Territoire Beta,CA,128977.89\n2025,DEMO-0039,Territoire Beta,CA,156028.93\n2026,DEMO-0039,Territoire Beta,CA,172799.52\n2022,DEMO-0040,Territoire Beta,CA,7470971.8\n2023,DEMO-0040,Territoire Beta,CA,8966362.26\n2024,DEMO-0040,Territoire Beta,CA,9570452.47\n2025,DEMO-0040,Territoire Beta,CA,9698368.3\n2026,DEMO-0040,Territoire Beta,CA,13518814.75\n2026,DEMO-0041,Territoire Beta,CA,5414.99\n2022,DEMO-0042,Territoire Beta,CA,212109.52\n2023,DEMO-0042,Territoire Beta,CA,193431.39\n2024,DEMO-0042,Territoire Beta,CA,296019.66\n2025,DEMO-0042,Territoire Beta,CA,190210.79\n2026,DEMO-0042,Territoire Beta,CA,325563.91\n2022,DEMO-0043,Territoire Beta,CA,515754.09\n2023,DEMO-0043,Territoire Beta,CA,610720.93\n2024,DEMO-0043,Territoire Beta,CA,752494.52\n2025,DEMO-0043,Territoire Beta,CA,824042.98\n2026,DEMO-0043,Territoire Beta,CA,1135786.42\n2022,DEMO-0044,Territoire Beta,CA,233192.83\n2023,DEMO-0044,Territoire Beta,CA,156943.82\n2024,DEMO-0044,Territoire Beta,CA,206880.22\n2025,DEMO-0044,Territoire Beta,CA,256905.85\n2026,DEMO-0044,Territoire Beta,CA,448872.79\n2022,DEMO-0045,Territoire Beta,CA,149959.32\n2023,DEMO-0045,Territoire Beta,CA,130758.77\n2024,DEMO-0045,Territoire Beta,CA,142727.8\n2025,DEMO-0045,Territoire Beta,CA,107997.92\n2026,DEMO-0045,Territoire Beta,CA,37173.5\n2025,DEMO-0046,Territoire Beta,CA,278745.36\n2026,DEMO-0046,Territoire Beta,CA,870323.02\n2022,DEMO-0047,Territoire Beta,CA,1053227.26\n2023,DEMO-0047,Territoire Beta,CA,994263.84\n2024,DEMO-0047,Territoire Beta,CA,877055.22\n2025,DEMO-0047,Territoire Beta,CA,1103185.59\n2026,DEMO-0047,Territoire Beta,CA,1220752.99\n2022,DEMO-0048,Territoire Beta,CA,59629.01\n2024,DEMO-0048,Territoire Beta,CA,23259.67\n2026,DEMO-0048,Territoire Beta,CA,6325.89\n2022,DEMO-0049,Territoire Beta,CA,218961.91\n2023,DEMO-0049,Territoire Beta,CA,304129.87\n2024,DEMO-0049,Territoire Beta,CA,252340.02\n2025,DEMO-0049,Territoire Beta,CA,302775.02\n2026,DEMO-0049,Territoire Beta,CA,229333.49\n2026,DEMO-0050,Territoire Beta,CA,5780.57\n2026,DEMO-0051,Territoire Beta,CA,146091.68\n2022,DEMO-0052,Territoire Beta,CA,208736.38\n2023,DEMO-0052,Territoire Beta,CA,169396.56\n2024,DEMO-0052,Territoire Beta,CA,220946.86\n2025,DEMO-0052,Territoire Beta,CA,130734.2\n2026,DEMO-0052,Territoire Beta,CA,297149.11\n2022,DEMO-0053,Territoire Beta,CA,232491.79\n2023,DEMO-0053,Territoire Beta,CA,233039.33\n2024,DEMO-0053,Territoire Beta,CA,239520.33\n2025,DEMO-0053,Territoire Beta,CA,186474.92\n2026,DEMO-0053,Territoire Beta,CA,380703.71\n2022,DEMO-0054,Territoire Beta,CA,1429367.31\n2023,DEMO-0054,Territoire Beta,CA,1920168.01\n2024,DEMO-0054,Territoire Beta,CA,1578301.75\n2025,DEMO-0054,Territoire Beta,CA,1780755.44\n2026,DEMO-0054,Territoire Beta,CA,2541488.53\n2022,DEMO-0055,Territoire Beta,CA,470495.82\n2023,DEMO-0055,Territoire Beta,CA,681262.35\n2024,DEMO-0055,Territoire Beta,CA,474985.88\n2025,DEMO-0055,Territoire Beta,CA,340848.04\n2026,DEMO-0055,Territoire Beta,CA,286979.42\n2022,DEMO-0056,Territoire Beta,CA,369023.9\n2023,DEMO-0056,Territoire Beta,CA,426197.11\n2024,DEMO-0056,Territoire Beta,CA,519651.7\n2025,DEMO-0056,Territoire Beta,CA,604656.47\n2026,DEMO-0056,Territoire Beta,CA,680767.86\n2022,DEMO-0057,Territoire Beta,CA,12583.42\n2023,DEMO-0057,Territoire Beta,CA,26340.58\n2024,DEMO-0057,Territoire Beta,CA,7898.84\n2025,DEMO-0057,Territoire Beta,CA,58996.79\n2026,DEMO-0057,Territoire Beta,CA,34343.23\n2022,DEMO-0058,Territoire Beta,CA,95181.26\n2023,DEMO-0058,Territoire Beta,CA,155570.46\n2024,DEMO-0058,Territoire Beta,CA,276781.38\n2025,DEMO-0058,Territoire Beta,CA,284506.94\n2026,DEMO-0058,Territoire Beta,CA,200535.66\n2022,DEMO-0059,Territoire Beta,CA,371074.03\n2023,DEMO-0059,Territoire Beta,CA,319004.16\n2024,DEMO-0059,Territoire Beta,CA,476005.4\n2025,DEMO-0059,Territoire Beta,CA,436762.88\n2026,DEMO-0059,Territoire Beta,CA,696255.01\n2022,DEMO-0060,Territoire Beta,CA,206916.81\n2023,DEMO-0060,Territoire Beta,CA,93401.91\n2024,DEMO-0060,Territoire Beta,CA,216746.51\n2025,DEMO-0060,Territoire Beta,CA,307585.24\n2026,DEMO-0060,Territoire Beta,CA,178118.96\n2022,DEMO-0061,Territoire Beta,CA,41157.55\n2023,DEMO-0061,Territoire Beta,CA,47625.24\n2024,DEMO-0061,Territoire Beta,CA,223123.45\n2025,DEMO-0061,Territoire Beta,CA,72154.05\n2026,DEMO-0061,Territoire Beta,CA,124060.4\n2022,DEMO-0062,Territoire Beta,CA,100459.25\n2023,DEMO-0062,Territoire Beta,CA,148842.81\n2024,DEMO-0062,Territoire Beta,CA,132706.48\n2025,DEMO-0062,Territoire Beta,CA,138562.59\n2026,DEMO-0062,Territoire Beta,CA,129081.87\n2022,DEMO-0063,Territoire Beta,CA,235809.19\n2023,DEMO-0063,Territoire Beta,CA,268926.46\n2024,DEMO-0063,Territoire Beta,CA,369550.39\n2025,DEMO-0063,Territoire Beta,CA,251509.97\n2026,DEMO-0063,Territoire Beta,CA,489821.82\n2022,DEMO-0064,Territoire Beta,CA,99939.65\n2023,DEMO-0064,Territoire Beta,CA,71513.26\n2024,DEMO-0064,Territoire Beta,CA,9914.3\n2025,DEMO-0064,Territoire Beta,CA,34895.22\n2026,DEMO-0064,Territoire Beta,CA,7139.95\n2022,DEMO-0065,Territoire Beta,CA,56998.87\n2023,DEMO-0065,Territoire Beta,CA,74676.9\n2024,DEMO-0065,Territoire Beta,CA,88181.04\n2025,DEMO-0065,Territoire Beta,CA,118710.34\n2026,DEMO-0065,Territoire Beta,CA,46330.78\n2022,DEMO-0066,Territoire Beta,CA,20150.57\n2023,DEMO-0066,Territoire Beta,CA,2921.14\n2024,DEMO-0066,Territoire Beta,CA,35868.7\n2025,DEMO-0066,Territoire Beta,CA,52110.78\n2026,DEMO-0066,Territoire Beta,CA,11236.8\n2022,DEMO-0067,Territoire Beta,CA,37479.38\n2023,DEMO-0067,Territoire Beta,CA,71769.86\n2024,DEMO-0067,Territoire Beta,CA,45331.32\n2025,DEMO-0067,Territoire Beta,CA,24363.02\n2026,DEMO-0067,Territoire Beta,CA,186719.35\n2022,DEMO-0068,Territoire Beta,CA,61098.56\n2023,DEMO-0068,Territoire Beta,CA,60101.64\n2024,DEMO-0068,Territoire Beta,CA,53214.98\n2025,DEMO-0068,Territoire Beta,CA,75670.14\n2026,DEMO-0068,Territoire Beta,CA,72787.73\n2022,DEMO-0069,Territoire Beta,CA,-178.09\n2023,DEMO-0069,Territoire Beta,CA,1377.86\n2024,DEMO-0069,Territoire Beta,CA,3407.59\n2025,DEMO-0069,Territoire Beta,CA,1415.86\n2026,DEMO-0069,Territoire Beta,CA,1594.96\n2022,DEMO-0070,Territoire Beta,CA,2060502.8\n2023,DEMO-0070,Territoire Beta,CA,1386313.26\n2024,DEMO-0070,Territoire Beta,CA,1376519.09\n2025,DEMO-0070,Territoire Beta,CA,273855.22\n2026,DEMO-0070,Territoire Beta,CA,141195.52\n2025,DEMO-0071,Territoire Beta,CA,17.92\n2025,DEMO-0072,Territoire Beta,CA,3959811.9\n2026,DEMO-0072,Territoire Beta,CA,4199641.05\n2022,DEMO-0073,Territoire Beta,CA,147.71\n2022,DEMO-0074,Territoire Beta,CA,4484.85\n2023,DEMO-0074,Territoire Beta,CA,2832.01\n2024,DEMO-0074,Territoire Beta,CA,14040.41\n2025,DEMO-0074,Territoire Beta,CA,3617.14\n2026,DEMO-0074,Territoire Beta,CA,8236.0\n2022,DEMO-0075,Territoire Beta,CA,79.51\n2023,DEMO-0075,Territoire Beta,CA,520.88\n2024,DEMO-0075,Territoire Beta,CA,516.39\n2025,DEMO-0075,Territoire Beta,CA,1612.46\n2026,DEMO-0075,Territoire Beta,CA,1692.18\n2025,DEMO-0076,Territoire Beta,CA,40970.69\n2026,DEMO-0076,Territoire Beta,CA,111967.7\n2022,DEMO-0077,Territoire Beta,CA,5038.17\n2023,DEMO-0077,Territoire Beta,CA,6244.31\n2024,DEMO-0077,Territoire Beta,CA,723.62\n2025,DEMO-0077,Territoire Beta,CA,429.87\n2025,DEMO-0078,Territoire Beta,CA,5664586.43\n2026,DEMO-0078,Territoire Beta,CA,8176075.96\n2025,DEMO-0079,Territoire Beta,CA,52661.05\n2026,DEMO-0079,Territoire Beta,CA,84963.93\n2025,DEMO-0080,Territoire Beta,CA,35853.59\n2026,DEMO-0080,Territoire Beta,CA,31074.6\n2022,DEMO-0081,Territoire Beta,CA,117184.24\n2023,DEMO-0081,Territoire Beta,CA,68203.47\n2024,DEMO-0081,Territoire Beta,CA,50413.55\n2025,DEMO-0081,Territoire Beta,CA,288857.89\n2026,DEMO-0081,Territoire Beta,CA,366587.77\n2022,DEMO-0082,Territoire Beta,CA,343177.51\n2023,DEMO-0082,Territoire Beta,CA,245737.85\n2024,DEMO-0082,Territoire Beta,CA,208626.78\n2025,DEMO-0082,Territoire Beta,CA,49746.63\n2026,DEMO-0082,Territoire Beta,CA,112.66\n2022,DEMO-0083,Territoire Beta,CA,31362.2\n2023,DEMO-0083,Territoire Beta,CA,26138.24\n2024,DEMO-0083,Territoire Beta,CA,38844.92\n2025,DEMO-0083,Territoire Beta,CA,47887.98\n2026,DEMO-0083,Territoire Beta,CA,32261.68\n2022,DEMO-0084,Territoire Beta,CA,121748.15\n2023,DEMO-0084,Territoire Beta,CA,91820.34\n2024,DEMO-0084,Territoire Beta,CA,90917.31\n2025,DEMO-0084,Territoire Beta,CA,104833.86\n2026,DEMO-0084,Territoire Beta,CA,148356.08\n2022,DEMO-0085,Territoire Beta,CA,2517.24\n2023,DEMO-0085,Territoire Beta,CA,1488.2\n2024,DEMO-0085,Territoire Beta,CA,32359.19\n2025,DEMO-0085,Territoire Beta,CA,7499.33\n2026,DEMO-0085,Territoire Beta,CA,10041.0\n2022,DEMO-0086,Territoire Beta,CA,19464.77\n2023,DEMO-0086,Territoire Beta,CA,6686.84\n2024,DEMO-0086,Territoire Beta,CA,22433.05\n2025,DEMO-0086,Territoire Beta,CA,37605.41\n2026,DEMO-0086,Territoire Beta,CA,20304.65\n2022,DEMO-0088,Territoire Beta,CA,381945.58\n2023,DEMO-0088,Territoire Beta,CA,644799.67\n2024,DEMO-0088,Territoire Beta,CA,316467.83\n2025,DEMO-0088,Territoire Beta,CA,291730.25\n2026,DEMO-0088,Territoire Beta,CA,333464.36\n2023,DEMO-0089,Territoire Beta,CA,3321.62\n2024,DEMO-0089,Territoire Beta,CA,4364.36\n2025,DEMO-0089,Territoire Beta,CA,3992.5\n2026,DEMO-0089,Territoire Beta,CA,1422.44\n2022,DEMO-0090,Territoire Beta,CA,62603.35\n2023,DEMO-0090,Territoire Beta,CA,104593.92\n2024,DEMO-0090,Territoire Beta,CA,78460.16\n2025,DEMO-0090,Territoire Beta,CA,167360.3\n2026,DEMO-0090,Territoire Beta,CA,76396.4\n2022,DEMO-0091,Territoire Beta,CA,13471.99\n2023,DEMO-0091,Territoire Beta,CA,40280.18\n2024,DEMO-0091,Territoire Beta,CA,45913.21\n2025,DEMO-0091,Territoire Beta,CA,44076.93\n2026,DEMO-0091,Territoire Beta,CA,32403.57\n2022,DEMO-0092,Territoire Beta,CA,57290.85\n2023,DEMO-0092,Territoire Beta,CA,68741.22\n2024,DEMO-0092,Territoire Beta,CA,66328.19\n2025,DEMO-0092,Territoire Beta,CA,133126.59\n2026,DEMO-0092,Territoire Beta,CA,156167.88\n2022,DEMO-0093,Territoire Beta,CA,11607.09\n2023,DEMO-0093,Territoire Beta,CA,31454.53\n2024,DEMO-0093,Territoire Beta,CA,5860.77\n2025,DEMO-0093,Territoire Beta,CA,3245.22\n2022,DEMO-0096,Territoire Beta,CA,-132.24\n2022,DEMO-0097,Territoire Beta,CA,558743.91\n2023,DEMO-0097,Territoire Beta,CA,615661.05\n2024,DEMO-0097,Territoire Beta,CA,753051.09\n2025,DEMO-0097,Territoire Beta,CA,709468.49\n2026,DEMO-0097,Territoire Beta,CA,725020.0\n2022,DEMO-0098,Territoire Beta,CA,770171.39\n2023,DEMO-0098,Territoire Beta,CA,862936.75\n2024,DEMO-0098,Territoire Beta,CA,1128093.49\n2025,DEMO-0098,Territoire Beta,CA,1388252.95\n2026,DEMO-0098,Territoire Beta,CA,1198448.74\n2022,DEMO-0099,Territoire Beta,CA,209387.12\n2023,DEMO-0099,Territoire Beta,CA,288810.49\n2024,DEMO-0099,Territoire Beta,CA,71060.1\n2025,DEMO-0099,Territoire Beta,CA,-17277.84\n2026,DEMO-0099,Territoire Beta,CA,-4320.64\n2022,DEMO-0100,Territoire Beta,CA,503666.05\n2023,DEMO-0100,Territoire Beta,CA,395425.1\n2024,DEMO-0100,Territoire Beta,CA,277617.53\n2025,DEMO-0100,Territoire Beta,CA,1344389.46\n2026,DEMO-0100,Territoire Beta,CA,1461437.4\n2022,DEMO-0101,Territoire Beta,CA,371884.03\n2023,DEMO-0101,Territoire Beta,CA,322552.06\n2024,DEMO-0101,Territoire Beta,CA,427263.2\n2025,DEMO-0101,Territoire Beta,CA,425149.27\n2026,DEMO-0101,Territoire Beta,CA,458344.53\n2022,DEMO-0102,Territoire Beta,CA,3872411.34\n2023,DEMO-0102,Territoire Beta,CA,3220131.97\n2024,DEMO-0102,Territoire Beta,CA,2835724.55\n2025,DEMO-0102,Territoire Beta,CA,3420231.98\n2026,DEMO-0102,Territoire Beta,CA,3975067.95\n2022,DEMO-0103,Territoire Beta,CA,233373.5\n2023,DEMO-0103,Territoire Beta,CA,179350.45\n2024,DEMO-0103,Territoire Beta,CA,190276.69\n2025,DEMO-0103,Territoire Beta,CA,253449.68\n2026,DEMO-0103,Territoire Beta,CA,290694.37\n2022,DEMO-0104,Territoire Beta,CA,218291.11\n2023,DEMO-0104,Territoire Beta,CA,49431.28\n2024,DEMO-0104,Territoire Beta,CA,5785.84\n2025,DEMO-0104,Territoire Beta,CA,9441.94\n2026,DEMO-0104,Territoire Beta,CA,4980.06\n2022,DEMO-0105,Territoire Beta,CA,417817.86\n2023,DEMO-0105,Territoire Beta,CA,217869.07\n2024,DEMO-0105,Territoire Beta,CA,247108.9\n2025,DEMO-0105,Territoire Beta,CA,293647.38\n2026,DEMO-0105,Territoire Beta,CA,341025.56\n2022,DEMO-0106,Territoire Beta,CA,388469.35\n2023,DEMO-0106,Territoire Beta,CA,378184.0\n2024,DEMO-0106,Territoire Beta,CA,647073.31\n2025,DEMO-0106,Territoire Beta,CA,636331.84\n2026,DEMO-0106,Territoire Beta,CA,857177.43\n2022,DEMO-0107,Territoire Beta,CA,8391.38\n2023,DEMO-0107,Territoire Beta,CA,8761.09\n2024,DEMO-0107,Territoire Beta,CA,10566.94\n2025,DEMO-0107,Territoire Beta,CA,36957.18\n2026,DEMO-0107,Territoire Beta,CA,45483.44\n2026,DEMO-0108,Territoire Beta,CA,3399715.77\n2026,DEMO-0109,Territoire Beta,CA,2448162.34\n2026,DEMO-0110,Territoire Beta,CA,1091556.19\n2026,DEMO-0111,Territoire Beta,CA,853262.97\n2026,DEMO-0112,Territoire Beta,CA,1762436.16\n2026,DEMO-0113,Territoire Beta,CA,136801.63\n2026,DEMO-0114,Territoire Beta,CA,152391.46\n2026,DEMO-0115,Territoire Beta,CA,32301.58\n2026,DEMO-0116,Territoire Beta,CA,3305.69\n2026,DEMO-0117,Territoire Beta,CA,79756.34\n2026,DEMO-0118,Territoire Beta,CA,73.26\n2026,DEMO-0119,Territoire Beta,CA,0.02\n2022,DEMO-0120,Territoire Beta,CA,11673.15\n2023,DEMO-0120,Territoire Beta,CA,30394.89\n2024,DEMO-0120,Territoire Beta,CA,199291.91\n2025,DEMO-0120,Territoire Beta,CA,276211.54\n2026,DEMO-0120,Territoire Beta,CA,297337.16\n2022,DEMO-0002,Territoire Beta,CA,87.94\n2022,DEMO-0001,Territoire Gamma,CA,27057.87\n2023,DEMO-0001,Territoire Gamma,CA,70655.2\n2024,DEMO-0001,Territoire Gamma,CA,48526.12\n2025,DEMO-0001,Territoire Gamma,CA,27596.82\n2026,DEMO-0001,Territoire Gamma,CA,57341.42\n2022,DEMO-0003,Territoire Gamma,CA,11677694.23\n2023,DEMO-0003,Territoire Gamma,CA,10738778.76\n2024,DEMO-0003,Territoire Gamma,CA,14834525.83\n2025,DEMO-0003,Territoire Gamma,CA,16039674.89\n2026,DEMO-0003,Territoire Gamma,CA,13973583.42\n2022,DEMO-0005,Territoire Gamma,CA,98.93\n2023,DEMO-0005,Territoire Gamma,CA,539.37\n2022,DEMO-0007,Territoire Gamma,CA,99487.67\n2023,DEMO-0007,Territoire Gamma,CA,118595.17\n2024,DEMO-0007,Territoire Gamma,CA,90747.78\n2025,DEMO-0007,Territoire Gamma,CA,100306.55\n2026,DEMO-0007,Territoire Gamma,CA,91579.61\n2022,DEMO-0008,Territoire Gamma,CA,110300.69\n2023,DEMO-0008,Territoire Gamma,CA,230324.41\n2024,DEMO-0008,Territoire Gamma,CA,284898.52\n2025,DEMO-0008,Territoire Gamma,CA,212541.3\n2026,DEMO-0008,Territoire Gamma,CA,577588.07\n2022,DEMO-0009,Territoire Gamma,CA,123545.42\n2023,DEMO-0009,Territoire Gamma,CA,175717.83\n2024,DEMO-0009,Territoire Gamma,CA,179111.86\n2025,DEMO-0009,Territoire Gamma,CA,228612.24\n2026,DEMO-0009,Territoire Gamma,CA,184938.27\n2022,DEMO-0010,Territoire Gamma,CA,6489.37\n2023,DEMO-0010,Territoire Gamma,CA,2052.56\n2024,DEMO-0010,Territoire Gamma,CA,9224.67\n2026,DEMO-0010,Territoire Gamma,CA,894.02\n2022,DEMO-0012,Territoire Gamma,CA,98918.06\n2023,DEMO-0012,Territoire Gamma,CA,83831.68\n2024,DEMO-0012,Territoire Gamma,CA,59795.73\n2025,DEMO-0012,Territoire Gamma,CA,68090.98\n2026,DEMO-0012,Territoire Gamma,CA,67916.48\n2022,DEMO-0014,Territoire Gamma,CA,183884.8\n2023,DEMO-0014,Territoire Gamma,CA,209026.18\n2024,DEMO-0014,Territoire Gamma,CA,362257.78\n2025,DEMO-0014,Territoire Gamma,CA,132765.9\n2026,DEMO-0014,Territoire Gamma,CA,192831.73\n2022,DEMO-0015,Territoire Gamma,CA,-172.46\n2022,DEMO-0016,Territoire Gamma,CA,61690.46\n2023,DEMO-0016,Territoire Gamma,CA,96944.59\n2024,DEMO-0016,Territoire Gamma,CA,81057.44\n2025,DEMO-0016,Territoire Gamma,CA,95591.36\n2026,DEMO-0016,Territoire Gamma,CA,88955.06\n2022,DEMO-0017,Territoire Gamma,CA,21715.9\n2023,DEMO-0017,Territoire Gamma,CA,38118.1\n2024,DEMO-0017,Territoire Gamma,CA,25180.89\n2025,DEMO-0017,Territoire Gamma,CA,38337.03\n2026,DEMO-0017,Territoire Gamma,CA,34309.33\n2022,DEMO-0019,Territoire Gamma,CA,4213607.37\n2023,DEMO-0019,Territoire Gamma,CA,4508200.12\n2024,DEMO-0019,Territoire Gamma,CA,5764602.45\n2025,DEMO-0019,Territoire Gamma,CA,6279286.32\n2026,DEMO-0019,Territoire Gamma,CA,5342338.38\n2023,DEMO-0020,Territoire Gamma,CA,302.38\n2024,DEMO-0020,Territoire Gamma,CA,-321.42\n2022,DEMO-0021,Territoire Gamma,CA,8390.91\n2023,DEMO-0021,Territoire Gamma,CA,7099.96\n2024,DEMO-0021,Territoire Gamma,CA,8788.15\n2026,DEMO-0021,Territoire Gamma,CA,1982.84\n2022,DEMO-0022,Territoire Gamma,CA,17806.78\n2023,DEMO-0022,Territoire Gamma,CA,25212.16\n2024,DEMO-0022,Territoire Gamma,CA,36696.6\n2025,DEMO-0022,Territoire Gamma,CA,60266.73\n2026,DEMO-0022,Territoire Gamma,CA,129667.86\n2022,DEMO-0023,Territoire Gamma,CA,81200.27\n2023,DEMO-0023,Territoire Gamma,CA,62800.68\n2024,DEMO-0023,Territoire Gamma,CA,68722.23\n2025,DEMO-0023,Territoire Gamma,CA,63018.7\n2026,DEMO-0023,Territoire Gamma,CA,70962.94\n2022,DEMO-0025,Territoire Gamma,CA,229709.07\n2023,DEMO-0025,Territoire Gamma,CA,288623.19\n2024,DEMO-0025,Territoire Gamma,CA,335082.32\n2025,DEMO-0025,Territoire Gamma,CA,388968.43\n2026,DEMO-0025,Territoire Gamma,CA,377324.41\n2022,DEMO-0027,Territoire Gamma,CA,169866.35\n2023,DEMO-0027,Territoire Gamma,CA,225444.95\n2024,DEMO-0027,Territoire Gamma,CA,242741.02\n2025,DEMO-0027,Territoire Gamma,CA,250793.31\n2026,DEMO-0027,Territoire Gamma,CA,234311.51\n2022,DEMO-0028,Territoire Gamma,CA,1980.28\n2023,DEMO-0028,Territoire Gamma,CA,1714.25\n2024,DEMO-0028,Territoire Gamma,CA,6729.1\n2025,DEMO-0028,Territoire Gamma,CA,-321.02\n2026,DEMO-0028,Territoire Gamma,CA,707.07\n2022,DEMO-0029,Territoire Gamma,CA,525066.03\n2023,DEMO-0029,Territoire Gamma,CA,528373.55\n2024,DEMO-0029,Territoire Gamma,CA,447312.09\n2025,DEMO-0029,Territoire Gamma,CA,391353.57\n2026,DEMO-0029,Territoire Gamma,CA,373858.98\n2022,DEMO-0030,Territoire Gamma,CA,4720.52\n2023,DEMO-0030,Territoire Gamma,CA,1340.15\n2024,DEMO-0030,Territoire Gamma,CA,3140.73\n2026,DEMO-0030,Territoire Gamma,CA,439.38\n2022,DEMO-0031,Territoire Gamma,CA,341549.43\n2023,DEMO-0031,Territoire Gamma,CA,435636.34\n2024,DEMO-0031,Territoire Gamma,CA,629297.38\n2025,DEMO-0031,Territoire Gamma,CA,534270.85\n2026,DEMO-0031,Territoire Gamma,CA,623164.13\n2022,DEMO-0033,Territoire Gamma,CA,2847053.36\n2023,DEMO-0033,Territoire Gamma,CA,3619523.13\n2024,DEMO-0033,Territoire Gamma,CA,4226239.14\n2025,DEMO-0033,Territoire Gamma,CA,4719021.76\n2026,DEMO-0033,Territoire Gamma,CA,5373684.65\n2022,DEMO-0034,Territoire Gamma,CA,92481.43\n2023,DEMO-0034,Territoire Gamma,CA,133397.28\n2024,DEMO-0034,Territoire Gamma,CA,172461.72\n2025,DEMO-0034,Territoire Gamma,CA,215234.53\n2026,DEMO-0034,Territoire Gamma,CA,194805.87\n2022,DEMO-0035,Territoire Gamma,CA,64679.01\n2023,DEMO-0035,Territoire Gamma,CA,100300.76\n2024,DEMO-0035,Territoire Gamma,CA,137030.74\n2025,DEMO-0035,Territoire Gamma,CA,123646.91\n2026,DEMO-0035,Territoire Gamma,CA,128580.67\n2022,DEMO-0036,Territoire Gamma,CA,33587.06\n2023,DEMO-0036,Territoire Gamma,CA,81063.81\n2024,DEMO-0036,Territoire Gamma,CA,64614.28\n2025,DEMO-0036,Territoire Gamma,CA,100667.91\n2026,DEMO-0036,Territoire Gamma,CA,71758.01\n2022,DEMO-0037,Territoire Gamma,CA,1392189.41\n2023,DEMO-0037,Territoire Gamma,CA,1247811.44\n2024,DEMO-0037,Territoire Gamma,CA,1632358.24\n2025,DEMO-0037,Territoire Gamma,CA,1617304.34\n2026,DEMO-0037,Territoire Gamma,CA,1886993.7\n2022,DEMO-0038,Territoire Gamma,CA,-918.08\n2022,DEMO-0039,Territoire Gamma,CA,5984.47\n2023,DEMO-0039,Territoire Gamma,CA,53346.66\n2024,DEMO-0039,Territoire Gamma,CA,48405.98\n2025,DEMO-0039,Territoire Gamma,CA,69480.25\n2026,DEMO-0039,Territoire Gamma,CA,30947.68\n2022,DEMO-0040,Territoire Gamma,CA,2557206.92\n2023,DEMO-0040,Territoire Gamma,CA,3662546.06\n2024,DEMO-0040,Territoire Gamma,CA,4925116.27\n2025,DEMO-0040,Territoire Gamma,CA,4782046.38\n2026,DEMO-0040,Territoire Gamma,CA,4897757.81\n2026,DEMO-0041,Territoire Gamma,CA,106580.22\n2022,DEMO-0042,Territoire Gamma,CA,91905.51\n2023,DEMO-0042,Territoire Gamma,CA,90433.91\n2024,DEMO-0042,Territoire Gamma,CA,252000.24\n2025,DEMO-0042,Territoire Gamma,CA,202222.75\n2026,DEMO-0042,Territoire Gamma,CA,195361.36\n2022,DEMO-0043,Territoire Gamma,CA,163255.53\n2023,DEMO-0043,Territoire Gamma,CA,220499.18\n2024,DEMO-0043,Territoire Gamma,CA,269993.77\n2025,DEMO-0043,Territoire Gamma,CA,294733.51\n2026,DEMO-0043,Territoire Gamma,CA,301288.6\n2022,DEMO-0044,Territoire Gamma,CA,89800.85\n2023,DEMO-0044,Territoire Gamma,CA,207401.46\n2024,DEMO-0044,Territoire Gamma,CA,304889.7\n2025,DEMO-0044,Territoire Gamma,CA,173996.8\n2026,DEMO-0044,Territoire Gamma,CA,151620.94\n2022,DEMO-0045,Territoire Gamma,CA,69474.57\n2023,DEMO-0045,Territoire Gamma,CA,33807.68\n2024,DEMO-0045,Territoire Gamma,CA,47602.19\n2025,DEMO-0045,Territoire Gamma,CA,39439.78\n2026,DEMO-0045,Territoire Gamma,CA,5583.68\n2025,DEMO-0046,Territoire Gamma,CA,128416.76\n2026,DEMO-0046,Territoire Gamma,CA,468298.37\n2022,DEMO-0047,Territoire Gamma,CA,197649.47\n2023,DEMO-0047,Territoire Gamma,CA,119383.05\n2024,DEMO-0047,Territoire Gamma,CA,89369.47\n2025,DEMO-0047,Territoire Gamma,CA,382462.51\n2026,DEMO-0047,Territoire Gamma,CA,153143.04\n2023,DEMO-0048,Territoire Gamma,CA,48006.62\n2024,DEMO-0048,Territoire Gamma,CA,94460.88\n2025,DEMO-0048,Territoire Gamma,CA,38562.02\n2026,DEMO-0048,Territoire Gamma,CA,56177.62\n2022,DEMO-0049,Territoire Gamma,CA,86270.35\n2023,DEMO-0049,Territoire Gamma,CA,26897.77\n2024,DEMO-0049,Territoire Gamma,CA,132920.57\n2025,DEMO-0049,Territoire Gamma,CA,240271.48\n2026,DEMO-0049,Territoire Gamma,CA,40530.67\n2026,DEMO-0050,Territoire Gamma,CA,8688.97\n2026,DEMO-0051,Territoire Gamma,CA,154240.52\n2022,DEMO-0052,Territoire Gamma,CA,40209.03\n2023,DEMO-0052,Territoire Gamma,CA,23653.43\n2024,DEMO-0052,Territoire Gamma,CA,19049.89\n2025,DEMO-0052,Territoire Gamma,CA,9516.57\n2026,DEMO-0052,Territoire Gamma,CA,61904.98\n2022,DEMO-0053,Territoire Gamma,CA,12749.79\n2023,DEMO-0053,Territoire Gamma,CA,7713.42\n2024,DEMO-0053,Territoire Gamma,CA,31321.05\n2025,DEMO-0053,Territoire Gamma,CA,23080.46\n2026,DEMO-0053,Territoire Gamma,CA,77660.23\n2022,DEMO-0054,Territoire Gamma,CA,67571.21\n2023,DEMO-0054,Territoire Gamma,CA,79924.56\n2024,DEMO-0054,Territoire Gamma,CA,52773.4\n2025,DEMO-0054,Territoire Gamma,CA,19118.93\n2026,DEMO-0054,Territoire Gamma,CA,153166.86\n2022,DEMO-0055,Territoire Gamma,CA,41663.68\n2023,DEMO-0055,Territoire Gamma,CA,31997.6\n2024,DEMO-0055,Territoire Gamma,CA,57318.57\n2025,DEMO-0055,Territoire Gamma,CA,61706.75\n2026,DEMO-0055,Territoire Gamma,CA,68424.36\n2022,DEMO-0056,Territoire Gamma,CA,157652.21\n2023,DEMO-0056,Territoire Gamma,CA,151609.59\n2024,DEMO-0056,Territoire Gamma,CA,217692.49\n2025,DEMO-0056,Territoire Gamma,CA,145321.92\n2026,DEMO-0056,Territoire Gamma,CA,253087.56\n2022,DEMO-0057,Territoire Gamma,CA,893.04\n2023,DEMO-0057,Territoire Gamma,CA,4553.16\n2024,DEMO-0057,Territoire Gamma,CA,13433.65\n2025,DEMO-0057,Territoire Gamma,CA,4969.34\n2026,DEMO-0057,Territoire Gamma,CA,9253.76\n2022,DEMO-0058,Territoire Gamma,CA,33602.51\n2023,DEMO-0058,Territoire Gamma,CA,76553.14\n2024,DEMO-0058,Territoire Gamma,CA,30727.95\n2025,DEMO-0058,Territoire Gamma,CA,32899.84\n2026,DEMO-0058,Territoire Gamma,CA,56364.13\n2022,DEMO-0059,Territoire Gamma,CA,112220.75\n2023,DEMO-0059,Territoire Gamma,CA,89078.04\n2024,DEMO-0059,Territoire Gamma,CA,89331.78\n2025,DEMO-0059,Territoire Gamma,CA,95860.98\n2026,DEMO-0059,Territoire Gamma,CA,104767.37\n2022,DEMO-0060,Territoire Gamma,CA,56170.47\n2023,DEMO-0060,Territoire Gamma,CA,110408.92\n2024,DEMO-0060,Territoire Gamma,CA,300333.85\n2025,DEMO-0060,Territoire Gamma,CA,107964.07\n2026,DEMO-0060,Territoire Gamma,CA,232287.98\n2022,DEMO-0061,Territoire Gamma,CA,13510.22\n2023,DEMO-0061,Territoire Gamma,CA,12411.51\n2025,DEMO-0061,Territoire Gamma,CA,1841.34\n2026,DEMO-0061,Territoire Gamma,CA,19967.46\n2022,DEMO-0062,Territoire Gamma,CA,26574.71\n2023,DEMO-0062,Territoire Gamma,CA,73119.8\n2024,DEMO-0062,Territoire Gamma,CA,65605.76\n2025,DEMO-0062,Territoire Gamma,CA,90955.39\n2026,DEMO-0062,Territoire Gamma,CA,48532.12\n2022,DEMO-0063,Territoire Gamma,CA,88697.94\n2023,DEMO-0063,Territoire Gamma,CA,48291.5\n2024,DEMO-0063,Territoire Gamma,CA,74677.65\n2025,DEMO-0063,Territoire Gamma,CA,366127.94\n2026,DEMO-0063,Territoire Gamma,CA,110072.49\n2022,DEMO-0064,Territoire Gamma,CA,137332.39\n2023,DEMO-0064,Territoire Gamma,CA,42689.6\n2024,DEMO-0064,Territoire Gamma,CA,4769.09\n2025,DEMO-0064,Territoire Gamma,CA,7927.67\n2026,DEMO-0064,Territoire Gamma,CA,1717.15\n2022,DEMO-0065,Territoire Gamma,CA,25013.18\n2023,DEMO-0065,Territoire Gamma,CA,92428.62\n2024,DEMO-0065,Territoire Gamma,CA,45081.97\n2025,DEMO-0065,Territoire Gamma,CA,165124.76\n2026,DEMO-0065,Territoire Gamma,CA,11746.46\n2022,DEMO-0066,Territoire Gamma,CA,15227.73\n2023,DEMO-0066,Territoire Gamma,CA,13147.3\n2024,DEMO-0066,Territoire Gamma,CA,29889.42\n2025,DEMO-0066,Territoire Gamma,CA,10871.52\n2026,DEMO-0066,Territoire Gamma,CA,19481.73\n2022,DEMO-0067,Territoire Gamma,CA,21470.85\n2024,DEMO-0067,Territoire Gamma,CA,8144.34\n2025,DEMO-0067,Territoire Gamma,CA,52468.18\n2026,DEMO-0067,Territoire Gamma,CA,47680.44\n2022,DEMO-0068,Territoire Gamma,CA,16626.78\n2023,DEMO-0068,Territoire Gamma,CA,33439.08\n2024,DEMO-0068,Territoire Gamma,CA,69852.77\n2025,DEMO-0068,Territoire Gamma,CA,89761.25\n2026,DEMO-0068,Territoire Gamma,CA,42131.79\n2022,DEMO-0069,Territoire Gamma,CA,330.95\n2023,DEMO-0069,Territoire Gamma,CA,287.89\n2024,DEMO-0069,Territoire Gamma,CA,574.07\n2025,DEMO-0069,Territoire Gamma,CA,425.7\n2022,DEMO-0070,Territoire Gamma,CA,1107808.9\n2023,DEMO-0070,Territoire Gamma,CA,1149914.69\n2024,DEMO-0070,Territoire Gamma,CA,1220151.94\n2025,DEMO-0070,Territoire Gamma,CA,163738.84\n2026,DEMO-0070,Territoire Gamma,CA,9620.37\n2025,DEMO-0071,Territoire Gamma,CA,17.09\n2025,DEMO-0072,Territoire Gamma,CA,1007131.59\n2026,DEMO-0072,Territoire Gamma,CA,1144605.93\n2024,DEMO-0073,Territoire Gamma,CA,35.91\n2022,DEMO-0074,Territoire Gamma,CA,37872.6\n2023,DEMO-0074,Territoire Gamma,CA,27702.73\n2024,DEMO-0074,Territoire Gamma,CA,50922.09\n2025,DEMO-0074,Territoire Gamma,CA,15656.88\n2026,DEMO-0074,Territoire Gamma,CA,54932.61\n2022,DEMO-0075,Territoire Gamma,CA,16978.18\n2023,DEMO-0075,Territoire Gamma,CA,15249.68\n2024,DEMO-0075,Territoire Gamma,CA,21524.74\n2025,DEMO-0075,Territoire Gamma,CA,11275.64\n2026,DEMO-0075,Territoire Gamma,CA,18761.78\n2025,DEMO-0076,Territoire Gamma,CA,2696.4\n2026,DEMO-0076,Territoire Gamma,CA,9545.11\n2022,DEMO-0077,Territoire Gamma,CA,59463.24\n2023,DEMO-0077,Territoire Gamma,CA,37374.94\n2024,DEMO-0077,Territoire Gamma,CA,11312.36\n2025,DEMO-0077,Territoire Gamma,CA,-65.42\n2026,DEMO-0077,Territoire Gamma,CA,-199.54\n2025,DEMO-0078,Territoire Gamma,CA,28699.01\n2026,DEMO-0078,Territoire Gamma,CA,71221.73\n2025,DEMO-0079,Territoire Gamma,CA,5878.07\n2026,DEMO-0079,Territoire Gamma,CA,558.88\n2025,DEMO-0080,Territoire Gamma,CA,3515.31\n2026,DEMO-0080,Territoire Gamma,CA,32010.09\n2022,DEMO-0081,Territoire Gamma,CA,25330.9\n2023,DEMO-0081,Territoire Gamma,CA,12833.79\n2024,DEMO-0081,Territoire Gamma,CA,15134.86\n2025,DEMO-0081,Territoire Gamma,CA,14216.45\n2026,DEMO-0081,Territoire Gamma,CA,19354.03\n2022,DEMO-0082,Territoire Gamma,CA,1659.66\n2023,DEMO-0082,Territoire Gamma,CA,6510.03\n2024,DEMO-0082,Territoire Gamma,CA,5455.29\n2025,DEMO-0082,Territoire Gamma,CA,221.51\n2022,DEMO-0083,Territoire Gamma,CA,5607.73\n2023,DEMO-0083,Territoire Gamma,CA,2300.01\n2024,DEMO-0083,Territoire Gamma,CA,15383.62\n2025,DEMO-0083,Territoire Gamma,CA,11059.56\n2026,DEMO-0083,Territoire Gamma,CA,20911.22\n2022,DEMO-0084,Territoire Gamma,CA,7287.16\n2023,DEMO-0084,Territoire Gamma,CA,5856.5\n2024,DEMO-0084,Territoire Gamma,CA,31238.29\n2025,DEMO-0084,Territoire Gamma,CA,18451.02\n2026,DEMO-0084,Territoire Gamma,CA,78779.49\n2022,DEMO-0085,Territoire Gamma,CA,31413.92\n2023,DEMO-0085,Territoire Gamma,CA,22970.93\n2024,DEMO-0085,Territoire Gamma,CA,27080.8\n2025,DEMO-0085,Territoire Gamma,CA,31532.31\n2026,DEMO-0085,Territoire Gamma,CA,34924.77\n2022,DEMO-0086,Territoire Gamma,CA,52564.89\n2023,DEMO-0086,Territoire Gamma,CA,47110.73\n2024,DEMO-0086,Territoire Gamma,CA,156176.51\n2025,DEMO-0086,Territoire Gamma,CA,155522.69\n2026,DEMO-0086,Territoire Gamma,CA,141791.4\n2022,DEMO-0088,Territoire Gamma,CA,4791.13\n2023,DEMO-0088,Territoire Gamma,CA,15366.92\n2024,DEMO-0088,Territoire Gamma,CA,11603.81\n2025,DEMO-0088,Territoire Gamma,CA,2387.26\n2026,DEMO-0088,Territoire Gamma,CA,224.86\n2022,DEMO-0089,Territoire Gamma,CA,-13691.73\n2023,DEMO-0089,Territoire Gamma,CA,3766.76\n2024,DEMO-0089,Territoire Gamma,CA,108616.34\n2025,DEMO-0089,Territoire Gamma,CA,175572.8\n2026,DEMO-0089,Territoire Gamma,CA,247670.31\n2022,DEMO-0090,Territoire Gamma,CA,462336.1\n2023,DEMO-0090,Territoire Gamma,CA,192701.66\n2024,DEMO-0090,Territoire Gamma,CA,279557.78\n2025,DEMO-0090,Territoire Gamma,CA,316385.63\n2026,DEMO-0090,Territoire Gamma,CA,633140.54\n2022,DEMO-0091,Territoire Gamma,CA,8469.11\n2024,DEMO-0091,Territoire Gamma,CA,23003.05\n2025,DEMO-0091,Territoire Gamma,CA,13708.44\n2026,DEMO-0091,Territoire Gamma,CA,19665.94\n2022,DEMO-0092,Territoire Gamma,CA,30875.69\n2023,DEMO-0092,Territoire Gamma,CA,30954.97\n2024,DEMO-0092,Territoire Gamma,CA,28225.38\n2025,DEMO-0092,Territoire Gamma,CA,58896.28\n2026,DEMO-0092,Territoire Gamma,CA,47760.65\n2022,DEMO-0093,Territoire Gamma,CA,1484.27\n2023,DEMO-0093,Territoire Gamma,CA,1699.02\n2025,DEMO-0093,Territoire Gamma,CA,1755.36\n2022,DEMO-0094,Territoire Gamma,CA,689.05\n2022,DEMO-0097,Territoire Gamma,CA,225759.44\n2023,DEMO-0097,Territoire Gamma,CA,266046.33\n2024,DEMO-0097,Territoire Gamma,CA,262458.34\n2025,DEMO-0097,Territoire Gamma,CA,221067.16\n2026,DEMO-0097,Territoire Gamma,CA,275706.99\n2022,DEMO-0098,Territoire Gamma,CA,65408.19\n2023,DEMO-0098,Territoire Gamma,CA,122375.4\n2024,DEMO-0098,Territoire Gamma,CA,212784.72\n2025,DEMO-0098,Territoire Gamma,CA,156346.96\n2026,DEMO-0098,Territoire Gamma,CA,382515.07\n2022,DEMO-0099,Territoire Gamma,CA,38055.27\n2023,DEMO-0099,Territoire Gamma,CA,47244.55\n2024,DEMO-0099,Territoire Gamma,CA,29713.31\n2025,DEMO-0099,Territoire Gamma,CA,-1143.11\n2022,DEMO-0100,Territoire Gamma,CA,167603.01\n2023,DEMO-0100,Territoire Gamma,CA,180087.89\n2024,DEMO-0100,Territoire Gamma,CA,198949.43\n2025,DEMO-0100,Territoire Gamma,CA,179023.23\n2026,DEMO-0100,Territoire Gamma,CA,211368.15\n2022,DEMO-0101,Territoire Gamma,CA,744599.06\n2023,DEMO-0101,Territoire Gamma,CA,660394.62\n2024,DEMO-0101,Territoire Gamma,CA,832547.46\n2025,DEMO-0101,Territoire Gamma,CA,825182.61\n2026,DEMO-0101,Territoire Gamma,CA,797745.92\n2022,DEMO-0102,Territoire Gamma,CA,742458.11\n2023,DEMO-0102,Territoire Gamma,CA,411184.61\n2024,DEMO-0102,Territoire Gamma,CA,574869.13\n2025,DEMO-0102,Territoire Gamma,CA,414974.36\n2026,DEMO-0102,Territoire Gamma,CA,411601.6\n2022,DEMO-0103,Territoire Gamma,CA,41291.16\n2023,DEMO-0103,Territoire Gamma,CA,44876.47\n2024,DEMO-0103,Territoire Gamma,CA,31702.42\n2025,DEMO-0103,Territoire Gamma,CA,27388.32\n2026,DEMO-0103,Territoire Gamma,CA,31579.36\n2022,DEMO-0104,Territoire Gamma,CA,1129709.2\n2023,DEMO-0104,Territoire Gamma,CA,-30612.38\n2024,DEMO-0104,Territoire Gamma,CA,-9681.52\n2025,DEMO-0104,Territoire Gamma,CA,4292.56\n2026,DEMO-0104,Territoire Gamma,CA,3568.51\n2022,DEMO-0105,Territoire Gamma,CA,19366.14\n2023,DEMO-0105,Territoire Gamma,CA,31968.37\n2024,DEMO-0105,Territoire Gamma,CA,43773.19\n2025,DEMO-0105,Territoire Gamma,CA,46636.44\n2026,DEMO-0105,Territoire Gamma,CA,60858.11\n2022,DEMO-0106,Territoire Gamma,CA,52282.35\n2023,DEMO-0106,Territoire Gamma,CA,63999.0\n2024,DEMO-0106,Territoire Gamma,CA,113045.86\n2025,DEMO-0106,Territoire Gamma,CA,105085.32\n2026,DEMO-0106,Territoire Gamma,CA,102292.46\n2022,DEMO-0107,Territoire Gamma,CA,4697.46\n2023,DEMO-0107,Territoire Gamma,CA,7214.87\n2024,DEMO-0107,Territoire Gamma,CA,9693.44\n2025,DEMO-0107,Territoire Gamma,CA,10407.27\n2026,DEMO-0107,Territoire Gamma,CA,14236.79\n2026,DEMO-0108,Territoire Gamma,CA,326134.05\n2026,DEMO-0109,Territoire Gamma,CA,70807.39\n2026,DEMO-0110,Territoire Gamma,CA,27812.6\n2026,DEMO-0111,Territoire Gamma,CA,13848.7\n2026,DEMO-0112,Territoire Gamma,CA,16541.15\n2026,DEMO-0113,Territoire Gamma,CA,438.17\n2026,DEMO-0117,Territoire Gamma,CA,64806.39\n2026,DEMO-0118,Territoire Gamma,CA,67.33\n2022,DEMO-0120,Territoire Gamma,CA,19810.92\n2023,DEMO-0120,Territoire Gamma,CA,190037.2\n2024,DEMO-0120,Territoire Gamma,CA,132085.93\n2025,DEMO-0120,Territoire Gamma,CA,195047.39\n2026,DEMO-0120,Territoire Gamma,CA,261700.34\n2024,DEMO-0001,Territoire Alpha,US,172.2\n2024,DEMO-0089,Territoire Alpha,US,1426.58\n2022,DEMO-0090,Territoire Alpha,US,1584.97\n2023,DEMO-0090,Territoire Alpha,US,1581.11\n2025,DEMO-0040,Territoire Gamma,US,20972.18";
+
+/* ================= ÉTAT ================= */
+let M=null, PROJ=[], PROJ_LO=[], PROJ_HI=[];
+const par={gGlobal:.095, adjP:{}, adjT:{}, horizon:3, spread:.03};
+const selP=new Set(), selT=new Set();
+let anAll=false, segAll=false, qProd="";
+const cvar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+const fmt$=new Intl.NumberFormat("fr-CA",{style:"currency",currency:"CAD",maximumFractionDigits:0});
+const fmtK=v=>{
+  const a=Math.abs(v);
+  if(a>=1e6) return (v/1e6).toLocaleString("fr-CA",{minimumFractionDigits:1,maximumFractionDigits:1})+" M$";
+  if(a>=1e3) return (v/1e3).toLocaleString("fr-CA",{maximumFractionDigits:0})+" k$";
+  return v.toLocaleString("fr-CA",{maximumFractionDigits:0})+" $";
+};
+const fmtPct=(v,d=1)=>(v*100).toLocaleString("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d})+" %";
+const fmtSign=(v,d=1)=>(v>=0?"+":"−")+fmtPct(Math.abs(v),d);
+const MOIS=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+const MOISL=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+const annuel=()=>M.mode==="annuel";
+const etiq=p=>{ const {y,m}=ymOf(p); return annuel()? String(y) : MOIS[m-1]+" "+String(y).slice(2); };
+const etiqL=p=>{ const {y,m}=ymOf(p); return annuel()? "Exercice "+y : MOISL[m-1]+" "+y; };
+
+/* ================= LECTURE CSV ================= */
+function parseCSV(txt){
+  txt=txt.replace(/^﻿/,"").replace(/\r\n?/g,"\n").trim();
+  const nl=txt.indexOf("\n"), head=txt.slice(0,nl<0?txt.length:nl);
+  const sep=(head.split(";").length>head.split(",").length)?";":",";
+  const lines=[]; let cur=[],f="",q=false;
+  for(let i=0;i<txt.length;i++){
+    const c=txt[i];
+    if(q){ if(c==='"'){ if(txt[i+1]==='"'){f+='"';i++;} else q=false; } else f+=c; }
+    else if(c==='"') q=true;
+    else if(c===sep){ cur.push(f); f=""; }
+    else if(c==="\n"){ cur.push(f); lines.push(cur); cur=[]; f=""; }
+    else f+=c;
+  }
+  cur.push(f); lines.push(cur);
+  const norm=s=>(s||"").trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  const hdr=lines.shift().map(norm);
+  const find=(...alts)=>{ for(const a of alts){ const i=hdr.findIndex(h=>h===a||h.startsWith(a)); if(i>=0) return i; } return -1; };
+  const iM=find("mois","exercice","periode","annee","date"),
+        iP=find("ligne de produit","famille","produit","gamme"),
+        iT=find("territoire","agence","region","province"),
+        iC=find("pays","country"),
+        iV=find("ventes","montant","valeur","chiffre");
+  if(iM<0||iP<0||iT<0||iV<0)
+    throw new Error("Colonnes manquantes. Il faut au minimum : Mois (ou Exercice), Ligne de produit (ou Famille), Territoire (ou Agence) et Ventes.");
+  const rows=[]; let rejets=0, nMensuel=0, nAnnuel=0;
+  for(const L of lines){
+    if(!L.length||L.every(x=>!String(x).trim())) continue;
+    const mo=String(L[iM]||"").trim();
+    let clef=null;
+    let mm=mo.match(/^(\d{4})[-\/.](\d{1,2})/);
+    if(!mm){ const alt=mo.match(/^(\d{1,2})[-\/.](\d{4})$/); if(alt) mm=[null,alt[2],alt[1]]; }
+    if(mm && +mm[2]>=1 && +mm[2]<=12){ clef=mm[1]+"-"+String(+mm[2]).padStart(2,"0"); nMensuel++; }
+    else if(/^\d{4}$/.test(mo)){ clef=mo; nAnnuel++; }
+    else { rejets++; continue; }
+    const v=parseFloat(String(L[iV]).replace(/[\s $]/g,"").replace(/,(\d{1,2})$/,".$1").replace(/[,']/g,""));
+    if(!isFinite(v)){ rejets++; continue; }
+    rows.push({mois:clef,p:per(clef),prod:String(L[iP]||"—").trim(),
+               terr:String(L[iT]||"—").trim(),
+               pays:(iC>=0?String(L[iC]||"").trim():"")||"—", v});
+  }
+  if(!rows.length) throw new Error("Aucune ligne exploitable dans ce fichier.");
+  // Un même nom d'agence peut exister dans deux pays (CVAC CA, ROC). On les
+  // distingue, sinon leurs ventes fusionneraient dans un seul segment.
+  const paysDe={};
+  for(const r of rows) (paysDe[r.terr]=paysDe[r.terr]||new Set()).add(r.pays);
+  for(const r of rows) if(paysDe[r.terr].size>1) r.terr=r.terr+" ("+r.pays+")";
+  return {rows, rejets, mode: nMensuel>=nAnnuel ? "mensuel" : "annuel"};
+}
+
+function charger(txt,nom){
+  let res;
+  try{ res=parseCSV(txt); } catch(e){ alert(e.message); return; }
+  M=buildModel(res.rows,res.mode);
+  par.adjP={}; par.adjT={};
+  selP.clear(); selT.clear();
+  M.prods.forEach(p=>selP.add(p)); M.terrs.forEach(t=>selT.add(t));
+
+  // curseurs adaptés au mode
+  const h=document.getElementById("h");
+  if(annuel()){ h.min=1; h.max=8;  par.horizon=Math.min(3,8); }
+  else        { h.min=3; h.max=36; par.horizon=17; }
+  h.value=par.horizon;
+  document.getElementById("hLab").textContent = annuel()? "Horizon de projection" : "Horizon de projection";
+  // croissance par défaut = TCAC observé sur l'historique
+  const tc=tcacHistorique();
+  par.gGlobal = Math.max(-.15, Math.min(.35, Math.round(tc*200)/200));
+  document.getElementById("g").value=(par.gGlobal*100).toFixed(1);
+  document.getElementById("gHint").textContent =
+    "TCAC observé sur l'historique : "+fmtSign(tc)+". Le curseur démarre sur cette valeur.";
+
+  const n=res.rows.length;
+  document.getElementById("dataNote").textContent =
+    nom+" — "+n.toLocaleString("fr-CA")+" lignes, "+M.prods.length+" familles, "+
+    M.terrs.length+" agences, mode "+M.mode+
+    (res.rejets? " · "+res.rejets+" ligne(s) ignorée(s)." : "");
+  construireRail();
+  majEtiquettes();
+  recalc();
+}
+
+function tcacHistorique(){
+  const parAn={};
+  for(const r of M.rows){ const y=ymOf(r.p).y; parAn[y]=(parAn[y]||0)+r.v; }
+  let ans=Object.keys(parAn).map(Number).sort((a,b)=>a-b);
+  if(M.mode==="mensuel"){                       // ne garder que les années complètes
+    const cnt={};
+    for(const r of M.rows){ const {y,m}=ymOf(r.p); (cnt[y]=cnt[y]||new Set()).add(m); }
+    ans=ans.filter(y=>cnt[y].size===12);
+  }
+  if(ans.length<2) return .05;
+  const a=parAn[ans[0]], z=parAn[ans[ans.length-1]];
+  return a>0 ? Math.pow(z/a,1/(ans.length-1))-1 : .05;
+}
+
+/* ================= RAIL ================= */
+function construireRail(){
+  // ajustements ciblés : une liste déroulante, des curseurs seulement pour les segments choisis
+  const pick=document.getElementById("adjPick");
+  pick.innerHTML='<option value="">Ajouter un ajustement…</option>';
+  const gA=document.createElement("optgroup"); gA.label="Agences";
+  M.terrs.forEach(t=>{ const o=document.createElement("option"); o.value="T|"+t;
+    o.textContent=t+" ("+M.pays[t]+")"; gA.appendChild(o); });
+  pick.appendChild(gA);
+  const gP=document.createElement("optgroup"); gP.label="Familles (par poids décroissant)";
+  [...M.prods].sort((a,b)=>(M.ttmProd[b]||0)-(M.ttmProd[a]||0)).forEach(p=>{
+    const o=document.createElement("option"); o.value="P|"+p;
+    o.textContent=p+" — "+fmtK(M.ttmProd[p]||0); gP.appendChild(o); });
+  pick.appendChild(gP);
+  pick.onchange=()=>{ const v=pick.value; if(!v) return;
+    const [t,nom]=[v[0],v.slice(2)];
+    (t==="P"?par.adjP:par.adjT)[nom]=(t==="P"?par.adjP:par.adjT)[nom]||0;
+    pick.value=""; majAdj(); recalc(); };
+  majAdj();
+  majChips();
+  const ft=document.getElementById("fTerr"); ft.textContent="";
+  M.terrs.forEach(t=>{
+    const b=document.createElement("button"); b.className="chip on"; b.type="button";
+    b.textContent=t+" · "+M.pays[t]; b.setAttribute("aria-pressed","true");
+    b.onclick=()=>{ selT.has(t)?selT.delete(t):selT.add(t);
+      b.classList.toggle("on",selT.has(t)); b.setAttribute("aria-pressed",String(selT.has(t))); dessiner(); };
+    ft.appendChild(b);
+  });
+}
+
+function majAdj(){
+  const box=document.getElementById("adjList"); box.textContent="";
+  const ajoute=(nom,pot,label)=>{
+    const d=document.createElement("div"); d.className="adjrow";
+    d.innerHTML='<div class="hd"><span class="nm"></span><span class="vv"></span>'+
+                '<button class="x" title="Retirer">×</button></div>'+
+                '<input type="range" min="-15" max="20" step="0.5">';
+    d.querySelector(".nm").textContent=label; d.querySelector(".nm").title=label;
+    const out=d.querySelector(".vv"), inp=d.querySelector("input");
+    inp.value=(pot[nom]*100).toFixed(1);
+    inp.setAttribute("aria-label","Ajustement de croissance — "+label);
+    const upd=()=>out.textContent=(inp.value>=0?"+":"−")+
+      Math.abs(inp.value).toLocaleString("fr-CA",{minimumFractionDigits:1,maximumFractionDigits:1})+" pts";
+    upd();
+    inp.oninput=()=>{ upd(); pot[nom]=+inp.value/100; recalc(); };
+    d.querySelector(".x").onclick=()=>{ delete pot[nom]; majAdj(); recalc(); };
+    box.appendChild(d);
+  };
+  for(const t in par.adjT) ajoute(t,par.adjT,t+" ("+M.pays[t]+")");
+  for(const p in par.adjP) ajoute(p,par.adjP,p);
+  if(!box.children.length){
+    const p=document.createElement("p"); p.className="mini";
+    p.textContent="Aucun ajustement. Tous les segments suivent la croissance globale.";
+    box.appendChild(p);
+  }
+}
+
+function majChips(){
+  const box=document.getElementById("fProd"); box.textContent="";
+  const q=qProd.trim().toLowerCase();
+  const liste=[...M.prods].sort((a,b)=>(M.ttmProd[b]||0)-(M.ttmProd[a]||0))
+                          .filter(p=>!q||p.toLowerCase().includes(q));
+  liste.forEach(p=>{
+    const b=document.createElement("button"); b.className="chip"+(selP.has(p)?" on":""); b.type="button";
+    b.textContent=p; b.title=p+" — "+fmtK(M.ttmProd[p]||0);
+    b.setAttribute("aria-pressed",String(selP.has(p)));
+    b.onclick=()=>{ selP.has(p)?selP.delete(p):selP.add(p);
+      b.classList.toggle("on",selP.has(p)); b.setAttribute("aria-pressed",String(selP.has(p)));
+      majCompte(); dessiner(); };
+    box.appendChild(b);
+  });
+  majCompte();
+}
+function majCompte(){
+  document.getElementById("fProdN").textContent =
+    selP.size+" famille"+(selP.size>1?"s":"")+" sur "+M.prods.length+" affichée"+(selP.size>1?"s":"");
+}
+
+/* ================= CALCUL ================= */
+function recalc(){
+  PROJ    = project(M,par);
+  PROJ_LO = project(M,{...par,gGlobal:par.gGlobal-par.spread});
+  PROJ_HI = project(M,{...par,gGlobal:par.gGlobal+par.spread});
+  dessiner();
+}
+const gardé=r=>selP.has(r.prod)&&selT.has(r.terr);
+
+function serie(){
+  const A={},B={},L={},H={};
+  for(const r of M.rows)  if(gardé(r)) A[r.p]=(A[r.p]||0)+r.v;
+  for(const r of PROJ)    if(gardé(r)) B[r.p]=(B[r.p]||0)+r.v;
+  for(const r of PROJ_LO) if(gardé(r)) L[r.p]=(L[r.p]||0)+r.v;
+  for(const r of PROJ_HI) if(gardé(r)) H[r.p]=(H[r.p]||0)+r.v;
+  const out=[];
+  for(let p=M.pMin;p<=M.pMax+par.horizon*M.step;p+=M.step)
+    out.push({p,...ymOf(p),reel:p<=M.pMax?(A[p]||0):null,
+              proj:p>M.pMax?(B[p]||0):null,lo:p>M.pMax?(L[p]||0):null,hi:p>M.pMax?(H[p]||0):null});
+  return out;
+}
+
+/* ================= RENDU ================= */
+const NS="http://www.w3.org/2000/svg";
+function el(t,a={},p){ const e=document.createElementNS(NS,t);
+  for(const k in a) e.setAttribute(k,a[k]); if(p) p.appendChild(e); return e; }
+function clear(n){ while(n.firstChild) n.removeChild(n.firstChild); }
+const tip=document.getElementById("tip");
+function showTip(x,y,html){ tip.innerHTML=html; tip.style.opacity=1;
+  const r=tip.getBoundingClientRect();
+  tip.style.left=Math.min(x+14,innerWidth-r.width-10)+"px";
+  tip.style.top=Math.max(8,Math.min(y-r.height/2,innerHeight-r.height-8))+"px"; }
+function hideTip(){ tip.style.opacity=0; }
+
+function majEtiquettes(){
+  const A=annuel();
+  document.getElementById("t1").textContent = A? "Ventes par exercice" : "Ventes mensuelles";
+  document.getElementById("t2").textContent = A? "Croissance d'un exercice à l'autre" : "Profil saisonnier";
+  document.getElementById("s2").textContent = A
+    ? "Variation observée sur l'historique, puis projetée."
+    : "Écart d'un mois à un mois moyen, calculé sur les années civiles complètes.";
+  document.getElementById("t3").textContent = A? "Prochain exercice par famille" : "Douze prochains mois par famille";
+  document.getElementById("s3").textContent = "Quinze premières familles du périmètre affiché, comparées à la dernière période close.";
+  document.getElementById("modeFlag").innerHTML = A
+    ? "<b>Mode annuel.</b> Le fichier chargé ne contient qu'un montant par exercice, donc aucune saisonnalité n'est calculable : "+
+      "la projection avance d'exercice en exercice. Dès que l'export mensuel sera disponible, chargez-le ici — "+
+      "l'outil bascule seul en mode mensuel et ajoute les indices saisonniers."
+    : "<b>Mode mensuel.</b> Les indices saisonniers sont calculés sur les années civiles complètes de l'historique.";
+}
+
+function dessiner(){
+  const S=serie();
+  kpis(S); chart1(S); chart2(S); chart3(); tableAn(S); tableSeg(); tableSerie(S); methode();
+}
+
+function kpis(S){
+  const A=annuel();
+  const N=A?1:12;
+  const dern=S.filter(d=>d.p>M.pMax-N*M.step&&d.p<=M.pMax).reduce((a,d)=>a+(d.reel||0),0);
+  const suiv=S.filter(d=>d.p>M.pMax&&d.p<=M.pMax+N*M.step).reduce((a,d)=>a+(d.proj||0),0);
+  const lo=S.filter(d=>d.p>M.pMax&&d.p<=M.pMax+N*M.step).reduce((a,d)=>a+(d.lo||0),0);
+  const hi=S.filter(d=>d.p>M.pMax&&d.p<=M.pMax+N*M.step).reduce((a,d)=>a+(d.hi||0),0);
+  const tot=S.filter(d=>d.p>M.pMax).reduce((a,d)=>a+(d.proj||0),0);
+  const cr=dern>0? suiv/dern-1 : 0;
+  const items=[
+    [A?"Dernier exercice clos":"12 derniers mois clos", fmt$.format(dern),
+     A? ymOf(M.pMax).y+" · périmètre filtré" : "Réel, périmètre filtré"],
+    [A?"Prochain exercice":"12 prochains mois", fmt$.format(suiv),
+     "Fourchette "+fmtK(lo)+" – "+fmtK(hi), true],
+    ["Croissance implicite", fmtSign(cr), A? "vs "+ymOf(M.pMax).y : "Sur 12 mois comparables"],
+    ["TCAC historique", fmtSign(tcacHistorique()), "Tous segments, historique complet"],
+    ["Total sur l'horizon", fmt$.format(tot),
+     par.horizon+(A?" exercice":" mois")+(A&&par.horizon>1?"s":"")+" · "+selP.size+"/"+M.prods.length+" familles"],
+  ];
+  const box=document.getElementById("kpis"); clear(box);
+  for(const [k,v,n,acc] of items){
+    const d=document.createElement("div"); d.className="kpi"+(acc?" accent":"");
+    d.innerHTML='<span class="k"></span><span class="v"></span><span class="n"></span>';
+    d.children[0].textContent=k; d.children[1].textContent=v; d.children[2].textContent=n;
+    box.appendChild(d);
+  }
+}
+
+function chart1(S){
+  const svg=document.getElementById("c1"); clear(svg);
+  const W=svg.clientWidth||900,H=330,m={t:14,r:16,b:26,l:66};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("height",H);
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const vals=S.flatMap(d=>[d.reel,d.proj,d.hi]).filter(v=>v!=null);
+  const vmax=Math.max(1,...vals)*1.08;
+  const x=i=>m.l+(S.length<2?iw/2:i*iw/(S.length-1));
+  const y=v=>m.t+ih-(v/vmax)*ih;
+  const STEEL=cvar("--steel"),COP=cvar("--copper");
+  for(let i=0;i<=5;i++){
+    const v=vmax*i/5,yy=y(v);
+    el("line",{x1:m.l,x2:W-m.r,y1:yy,y2:yy,class:i?"gridline":"axis"},svg);
+    el("text",{x:m.l-9,y:yy+3.5,"text-anchor":"end"},svg).textContent=fmtK(v);
+  }
+  const pas = annuel() ? 1 : (S.length<=14?1:S.length<=26?2:S.length<=44?3:S.length<=90?6:12);
+  S.forEach((d,i)=>{
+    if(annuel()){ if(i%Math.ceil(S.length/12)) return; }
+    else if((d.m-1)%pas) return;
+    const t=el("text",{x:x(i),y:H-8,"text-anchor":"middle"},svg);
+    t.textContent=etiq(d.p);
+    if(annuel()||d.m===1) t.setAttribute("fill",cvar("--ink-2"));
+  });
+  const iS=S.findIndex(d=>d.p===M.pMax);
+  if(par.spread>0){
+    let up="",dn="";
+    for(let i=iS;i<S.length;i++){
+      const hv=i===iS?S[i].reel:S[i].hi, lv=i===iS?S[i].reel:S[i].lo;
+      up+=(up?"L":"M")+x(i)+","+y(hv); dn="L"+x(i)+","+y(lv)+dn;
+    }
+    el("path",{d:up+dn+"Z",fill:COP,"fill-opacity":.11},svg);
+  }
+  let dR=""; S.forEach((d,i)=>{ if(d.reel==null) return; dR+=(dR?"L":"M")+x(i)+","+y(d.reel); });
+  el("path",{d:dR,fill:"none",stroke:STEEL,"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  let dP="M"+x(iS)+","+y(S[iS].reel);
+  for(let i=iS+1;i<S.length;i++) dP+="L"+x(i)+","+y(S[i].proj);
+  el("path",{d:dP,fill:"none",stroke:COP,"stroke-width":2,"stroke-dasharray":"6 4","stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  el("line",{x1:x(iS),x2:x(iS),y1:m.t,y2:m.t+ih,stroke:cvar("--muted"),"stroke-width":1,"stroke-dasharray":"2 3","stroke-opacity":.7},svg);
+  el("text",{x:x(iS)+6,y:m.t+11,fill:cvar("--muted")},svg)
+    .textContent = annuel()? "dernier exercice clos" : "dernier mois clos";
+  if(annuel()) S.forEach((d,i)=>{
+    const v=d.reel!=null?d.reel:d.proj;
+    el("circle",{cx:x(i),cy:y(v),r:3.5,fill:d.reel!=null?STEEL:COP,
+                 stroke:cvar("--surface"),"stroke-width":1.5},svg);
+  });
+  else{
+    el("circle",{cx:x(iS),cy:y(S[iS].reel),r:4,fill:STEEL,stroke:cvar("--surface"),"stroke-width":2},svg);
+    el("circle",{cx:x(S.length-1),cy:y(S[S.length-1].proj),r:4,fill:COP,stroke:cvar("--surface"),"stroke-width":2},svg);
+  }
+  const cross=el("line",{y1:m.t,y2:m.t+ih,stroke:cvar("--ink-2"),"stroke-width":1,"stroke-opacity":0},svg);
+  const mk=el("circle",{r:5,fill:"none","stroke-width":2,"stroke-opacity":0},svg);
+  const hit=el("rect",{x:m.l,y:m.t,width:iw,height:ih,fill:"transparent"},svg);
+  hit.addEventListener("pointermove",ev=>{
+    const bb=svg.getBoundingClientRect(), px=(ev.clientX-bb.left)*(W/bb.width);
+    let i=S.length<2?0:Math.round((px-m.l)/(iw/(S.length-1)));
+    i=Math.max(0,Math.min(S.length-1,i));
+    const d=S[i], est=d.reel!=null, v=est?d.reel:d.proj;
+    cross.setAttribute("x1",x(i)); cross.setAttribute("x2",x(i)); cross.setAttribute("stroke-opacity",.35);
+    mk.setAttribute("cx",x(i)); mk.setAttribute("cy",y(v));
+    mk.setAttribute("stroke",est?STEEL:COP); mk.setAttribute("stroke-opacity",1); mk.setAttribute("fill",cvar("--surface"));
+    let h='<div class="t">'+etiqL(d.p)+'</div><div class="row"><span><i class="sw" style="background:'+
+      (est?STEEL:COP)+'"></i>'+(est?"Réel":"Projeté")+'</span><b>'+fmt$.format(v)+'</b></div>';
+    if(!est&&par.spread>0) h+='<div class="row"><span style="color:var(--muted)">Fourchette</span><b style="font-weight:400">'+
+      fmtK(d.lo)+" – "+fmtK(d.hi)+'</b></div>';
+    const pv=S[i-(annuel()?1:12)];
+    if(pv){ const q=pv.reel!=null?pv.reel:pv.proj;
+      if(q>0) h+='<div class="row"><span style="color:var(--muted)">'+(annuel()?"vs exercice précédent":"vs an dernier")+
+        '</span><b>'+fmtSign(v/q-1)+'</b></div>'; }
+    showTip(ev.clientX,ev.clientY,h);
+  });
+  hit.addEventListener("pointerleave",()=>{hideTip();cross.setAttribute("stroke-opacity",0);mk.setAttribute("stroke-opacity",0);});
+  document.getElementById("lg1").innerHTML=
+    '<span class="item"><i class="sw" style="background:'+STEEL+'"></i>Réel</span>'+
+    '<span class="item"><i class="sw" style="background:'+COP+'"></i>Projeté</span>'+
+    (par.spread>0?'<span class="item"><i class="sw sq" style="background:'+COP+';opacity:.22"></i>Fourchette ± '+
+      (par.spread*100).toLocaleString("fr-CA",{maximumFractionDigits:1})+' pts</span>':'');
+  document.getElementById("chartSub").textContent =
+    "Réel de "+etiq(M.pMin)+" à "+etiq(M.pMax)+", puis "+par.horizon+
+    (annuel()? " exercice"+(par.horizon>1?"s":"") : " mois")+" projeté"+(par.horizon>1||!annuel()?"s":"")+".";
+}
+
+function chart2(S){
+  const svg=document.getElementById("c2"); clear(svg);
+  const W=svg.clientWidth||420,H=210,m={t:12,r:10,b:24,l:44};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("height",H);
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  let dev=[],lab=[],lng=[],est=[];
+  if(annuel()){
+    for(let i=1;i<S.length;i++){
+      const a=S[i-1].reel!=null?S[i-1].reel:S[i-1].proj, b=S[i].reel!=null?S[i].reel:S[i].proj;
+      dev.push(a>0?b/a-1:0); lab.push(String(S[i].y)); lng.push(etiqL(S[i].p));
+      est.push(S[i].reel!=null);
+    }
+  }else{
+    const w={}; let tw=0;
+    for(const p of M.prods) if(selP.has(p)){ w[p]=M.ttmProd[p]||0; tw+=w[p]; }
+    for(let mm=1;mm<=12;mm++){
+      let s=0; for(const p in w) s+=M.idx[p][mm]*w[p];
+      dev.push((tw>0?s/tw:1)-1); lab.push(MOIS[mm-1].replace(".","")); lng.push(MOISL[mm-1]); est.push(true);
+    }
+  }
+  if(!dev.length){ el("text",{x:W/2,y:H/2,"text-anchor":"middle"},svg).textContent="Pas assez de périodes."; return; }
+  const amp=Math.max(.08,...dev.map(Math.abs))*1.25;
+  const y0=m.t+ih/2, sc=(ih/2)/amp, bw=Math.min(28,iw/dev.length*.62);
+  el("line",{x1:m.l,x2:W-m.r,y1:y0,y2:y0,class:"axis"},svg);
+  const unit=v=>annuel()?fmtSign(v,0):(1+v).toFixed(2).replace(".",",");
+  el("text",{x:m.l-7,y:y0+3.5,"text-anchor":"end"},svg).textContent=annuel()?"0 %":"1,00";
+  el("text",{x:m.l-7,y:m.t+4,"text-anchor":"end"},svg).textContent=unit(amp);
+  el("text",{x:m.l-7,y:m.t+ih+3,"text-anchor":"end"},svg).textContent=unit(-amp);
+  const STEEL=cvar("--steel"),COP=cvar("--copper");
+  dev.forEach((d,i)=>{
+    const cx=m.l+iw*(i+.5)/dev.length, hh=Math.abs(d)*sc, teinte=d>=0?COP:STEEL;
+    const a={x:cx-bw/2,y:d>=0?y0-hh:y0+1,width:bw,height:Math.max(1,hh-1),rx:2,fill:teinte};
+    if(!est[i]){ a["fill-opacity"]=.3; a.stroke=teinte; a["stroke-width"]=1.5; a["stroke-dasharray"]="3 2"; }
+    el("rect",a,svg);
+    const tl=el("text",{x:cx,y:H-7,"text-anchor":"middle"},svg); tl.textContent=lab[i];
+    if(!est[i]) tl.setAttribute("fill-opacity",.65);
+    const hz=el("rect",{x:cx-iw/(2*dev.length),y:m.t,width:iw/dev.length,height:ih,fill:"transparent"},svg);
+    hz.addEventListener("pointerenter",ev=>showTip(ev.clientX,ev.clientY,
+      '<div class="t">'+lng[i]+'</div><div class="row"><span>'+
+      (annuel()?"Croissance":"Indice")+'</span><b>'+
+      (annuel()? fmtSign(d) : (1+d).toLocaleString("fr-CA",{minimumFractionDigits:3,maximumFractionDigits:3}))+
+      '</b></div>'+(annuel()
+        ? '<div class="row"><span style="color:var(--muted)">Source</span><b style="font-weight:400">'+(est[i]?"réel":"projeté")+'</b></div>'
+        : '<div class="row"><span style="color:var(--muted)">Écart au mois moyen</span><b>'+fmtSign(d)+'</b></div>')));
+    hz.addEventListener("pointerleave",hideTip);
+  });
+  document.getElementById("s2").innerHTML = annuel()
+    ? 'Variation d\'un exercice à l\'autre. Barre pleine&nbsp;= réel, barre hachurée&nbsp;= projeté.'
+    : "Écart d'un mois à un mois moyen, calculé sur les années civiles complètes.";
+}
+
+function chart3(){
+  const svg=document.getElementById("c3"); clear(svg);
+  const N=annuel()?1:12, lim=M.pMax+N*M.step;
+  const av={},ap={};
+  for(const r of PROJ) if(gardé(r)&&r.p<=lim) ap[r.prod]=(ap[r.prod]||0)+r.v;
+  for(const r of M.rows) if(gardé(r)&&r.p>M.pMax-N*M.step) av[r.prod]=(av[r.prod]||0)+r.v;
+  const list=Object.keys(ap).map(p=>({p,v:ap[p],t:av[p]||0}))
+                   .sort((a,b)=>b.v-a.v).slice(0,15);
+  const W=svg.clientWidth||420, rowH=26, H=Math.max(60,list.length*rowH+12), m={t:4,r:8,l:8};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("height",H);
+  if(!list.length){ el("text",{x:W/2,y:34,"text-anchor":"middle"},svg).textContent="Aucune famille sélectionnée."; return; }
+  const vmax=Math.max(...list.map(d=>d.v));
+  // colonnes fixes : libellé | barre | montant | croissance
+  const xCr=W-m.r, xVal=xCr-56, xBarFin=xVal-62;
+  const barMax=Math.max(50,Math.min(190,(xBarFin-m.l)*.5)), bx=xBarFin-barMax;
+  const larg=Math.max(6,Math.floor((bx-m.l-10)/6.6));
+  const STEEL=cvar("--steel");
+  list.forEach((d,i)=>{
+    const yy=m.t+i*rowH+13;
+    const t=el("text",{x:m.l,y:yy+4,fill:cvar("--ink-2")},svg);
+    t.setAttribute("style","font-family:'Source Sans 3',sans-serif;font-size:12.5px");
+    t.textContent=d.p.length>larg?d.p.slice(0,larg-1)+"…":d.p;
+    el("title",{},t).textContent=d.p+" — "+fmt$.format(d.v);
+    el("rect",{x:bx,y:yy-3,width:barMax,height:7,rx:2,fill:cvar("--hair-2")},svg);
+    el("rect",{x:bx,y:yy-3,width:Math.max(2,barMax*d.v/vmax),height:7,rx:2,fill:STEEL},svg);
+    const v=el("text",{x:xVal,y:yy+4,"text-anchor":"end",fill:cvar("--ink")},svg);
+    v.setAttribute("style","font-family:'IBM Plex Mono',monospace;font-size:12px;font-variant-numeric:tabular-nums");
+    v.textContent=fmtK(d.v);
+    const cr=d.t>0?d.v/d.t-1:0;
+    const c=el("text",{x:xCr,y:yy+4,"text-anchor":"end",fill:cr>=0?cvar("--vert"):cvar("--copper")},svg);
+    c.setAttribute("style","font-family:'IBM Plex Mono',monospace;font-size:11.5px");
+    c.textContent = d.t>0 ? fmtSign(cr,1) : "nouv.";
+  });
+}
+
+function tableAn(S){
+  const ans=[...new Set(S.map(d=>d.y))].sort();
+  const val={};
+  for(const r of M.rows) if(gardé(r)){ const k=r.prod+"|"+ymOf(r.p).y; val[k]=(val[k]||0)+r.v; }
+  for(const r of PROJ)   if(gardé(r)){ const k=r.prod+"|"+ymOf(r.p).y; val[k]=(val[k]||0)+r.v; }
+  const complet=a=>{ const s=new Set(); for(const d of S) if(d.y===a) s.add(d.m);
+    return annuel()? true : s.size===12; };
+  let data=[...selP].map(p=>({p,vals:ans.map(a=>val[p+"|"+a]||0)}));
+  data.sort((a,b)=>b.vals[ans.length-1]-a.vals[ans.length-1]);
+  const totAll=ans.map((a,j)=>data.reduce((s,d)=>s+d.vals[j],0));
+  let reste=null;
+  if(!anAll && data.length>15){
+    const t=data.slice(15);
+    reste={n:t.length, vals:ans.map((a,j)=>t.reduce((s,d)=>s+d.vals[j],0))};
+    data=data.slice(0,15);
+  }
+  const pleines=ans.filter(complet);
+  const iA=ans.indexOf(pleines[0]), iZ=ans.indexOf(pleines[pleines.length-1]);
+  const tcac=v=>(pleines.length>1&&v[iA]>0)?Math.pow(v[iZ]/v[iA],1/(iZ-iA))-1:null;
+  const cell=v=>'<td>'+fmtK(v)+'</td>';
+  let h='<table><thead><tr><th>Famille</th>';
+  ans.forEach(a=>h+='<th>'+a+(complet(a)?"":" *")+(a>ymOf(M.pMax).y?" ▸":"")+'</th>');
+  h+='<th>TCAC</th></tr></thead><tbody>';
+  for(const d of data){
+    h+='<tr><td>'+d.p+'</td>'+d.vals.map(cell).join("");
+    const t=tcac(d.vals);
+    h+='<td class="'+(t>=0?"pos":"neg")+'">'+(t==null?"—":fmtSign(t))+'</td></tr>';
+  }
+  if(reste){
+    h+='<tr><td style="color:var(--muted)">Autres familles ('+reste.n+')</td>'+reste.vals.map(cell).join("");
+    const t=tcac(reste.vals);
+    h+='<td class="'+(t>=0?"pos":"neg")+'">'+(t==null?"—":fmtSign(t))+'</td></tr>';
+  }
+  h+='</tbody><tfoot><tr><td>Total</td>'+totAll.map(cell).join("");
+  const tt=tcac(totAll);
+  h+='<td class="'+(tt>=0?"pos":"neg")+'">'+(tt==null?"—":fmtSign(tt))+'</td></tr></tfoot></table>';
+  document.getElementById("tblAn").innerHTML=h;
+  document.getElementById("anAll").textContent = anAll? "Réduire aux 15 premières" : "Afficher toutes les familles";
+  document.getElementById("anAll").classList.toggle("hide", selP.size<=15);
+  document.getElementById("anSub").textContent =
+    "Réel et projeté combinés ; ▸ marque une période projetée."+
+    (annuel()? "" : " Un astérisque marque une année incomplète.")+
+    " Le TCAC porte sur "+(pleines.length>1?pleines[0]+" à "+pleines[pleines.length-1]:"une seule période")+".";
+}
+
+let tri={k:"n",asc:false};
+function tableSeg(){
+  const N=annuel()?1:12, lim=M.pMax+N*M.step;
+  const acc={};
+  for(const r of PROJ) if(gardé(r)&&r.p<=lim){ const k=r.prod+"|"+r.terr; acc[k]=(acc[k]||0)+r.v; }
+  const lignes=[];
+  for(const k in acc){
+    const [p,t]=k.split("|");
+    const d0=M.ttm[k]||0, n=acc[k];
+    lignes.push({prod:p,terr:t,pays:M.pays[t],d0,n,e:n-d0,cr:d0>0?n/d0-1:0});
+  }
+  const sg=tri.asc?1:-1;
+  lignes.sort((a,b)=>typeof a[tri.k]==="string"?sg*a[tri.k].localeCompare(b[tri.k],"fr"):sg*(a[tri.k]-b[tri.k]));
+  const sT=lignes.reduce((a,l)=>a+l.d0,0), sN=lignes.reduce((a,l)=>a+l.n,0);
+  const vmax=Math.max(1,...lignes.map(l=>l.n));
+  const vue=segAll?lignes:lignes.slice(0,40);
+  const cols=[["prod","Famille"],["terr","Agence"],
+              ["d0",annuel()?"Dernier exercice":"12 derniers mois"],
+              ["n",annuel()?"Prochain exercice":"12 prochains mois"],["e","Écart"],["cr","Croissance"]];
+  let h='<table><thead><tr>';
+  cols.forEach(([k,l])=>h+='<th data-k="'+k+'" class="'+(k===tri.k?"act":"")+'">'+l+(k===tri.k?(tri.asc?" ▲":" ▼"):"")+'</th>');
+  h+='<th style="width:96px">Part</th></tr></thead><tbody>';
+  for(const l of vue){
+    h+='<tr><td>'+l.prod+'</td><td style="text-align:left">'+l.terr+
+       ' <span style="color:var(--muted)">'+l.pays+'</span></td>'+
+       '<td>'+fmtK(l.d0)+'</td><td>'+fmtK(l.n)+'</td>'+
+       '<td class="'+(l.e>=0?"pos":"neg")+'">'+(l.e>=0?"+":"−")+fmtK(Math.abs(l.e))+'</td>'+
+       '<td class="'+(l.cr>=0?"pos":"neg")+'">'+fmtSign(l.cr)+'</td>'+
+       '<td><span class="bar"><i style="width:'+(100*l.n/vmax).toFixed(1)+'%"></i></span></td></tr>';
+  }
+  h+='</tbody><tfoot><tr><td colspan="2">'+lignes.length+' segments'+
+     (vue.length<lignes.length?' · '+vue.length+' affichés':'')+'</td>'+
+     '<td>'+fmtK(sT)+'</td><td>'+fmtK(sN)+'</td>'+
+     '<td class="'+(sN-sT>=0?"pos":"neg")+'">'+(sN-sT>=0?"+":"−")+fmtK(Math.abs(sN-sT))+'</td>'+
+     '<td class="'+(sN>=sT?"pos":"neg")+'">'+(sT>0?fmtSign(sN/sT-1):"—")+'</td><td></td></tr></tfoot></table>';
+  const box=document.getElementById("tblSeg"); box.innerHTML=h;
+  box.querySelectorAll("th[data-k]").forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    tri = tri.k===k ? {k,asc:!tri.asc} : {k,asc:(k==="prod"||k==="terr")};
+    tableSeg();
+  });
+  document.getElementById("segAll").textContent = segAll? "Réduire à 40 lignes" : "Afficher tout ("+lignes.length+")";
+  document.getElementById("segAll").classList.toggle("hide", lignes.length<=40);
+  document.getElementById("segSub").textContent =
+    "Cliquez un en-tête pour trier. "+(annuel()?"Prochain exercice comparé au dernier exercice clos.":"Douze mois projetés comparés aux douze derniers mois clos.");
+}
+
+function tableSerie(S){
+  let h='<table><thead><tr><th>Période</th><th>Réel</th><th>Projeté</th><th>Basse</th><th>Haute</th></tr></thead><tbody>';
+  for(const d of S) h+='<tr><td>'+etiqL(d.p)+'</td>'+
+    ['reel','proj','lo','hi'].map(k=>'<td>'+(d[k]!=null?fmt$.format(d[k]):"—")+'</td>').join("")+'</tr>';
+  document.getElementById("tbl1").innerHTML=h+'</tbody></table>';
+}
+
+function methode(){
+  document.getElementById("datawin").innerHTML =
+    "Historique "+etiq(M.pMin)+" → "+etiq(M.pMax)+"<br>"+
+    (annuel()? "Mode annuel · aucune saisonnalité"
+             : "Saisonnalité sur "+(M.pleines.length?M.pleines[0]+"–"+M.pleines[M.pleines.length-1]:"l'historique"));
+  document.getElementById("method").textContent =
+    "Méthode — pour chaque couple famille × agence, la base part des ventes de la dernière année close"+
+    (annuel()? ", soit l'exercice "+ymOf(M.pMax).y+". Chaque exercice projeté vaut base × (1 + croissance)^(nombre d'exercices d'écart)."
+             : " (les douze derniers mois), divisées par un facteur d'ancrage qui reconstitue cette même fenêtre sous la loi croissance × saisonnalité. "+
+               "Chaque mois projeté vaut ensuite base × (1 + croissance)^(mois d'écart ÷ 12) × indice saisonnier de la famille. "+
+               "L'ancrage évite le biais du « TTM ÷ 12 » : sans lui, un segment paramétré à 7 % ressortirait autour de 4 % d'une année sur l'autre.")+
+    " La croissance d'un segment est la croissance globale augmentée de ses ajustements de famille et d'agence. "+
+    "Le modèle prolonge la tendance récente : il ignore le carnet de commandes, les contrats ponctuels et les changements de gamme. "+
+    "Le classeur Excel livré avec cet outil applique exactement les mêmes formules.";
+}
+
+/* ================= COMMANDES ================= */
+const $=id=>document.getElementById(id);
+$("g").addEventListener("input",e=>{ par.gGlobal=+e.target.value/100; $("vG").textContent=fmtPct(par.gGlobal); recalc(); });
+$("h").addEventListener("input",e=>{ par.horizon=+e.target.value;
+  $("vH").textContent=par.horizon+(annuel()?" exercice"+(par.horizon>1?"s":""):" mois"); recalc(); });
+$("s").addEventListener("input",e=>{ par.spread=+e.target.value/100;
+  $("vS").textContent="± "+(+e.target.value).toLocaleString("fr-CA",{minimumFractionDigits:1,maximumFractionDigits:1})+" pts"; recalc(); });
+$("qProd").addEventListener("input",e=>{ qProd=e.target.value; majChips(); });
+document.querySelectorAll("[data-sel]").forEach(b=>b.onclick=()=>{
+  const mode=b.dataset.sel;
+  selP.clear();
+  if(mode==="all") M.prods.forEach(p=>selP.add(p));
+  if(mode==="top") [...M.prods].sort((a,b2)=>(M.ttmProd[b2]||0)-(M.ttmProd[a]||0)).slice(0,15).forEach(p=>selP.add(p));
+  majChips(); dessiner();
+});
+$("toggleTbl").onclick=e=>{
+  const t=$("tbl1"), on=t.classList.toggle("hide");
+  $("c1").classList.toggle("hide",!on); $("lg1").classList.toggle("hide",!on);
+  e.target.textContent = on? "Voir en tableau" : "Voir le graphique";
+};
+$("anAll").onclick=()=>{ anAll=!anAll; dessiner(); };
+$("segAll").onclick=()=>{ segAll=!segAll; tableSeg(); };
+$("btnImport").onclick=()=>$("file").click();
+const lire=f=>{ const r=new FileReader(); r.onload=()=>charger(r.result,f.name); r.readAsText(f,"utf-8"); };
+$("file").onchange=e=>{ const f=e.target.files[0]; if(f) lire(f); };
+const drop=$("drop");
+["dragenter","dragover"].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.add("over");}));
+["dragleave","drop"].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.remove("over");}));
+drop.addEventListener("drop",e=>{ const f=e.dataTransfer.files[0]; if(f) lire(f); });
+/* Enregistrement d'un fichier. Publiée comme Artifact, la page passe par
+   l'hôte (qui demande confirmation) ; ouverte depuis le disque, elle retombe
+   sur le téléchargement classique du navigateur. */
+let DL=undefined;
+if(window.claude&&claude.use) claude.use("downloads").then(d=>{DL=d;},()=>{DL=null;});
+async function dl(nom,txt){
+  const contenu="﻿"+txt;
+  if(DL===undefined&&window.claude&&claude.use){ try{ DL=await claude.use("downloads"); }catch(e){ DL=null; } }
+  if(DL){
+    try{ await DL.save({filename:nom,data:contenu}); return; }
+    catch(e){
+      if(e&&e.code==="declined") return;
+      if(e&&(e.code==="rate_limited")){ alert("Un enregistrement est déjà en cours. Réessayez dans un instant."); return; }
+      /* sinon on tente la voie navigateur */
+    }
+  }
+  const b=new Blob([contenu],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=nom;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+$("tpl").onclick=()=>dl("gabarit_ventes.csv",
+  "Mois,Ligne de produit,Territoire,Pays,Ventes\n"+
+  "2026-01,10000-B,QC Distribution,CA,152340.00\n"+
+  "2026-01,30350-SHU,ROC,CA,48210.55\n"+
+  "2026-02,10000-B,QC Distribution,CA,131900.00\n");
+$("btnExport").onclick=()=>{
+  const esc=s=>/[",]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+  let t="Période,Famille,Agence,Pays,Type,Ventes\n";
+  for(const r of M.rows) t+=[r.mois,esc(r.prod),esc(r.terr),r.pays,"Réel",r.v.toFixed(2)].join(",")+"\n";
+  for(const r of PROJ)   t+=[annuel()?ymOf(r.p).y:ymOf(r.p).s,esc(r.prod),esc(r.terr),r.pays,"Projeté",r.v.toFixed(2)].join(",")+"\n";
+  dl("projection_ventes.csv",t);
+};
+let rt; addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(M) dessiner(); },140); });
+
+charger(DATA_CSV,"Démo Chauffage — exercices 2022 à 2026");
+$("vG").textContent=fmtPct(par.gGlobal);
+$("vH").textContent=par.horizon+(annuel()?" exercice"+(par.horizon>1?"s":""):" mois");
+$("vS").textContent="± 3,0 pts";
+</script>
+
+</body>
+</html>
