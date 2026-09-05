@@ -1,391 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title data-en="Jérôme Potvin — Commercial Strategy &amp; Applied AI" data-fr="Jérôme Potvin — Stratégie commerciale &amp; IA appliquée">Jérôme Potvin — Commercial Strategy &amp; Applied AI</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jérôme Potvin — AI & Commercial Strategy Publications / Publications IA & Stratégie Commerciale</title>
+<meta name="description" content="Bilingual portfolio of published AI strategy work. Portfolio bilingue de publications sur l'IA appliquée à la distribution CVC/électrique.">
 <style>
-:root{
-  --navy:#0F2544; --slate:#1E3A5F; --accent:#F4820A; --accentL:#FEF0E0;
-  --bg:#F0F4FA; --card:#FFFFFF; --text:#1A1A2E; --muted:#6B7A99; --border:#D4DCEA;
-  --teal:#0891B2; --green:#16A349;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
-.mono{font-family:'IBM Plex Mono',monospace}
-.display{font-family:'Space Grotesk',sans-serif}
-a{color:inherit}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
 
-/* ── Lang toggle ── */
-.lang-toggle{position:fixed;top:18px;right:18px;z-index:50;display:flex;background:rgba(15,37,68,0.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:3px;gap:2px}
-.lang-btn{border:none;background:transparent;color:rgba(255,255,255,0.55);font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.04em;padding:6px 13px;border-radius:16px;cursor:pointer;transition:background .15s ease,color .15s ease}
-.lang-btn.active{background:var(--accent);color:#fff}
+  :root{
+    --ink: #0A1622; --navy: #0F1B33; --navy-2: #182648;
+    --paper: #F2F0E9; --paper-dim: #E7E4DA;
+    --copper: #B96A3C; --copper-bright: #E8622C; --teal: #2E7D6B;
+    --muted: #5B6670; --hair: #D6D2C7;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Newsreader',Georgia,serif; font-size:17px; line-height:1.6; }
+  .mono{ font-family:'Spline Sans Mono',monospace; }
 
-/* ── Layout shells ── */
-.wrap{max-width:1100px;margin:0 auto;padding:0 28px}
-section{padding:96px 0}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
-.section-head{margin-bottom:44px;max-width:640px}
-.section-title{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-0.01em;margin-top:10px;color:var(--navy)}
-.section-sub{color:var(--muted);font-size:15px;margin-top:10px}
+  .masthead{ background:var(--ink); color:var(--paper); border-bottom:1px solid rgba(255,255,255,0.1); }
+  .masthead-inner{ max-width:960px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family:'Spline Sans Mono',monospace; font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; font-weight:600; }
+  .brand b{ color:var(--copper-bright); }
+  .lang-pill{ font-family:'Spline Sans Mono',monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(242,240,233,0.55); border:1px solid rgba(255,255,255,0.18); padding:5px 12px; border-radius:20px; }
 
-/* ── Hero ── */
-.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:0}
-.hero-inner{position:relative;z-index:2;padding:110px 28px 90px;max-width:1100px;margin:0 auto}
-.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px}
-.hero-eyebrow::before{content:"";width:22px;height:1px;background:var(--accent)}
-h1.hero-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,5.4vw,58px);line-height:1.05;letter-spacing:-0.02em;margin:22px 0 24px;max-width:820px}
-h1.hero-title em{font-style:normal;color:var(--accent)}
-.hero-lede{font-size:17px;color:rgba(255,255,255,0.72);max-width:560px;margin-bottom:36px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer;border:none;transition:transform .15s ease,box-shadow .15s ease}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 22px rgba(244,130,10,0.28)}
-.btn-ghost{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.28)}
-.hero-meta{margin-top:56px;display:flex;gap:36px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(255,255,255,0.55)}
-.hero-meta b{color:#fff;font-family:'Space Grotesk',sans-serif;font-size:19px;display:block;font-weight:700}
+  .hero{ background:linear-gradient(160deg, var(--ink) 0%, var(--navy) 100%); color:var(--paper); padding:56px 0 64px; position:relative; overflow:hidden; }
+  .hero::after{ content:""; position:absolute; right:-80px; top:-80px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle at 30% 30%, var(--copper-bright), transparent 70%); opacity:0.22; }
+  .hero-inner{ max-width:960px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+  .kicker{ font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--copper-bright); margin:0 0 18px; display:flex; align-items:center; gap:10px; }
+  .kicker::before{ content:""; width:26px; height:1px; background:var(--copper-bright); }
+  .hero h1{ font-size:clamp(26px,4.6vw,38px); font-weight:600; line-height:1.22; margin:0 0 8px; max-width:680px; }
+  .hero h1.fr-sub{ color:rgba(242,240,233,0.62); font-style:italic; font-weight:400; font-size:clamp(18px,3vw,24px); margin-bottom:20px; }
+  .hero p{ font-size:15.5px; color:rgba(242,240,233,0.72); max-width:600px; margin:0 0 6px; }
+  .hero p.fr-sub{ font-style:italic; color:rgba(242,240,233,0.5); }
 
-/* Blueprint background */
-.bp-layer{position:absolute;inset:0;z-index:1;opacity:0.9}
-.bp-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.035) 1px,transparent 1px);background-size:34px 34px}
-.bp-fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,37,68,0) 0%,var(--navy) 92%)}
+  .circuit{ margin-top:32px; display:flex; align-items:center; max-width:680px; }
+  .circuit-line{ flex:1; height:1px; background:rgba(255,255,255,0.18); }
+  .circuit-node{ width:7px; height:7px; border-radius:50%; background:var(--copper-bright); flex-shrink:0; box-shadow:0 0 0 3px rgba(232,98,44,0.18); }
+  .circuit-label{ font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:0.06em; color:rgba(242,240,233,0.5); text-transform:uppercase; padding:0 10px; white-space:nowrap; }
+  .circuit-label .fr-sub{ color:rgba(242,240,233,0.3); }
 
-/* ── Signature schematic ── */
-.schematic-card{background:var(--navy);border-radius:18px;padding:40px 34px;overflow-x:auto}
-.schematic-card svg{display:block;margin:0 auto;min-width:640px}
-.bp-node-label{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#fff;font-weight:500}
-.bp-node-sub{font-family:'Inter',sans-serif;font-size:9.5px;fill:rgba(255,255,255,0.55)}
+  .content{ max-width:960px; margin:0 auto; padding:52px 24px 0; }
 
-/* ── Project card ── */
-.project{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 4px 18px rgba(15,37,68,0.06)}
-.project-top{padding:34px 34px 0}
-.project-tag{display:inline-flex;align-items:center;gap:6px;background:var(--accentL);color:#B45309;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:16px}
-.project-title{font-family:'Space Grotesk',sans-serif;font-size:25px;font-weight:700;color:var(--navy)}
-.project-desc{color:var(--muted);margin-top:12px;max-width:600px;font-size:14.5px}
-.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;margin-top:28px;border-top:1px solid var(--border)}
-.feature{padding:20px 34px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
-.feature:nth-child(3n){border-right:none}
-.feature-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:600}
-.feature-name{font-weight:700;font-size:13.5px;margin-top:6px;color:var(--text)}
-.feature-sub{font-size:12px;color:var(--muted);margin-top:3px}
-.project-foot{display:flex;justify-content:space-between;align-items:center;padding:20px 34px;background:var(--bg);flex-wrap:wrap;gap:12px}
-.lock-note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+  .pillar{ margin-bottom:56px; }
+  .pillar-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
+  .pillar-num{ font-family:'Spline Sans Mono',monospace; font-size:13px; color:var(--copper); font-weight:600; }
+  .pillar-title{ font-size:22px; font-weight:600; }
+  .pillar-title .t-en{ font-size:16px; font-weight:400; font-style:italic; color:var(--muted); margin-left:10px; }
+  .pillar-sub{ color:var(--muted); font-size:14px; margin:4px 0 26px; max-width:620px; line-height:1.55; }
+  .pillar-sub .d-en{ display:block; font-style:italic; color:#8b93a0; margin-top:3px; }
 
-/* ── Systems grid ── */
-.sys-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
-.sys-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
-.sys-card .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);margin-bottom:14px}
-.sys-card h3{font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--navy);margin-bottom:8px}
-.sys-card p{font-size:13px;color:var(--muted)}
-.sys-card .status{display:inline-block;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.05em;padding:3px 9px;border-radius:10px}
-.status-live{background:#EAFBF1;color:var(--green)}
-.status-paused{background:var(--accentL);color:#B45309}
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:680px){ .cards{ grid-template-columns:1fr; } }
 
-/* ── Publications ── */
-.pub-list{border-top:1px solid var(--border)}
-.pub-row{display:flex;gap:24px;padding:22px 0;border-bottom:1px solid var(--border);align-items:baseline;flex-wrap:wrap}
-.pub-row .pub-date{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);width:90px;flex-shrink:0}
-.pub-row .pub-body{flex:1;min-width:260px}
-.pub-title{font-weight:700;font-size:15px;color:var(--text)}
-.pub-venue{font-size:12.5px;color:var(--accent);font-weight:600;margin-top:2px}
-.pub-link{font-size:12.5px;font-weight:700;color:var(--teal);text-decoration:none}
+  .card{ background:#fff; border:1px solid var(--hair); border-radius:4px; padding:20px 22px; display:flex; flex-direction:column; gap:9px; }
+  a.card.linked{ text-decoration:none; color:inherit; transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+  a.card.linked:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(15,22,34,0.08); border-color:var(--copper-bright); }
+  .card-link{ font-family:'Spline Sans Mono',monospace; font-size:14px; font-weight:600; color:var(--copper-bright); flex-shrink:0; }
+  .card-venue{ font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:var(--teal); font-weight:600; }
+  .card-venue .sep{ color:var(--hair); margin:0 3px; }
+  .card-title{ line-height:1.32; }
+  .card-title .t-fr{ display:block; font-size:16.5px; font-weight:600; color:var(--ink); }
+  .card-title .t-en{ display:block; font-size:13.5px; font-style:italic; color:var(--muted); margin-top:3px; }
+  .card-desc p{ margin:0; font-size:13.5px; line-height:1.5; }
+  .card-desc .d-fr{ color:var(--ink); }
+  .card-desc .d-en{ color:#8b93a0; font-style:italic; margin-top:6px; padding-top:6px; border-top:1px dashed var(--hair); }
+  .card-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:6px; gap:10px; flex-wrap:wrap; }
+  .card-format{ font-family:'Spline Sans Mono',monospace; font-size:9.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; }
+  .card-format .sep{ color:var(--hair); margin:0 3px; }
+  .chips{ display:flex; gap:6px; }
+  .chip{ font-family:'Spline Sans Mono',monospace; font-size:11px; font-weight:600; color:var(--copper-bright); text-decoration:none; border:1px solid var(--copper-bright); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:background 0.15s ease, color 0.15s ease; }
+  .chip:hover{ background:var(--copper-bright); color:#fff; }
+  .chip .arrow{ opacity:0.7; }
 
-/* ── Footer ── */
-footer{background:var(--navy);color:rgba(255,255,255,0.6);padding:56px 0 40px}
-.foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;align-items:center}
-.foot-name{color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px}
-.foot-links a{font-size:13px;text-decoration:none;color:rgba(255,255,255,0.65);margin-left:22px}
-.foot-links a:hover{color:#fff}
-
-/* ── Reveal ── */
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
-.reveal.in{opacity:1;transform:translateY(0)}
+  .footer{ border-top:1px solid var(--hair); margin-top:20px; padding:32px 24px 56px; text-align:center; }
+  .footer p{ font-size:13px; color:var(--muted); margin:0 0 6px; }
+  .footer a{ color:var(--copper-bright); text-decoration:none; font-weight:600; }
 </style>
 </head>
 <body>
 
-<div class="lang-toggle">
-  <button class="lang-btn active" data-setlang="en">EN</button>
-  <button class="lang-btn" data-setlang="fr">FR</button>
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="brand"><b>JP</b> · Publications</div>
+  </div>
 </div>
 
-<!-- ═══════════ HERO ═══════════ -->
 <div class="hero">
-  <div class="bp-layer">
-    <div class="bp-grid"></div>
-    <svg width="100%" height="620" viewBox="0 0 1100 620" style="position:absolute;top:0;left:0;opacity:0.5">
-      <defs><marker id="arrH" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L6,2.5 z" fill="#0891B2"/></marker></defs>
-      <path d="M 60 480 L 60 300 L 300 300" stroke="#0891B2" stroke-width="1.2" fill="none" marker-end="url(#arrH)"/>
-      <path d="M 60 560 L 220 560 L 220 340" stroke="#22384f" stroke-width="1.2" fill="none"/>
-      <path d="M 950 120 L 950 260 L 760 260" stroke="#22384f" stroke-width="1.2" fill="none"/>
-      <circle cx="60" cy="480" r="3" fill="#F4820A"/>
-      <circle cx="220" cy="560" r="3" fill="#F4820A"/>
-      <circle cx="950" cy="120" r="3" fill="#F4820A"/>
-    </svg>
-  </div>
   <div class="hero-inner">
-    <div class="hero-eyebrow i18n" data-en="Director, Commercial Strategy — Innovair Solutions" data-fr="Directeur, Stratégie Commerciale — Innovair Solutions">Director, Commercial Strategy — Innovair Solutions</div>
-    <h1 class="hero-title i18n-html" data-en="25 years on the commercial front line, turned into &lt;em&gt;systems that hold up.&lt;/em&gt;" data-fr="25 ans de terrain commercial, convertis en &lt;em&gt;systèmes qui tiennent la route.&lt;/em&gt;">25 years on the commercial front line, turned into <em>systems that hold up.</em></h1>
-    <p class="hero-lede i18n" data-en="I connect commercial intuition to data — market models, monitoring agents, dashboards — for faster, better-grounded decisions in electrical and HVAC distribution." data-fr="Je relie l'intuition commerciale à la donnée — modèles de marché, agents de veille, tableaux de bord — pour des décisions plus rapides et mieux ancrées, dans la distribution électrique et CVAC.">I connect commercial intuition to data — market models, monitoring agents, dashboards — for faster, better-grounded decisions in electrical and HVAC distribution.</p>
-    <div class="hero-cta">
-      <a href="#projet" class="btn btn-primary i18n" data-en="See the Market Intelligence app →" data-fr="Voir l'application Market Intelligence →">See the Market Intelligence app →</a>
-      <a href="#publications" class="btn btn-ghost i18n" data-en="Read the publications" data-fr="Lire les publications">Read the publications</a>
-    </div>
-    <div class="hero-meta">
-      <div><b>25+ yrs</b><span class="i18n" data-en="sales &amp; commercial leadership" data-fr="vente &amp; leadership commercial">sales &amp; commercial leadership</span></div>
-      <div><b>7</b><span class="i18n" data-en="articles published (2026)" data-fr="articles publiés (2026)">articles published (2026)</span></div>
-      <div><b>3</b><span class="i18n" data-en="AI systems in production" data-fr="systèmes IA en production">AI systems in production</span></div>
-      <div><b>EMBA</b><span class="i18n" data-en="+ Business Intelligence, U. Sherbrooke" data-fr="+ Business Intelligence, U. Sherbrooke">+ Business Intelligence, U. Sherbrooke</span></div>
-      <div><b>Harvard</b><span class="i18n" data-en="AI certifications, Harvard Business School Online" data-fr="certifications IA, Harvard Business School Online">AI certifications, Harvard Business School Online</span></div>
-      <div><b>MIT</b><span class="i18n" data-en="Generative &amp; agentic AI program (Sept. 2026)" data-fr="Formation IA générative &amp; agentique (sept. 2026)">Generative &amp; agentic AI program (Sept. 2026)</span></div>
-      <div><b class="i18n" data-en="Lecturer" data-fr="Chargé de cours">Lecturer</b><span class="i18n" data-en="CRM, U. Sherbrooke — since 2019" data-fr="CRM, U. Sherbrooke — depuis 2019">CRM, U. Sherbrooke — since 2019</span></div>
+    <div class="kicker">Commercial Strategy × Applied AI <span style="opacity:.5">/</span> Stratégie Commerciale × IA Appliquée</div>
+    <h1>Writing the bridge between the field and artificial intelligence</h1>
+    <h1 class="fr-sub">Écrire le pont entre le terrain et l'intelligence artificielle</h1>
+    <p>A selection of published articles and analyses on AI governance, adoption, and commercial impact in HVAC/electrical distribution.</p>
+    <p class="fr-sub">Une sélection d'articles et d'analyses publiés sur la gouvernance, l'adoption et l'impact commercial de l'IA dans la distribution CVC/électrique.</p>
+
+    <div class="circuit">
+      <div class="circuit-node"></div>
+      <div class="circuit-line"></div>
+      <div class="circuit-label">Governance <span class="fr-sub">/ Gouvernance</span></div>
+      <div class="circuit-line"></div>
+      <div class="circuit-node"></div>
+      <div class="circuit-line"></div>
+      <div class="circuit-label">Adoption <span class="fr-sub">/ Adoption</span></div>
+      <div class="circuit-line"></div>
+      <div class="circuit-node"></div>
+      <div class="circuit-line"></div>
+      <div class="circuit-label">Impact <span class="fr-sub">/ Impact</span></div>
+      <div class="circuit-line"></div>
+      <div class="circuit-node"></div>
     </div>
   </div>
-  <div class="bp-fade"></div>
 </div>
 
-<!-- ═══════════ SIGNATURE SCHEMATIC ═══════════ -->
-<section class="wrap reveal">
-  <div class="section-head">
-    <div class="eyebrow i18n" data-en="How it fits together" data-fr="Comment ça s'assemble">How it fits together</div>
-    <h2 class="section-title i18n" data-en="Business context drives the engine — not the other way around" data-fr="Le contexte métier fait tourner le moteur, pas l'inverse">Business context drives the engine — not the other way around</h2>
-    <p class="section-sub i18n" data-en="Every system below starts from a real commercial problem lived on the ground — not a technology looking for a use case." data-fr="Chaque système ci-dessous part d'un problème commercial réel vécu sur le terrain — pas d'une technologie qui cherche un usage.">Every system below starts from a real commercial problem lived on the ground — not a technology looking for a use case.</p>
-  </div>
-  <div class="schematic-card">
-    <svg viewBox="0 0 900 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
-      <defs><marker id="arrS" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#6B7A99"/></marker></defs>
-      <rect x="20" y="80" width="150" height="60" rx="8" fill="#12315a" stroke="#22456f"/>
-      <text x="95" y="105" text-anchor="middle" class="bp-node-label i18n" data-en="25 yrs on the ground" data-fr="25 ans terrain">25 yrs on the ground</text>
-      <text x="95" y="120" text-anchor="middle" class="bp-node-sub i18n" data-en="Sales · distribution · HVAC" data-fr="Ventes · distribution · CVAC">Sales · distribution · HVAC</text>
+<div class="content">
 
-      <rect x="220" y="20" width="150" height="60" rx="8" fill="#12315a" stroke="#22456f"/>
-      <text x="295" y="45" text-anchor="middle" class="bp-node-label i18n" data-en="AI/BI training" data-fr="Formation IA/BI">AI/BI training</text>
-      <text x="295" y="60" text-anchor="middle" class="bp-node-sub">EMBA · Sherbrooke · Harvard</text>
-
-      <rect x="220" y="140" width="150" height="60" rx="8" fill="#12315a" stroke="#22456f"/>
-      <text x="295" y="165" text-anchor="middle" class="bp-node-label i18n" data-en="Client problem" data-fr="Problème client">Client problem</text>
-      <text x="295" y="180" text-anchor="middle" class="bp-node-sub i18n" data-en="Market sizing · price monitoring" data-fr="Sizing marché · veille prix">Market sizing · price monitoring</text>
-
-      <rect x="420" y="80" width="170" height="60" rx="8" fill="#F4820A" stroke="#F4820A"/>
-      <text x="505" y="105" text-anchor="middle" class="bp-node-label i18n" style="fill:#1A1A2E;font-weight:700" data-en="System built" data-fr="Système construit">System built</text>
-      <text x="505" y="120" text-anchor="middle" class="bp-node-sub i18n" style="fill:#5a3a12" data-en="App · n8n agent · model" data-fr="App · agent n8n · modèle">App · n8n agent · model</text>
-
-      <rect x="650" y="20" width="150" height="60" rx="8" fill="#0F2544" stroke="#0891B2" stroke-width="1.5"/>
-      <text x="725" y="45" text-anchor="middle" class="bp-node-label i18n" data-en="Commercial decision" data-fr="Décision commerciale">Commercial decision</text>
-      <text x="725" y="60" text-anchor="middle" class="bp-node-sub i18n" data-en="Faster, better grounded" data-fr="Plus rapide, mieux ancrée">Faster, better grounded</text>
-
-      <rect x="650" y="140" width="150" height="60" rx="8" fill="#0F2544" stroke="#0891B2" stroke-width="1.5"/>
-      <text x="725" y="165" text-anchor="middle" class="bp-node-label i18n" data-en="Content &amp; positioning" data-fr="Contenu &amp; positionnement">Content &amp; positioning</text>
-      <text x="725" y="180" text-anchor="middle" class="bp-node-sub i18n" data-en="Articles · talks" data-fr="Articles · conférences">Articles · talks</text>
-
-      <path d="M170,110 L220,60 L220,60" stroke="#6B7A99" fill="none" marker-end="url(#arrS)"/>
-      <path d="M170,110 L220,160" stroke="#6B7A99" fill="none" marker-end="url(#arrS)"/>
-      <path d="M370,50 L420,95" stroke="#6B7A99" fill="none" marker-end="url(#arrS)"/>
-      <path d="M370,170 L420,120" stroke="#6B7A99" fill="none" marker-end="url(#arrS)"/>
-      <path d="M590,100 L650,50" stroke="#0891B2" stroke-width="1.5" fill="none" marker-end="url(#arrS)"/>
-      <path d="M590,115 L650,165" stroke="#0891B2" stroke-width="1.5" fill="none" marker-end="url(#arrS)"/>
-    </svg>
-  </div>
-</section>
-
-<!-- ═══════════ PROJET PHARE ═══════════ -->
-<section id="projet" class="wrap reveal">
-  <div class="section-head">
-    <div class="eyebrow i18n" data-en="Featured project" data-fr="Projet phare">Featured project</div>
-    <h2 class="section-title i18n" data-en="Market Intelligence Application" data-fr="Application Market Intelligence">Market Intelligence Application</h2>
-    <p class="section-sub i18n" data-en="A market-sizing and commercial-targeting tool for electric heating and heat pumps — built and grounded on real Canadian data sources." data-fr="Un outil de sizing de marché et de ciblage commercial pour le chauffage électrique et les thermopompes — construit et ancré sur des sources canadiennes réelles.">A market-sizing and commercial-targeting tool for electric heating and heat pumps — built and grounded on real Canadian data sources.</p>
-  </div>
-  <div class="project">
-    <div class="project-top">
-      <span class="project-tag i18n" data-en="🔒 Restricted access" data-fr="🔒 Accès protégé">🔒 Restricted access</span>
-      <div class="project-title">Market Intelligence — Innovair Solutions</div>
-      <p class="project-desc i18n" data-en="Market sizing by region, product and channel, retail-price competitive monitoring, and account/pipeline mapping to target — with a fully documented methodology so every number stays traceable." data-fr="Sizing de marché par région, produit et canal, veille concurrentielle sur les prix de détail, et cartographie des comptes/pipeline à cibler — avec une méthodologie entièrement documentée pour que chaque chiffre reste traçable.">Market sizing by region, product and channel, retail-price competitive monitoring, and account/pipeline mapping to target — with a fully documented methodology so every number stays traceable.</p>
+  <div class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">01</span>
+      <span class="pillar-title"><span class="t-en">Governance & trust</span><span class="t-fr">Gouvernance & confiance</span></span>
     </div>
-    <div class="feature-grid">
-      <div class="feature"><div class="feature-num">01</div><div class="feature-name i18n" data-en="Dashboard" data-fr="Tableau de bord">Dashboard</div><div class="feature-sub i18n" data-en="Overview of the filtered market" data-fr="Vue d'ensemble du marché filtré">Overview of the filtered market</div></div>
-      <div class="feature"><div class="feature-num">02</div><div class="feature-name i18n" data-en="Market Intelligence" data-fr="Intelligence de marché">Market Intelligence</div><div class="feature-sub i18n" data-en="Sizing by region / product / channel" data-fr="Sizing par région / produit / canal">Sizing by region / product / channel</div></div>
-      <div class="feature"><div class="feature-num">03</div><div class="feature-name i18n" data-en="Opportunities" data-fr="Opportunités">Opportunities</div><div class="feature-sub i18n" data-en="Accounts, pipeline, white space" data-fr="Comptes, pipeline, white space">Accounts, pipeline, white space</div></div>
-      <div class="feature"><div class="feature-num">04</div><div class="feature-name i18n" data-en="Competitive Monitoring" data-fr="Veille concurrentielle">Competitive Monitoring</div><div class="feature-sub i18n" data-en="Market share &amp; signals" data-fr="Parts de portefeuille &amp; signaux">Market share &amp; signals</div></div>
-      <div class="feature"><div class="feature-num">05</div><div class="feature-name i18n" data-en="Definitions" data-fr="Définitions">Definitions</div><div class="feature-sub i18n" data-en="Channel / vertical / product glossary" data-fr="Glossaire canaux / verticaux / produits">Channel / vertical / product glossary</div></div>
-      <div class="feature"><div class="feature-num">06</div><div class="feature-name i18n" data-en="Methodology" data-fr="Méthodologie">Methodology</div><div class="feature-sub i18n" data-en="Sources, assumptions, limits, architecture" data-fr="Sources, hypothèses, limites, architecture">Sources, assumptions, limits, architecture</div></div>
-    </div>
-    <div class="project-foot">
-      <div class="lock-note i18n" data-en="🔒 Access on request — grounded on CMHC/StatCan/HRAI/NRCan data, exact sizing not public." data-fr="🔒 Accès sur demande — données ancrées SCHL/StatCan/HRAI/NRCan, sizing exact non public.">🔒 Access on request — grounded on CMHC/StatCan/HRAI/NRCan data, exact sizing not public.</div>
-      <a href="market-intelligence-demo.html" class="btn btn-primary i18n" style="padding:10px 20px" data-en="Open the application →" data-fr="Ouvrir l'application →">Open the application →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ SYSTÈMES CONSTRUITS ═══════════ -->
-<section class="wrap reveal">
-  <div class="section-head">
-    <div class="eyebrow i18n" data-en="Under the hood" data-fr="Sous le capot">Under the hood</div>
-    <h2 class="section-title i18n" data-en="Systems in production" data-fr="Systèmes en production">Systems in production</h2>
-    <p class="section-sub i18n" data-en="Beyond the flagship app — automations built to replace recurring manual work." data-fr="Au-delà de l'application phare — des automatisations construites pour remplacer du travail manuel récurrent.">Beyond the flagship app — automations built to replace recurring manual work.</p>
-  </div>
-  <div class="sys-grid">
-    <div class="sys-card">
-      <div class="dot"></div>
-      <h3 class="i18n" data-en="Competitive Monitoring Agent" data-fr="Agent de veille concurrentielle">Competitive Monitoring Agent</h3>
-      <p class="i18n" data-en="Weekly n8n workflow that scrapes Home Depot/Rona pricing on competitor brands and produces a $/W analysis via the Claude API." data-fr="Workflow n8n hebdomadaire qui scrape les prix Home Depot/Rona sur les marques concurrentes et produit une analyse $/W via l'API Claude.">Weekly n8n workflow that scrapes Home Depot/Rona pricing on competitor brands and produces a $/W analysis via the Claude API.</p>
-      <span class="status status-paused i18n" data-en="Paused — hardware access" data-fr="En pause — accès matériel">Paused — hardware access</span>
-    </div>
-    <div class="sys-card">
-      <div class="dot"></div>
-      <h3 class="i18n" data-en="Weekly AI Monitoring" data-fr="Veille IA hebdomadaire">Weekly AI Monitoring</h3>
-      <p class="i18n" data-en="n8n workflow compiling a weekly French-language digest on AI news relevant to B2B/HVAC, with week-over-week tracking in Airtable." data-fr="Workflow n8n qui compile un digest hebdomadaire en français sur l'actualité IA pertinente au B2B/CVAC, avec suivi semaine-sur-semaine dans Airtable.">n8n workflow compiling a weekly French-language digest on AI news relevant to B2B/HVAC, with week-over-week tracking in Airtable.</p>
-      <span class="status status-live i18n" data-en="Active" data-fr="Actif">Active</span>
-    </div>
-    <div class="sys-card">
-      <div class="dot"></div>
-      <h3 class="i18n" data-en="Budget Forecast Model" data-fr="Modèle de prévision budgétaire">Budget Forecast Model</h3>
-      <p class="i18n" data-en="Driver-based Excel model for heating and heat pump sales." data-fr="Modèle Excel piloté par des inducteurs (driver-based) pour les ventes de chauffage et de thermopompes.">Driver-based Excel model for heating and heat pump sales.</p>
-      <span class="status status-live i18n" data-en="Active" data-fr="Actif">Active</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ PUBLICATIONS ═══════════ -->
-<section id="publications" class="wrap reveal">
-  <div class="section-head">
-    <div class="eyebrow i18n" data-en="Signed publications" data-fr="Publications signées">Signed publications</div>
-    <h2 class="section-title i18n" data-en="Thought leadership — AI in distribution" data-fr="Thought leadership — IA en distribution">Thought leadership — AI in distribution</h2>
-    <p class="section-sub i18n" data-en="Articles published as Director, Commercial Strategy, Innovair Solutions." data-fr="Articles publiés à titre de Directeur, Stratégie Commerciale, Innovair Solutions.">Articles published as Director, Commercial Strategy, Innovair Solutions.</p>
-  </div>
-        <div class="pub-list">
-<div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Artificial Intelligence at the Crossroads of Cybersecurity and Governance</div>
-        <div class="pub-venue i18n" data-en="Feature article — manufacturing, distribution, electricity &amp; plumbing" data-fr="Article de fond — manufacturier, distribution, électricité et plomberie">Feature article — manufacturing, distribution, electricity &amp; plumbing</div>
-        <a href="ai_cybersecurity_governance_en.html" class="pub-link">EN →</a>
-        &nbsp;·&nbsp;
-        <a href="ai_cybersecurity_governance_fr.html" class="pub-link">FR →</a>
+    <p class="pillar-sub"><span class="d-en">Why the gap between AI adoption and AI governance is the real risk to manage.</span><span class="d-fr">Pourquoi l'écart entre l'adoption de l'IA et sa gouvernance est le vrai risque à gérer.</span></p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-venue">Article · Innovair Group <span class="sep">/</span> Article · Innovair Group</div>
+        <div class="card-title">
+          <span class="t-fr">Wired for Trust: Why AI Governance Is the Missing Circuit</span>
+          <span class="t-en">Sous tension : pourquoi la gouvernance de l'IA est le circuit manquant</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">88% of organizations use AI — only 8% maintain a comprehensive governance framework. What Schneider Electric does differently.</p>
+          <p class="d-en">88% des organisations utilisent l'IA — seulement 8% ont un cadre de gouvernance complet. Ce que Schneider Electric fait différemment.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Article + carousel <span class="sep">/</span> Article + carrousel</span>
+          <div class="chips"><a class="chip" href="wired-for-trust-article.html">EN <span class="arrow">→</span></a><a class="chip" href="wired-for-trust-article-fr.html">FR <span class="arrow">→</span></a></div>
+        </div>
       </div>
-      </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Same Voltage, Two Outcomes: Why AI in Electrical Distribution is Won on Change, Not Technology</div>
-        <div class="pub-venue">Canadian Electrical Wholesaler</div>
-        <a href="AI_electrical_distribution_Canada.html" class="pub-link i18n" data-en="Read the article →" data-fr="Lire l'article →">Read the article →</a>
-      </div>
-    </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Promoted to Fail: The Peter Principle Meets AI</div>
-        <div class="pub-venue i18n" data-en="HR / leadership angle" data-fr="Angle RH / leadership">HR / leadership angle</div>
-        <a href="HR%20peter%20principle_ai_article_eng.html" class="pub-link">EN →</a>
-        &nbsp;·&nbsp;
-        <a href="HR%20principe%20peter_ai_article_fr.html" class="pub-link">FR →</a>
-      </div>
-    </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Your Customers Aren't Afraid of AI — Your Employees Are</div>
-        <div class="pub-venue i18n" data-en="Agentic AI / internal adoption" data-fr="IA agentique / adoption interne">Agentic AI / internal adoption</div>
-        <a href="article%20ia%20agentique%20en.html" class="pub-link">EN →</a>
-        &nbsp;·&nbsp;
-        <a href="article%20ia%20agentique.html" class="pub-link">FR →</a>
-      </div>
-    </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">From Instinct to Intelligence</div>
-        <div class="pub-venue">De l'instinct à l'intelligence</div>
-        <a href="de-_instinct_a-_intelligence_fr.html" class="pub-link">FR →</a>
-      </div>
-    </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Japan's Signal: The End of the Stand-Alone Gas Water Heater</div>
-        <div class="pub-venue i18n" data-en="Market signal / product trend" data-fr="Signal de marché / tendance produit">Market signal / product trend</div>
-        <a href="japan_signal_article_en.html" class="pub-link">EN →</a>
-      </div>
-    </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Wired for Trust: Why AI Governance Is the Missing Circuit</div>
-        <div class="pub-venue i18n" data-en="LinkedIn — article &amp; carousel" data-fr="LinkedIn — article &amp; carrousel">LinkedIn — article &amp; carousel</div>
-        <a href="wired_for_trust_article.html" class="pub-link">EN →</a>
-        &nbsp;·&nbsp;
-        <a href="wired_for_trust_article_fr.html" class="pub-link">FR →</a>
-      </div>
-    </div>
-    <div class="pub-row">
-      <div class="pub-date mono">2026</div>
-      <div class="pub-body">
-        <div class="pub-title">Your Best Rep Can't Remember</div>
-        <div class="pub-venue i18n" data-en="CRM / sales memory" data-fr="CRM / mémoire commerciale">CRM / sales memory</div>
-        <a href="your_best_rep_cant_remember_en.html" class="pub-link">EN →</a>
-        &nbsp;·&nbsp;
-        <a href="votre_meilleur_representant_fr.html" class="pub-link">FR →</a>
+      <div class="card">
+        <div class="card-venue">Canadian Electrical Wholesaler · Featured in newsletter</div>
+        <div class="card-title">
+          <span class="t-fr">Your Customers Aren't Afraid of AI. Your Employees Are.</span>
+          <span class="t-en">L'IA ne fait pas peur à vos clients. Elle fait peur à vos employés.</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">The real risk of agentic AI isn't technological — it's trust. 5 principles for deploying without widening the gap.</p>
+          <p class="d-en">Le vrai risque de l'IA agentique n'est pas technologique — c'est la confiance. 5 principes pour déployer sans creuser le fossé.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Article + carousel <span class="sep">/</span> Article + carrousel</span>
+          <div class="chips"><a class="chip" href="https://www.canadianelectricalwholesaler.ca/your-customers-arent-afraid-of-ai-your-employees-are/">EN <span class="arrow">→</span></a><a class="chip" href="article ia agentique.html">FR <span class="arrow">→</span></a></div>
+        </div>
       </div>
     </div>
   </div>
-  <p style="margin-top:18px;font-size:12px;color:var(--muted)" class="i18n" data-en="↳ Double-check each link matches the right article once duplicate files are removed from the repo." data-fr="↳ Vérifie que chaque lien correspond bien au bon article une fois les fichiers en double retirés du dépôt.">↳ Double-check each link matches the right article once duplicate files are removed from the repo.</p>
-</section>
 
-<footer>
-  <div class="wrap foot-row">
-    <div>
-      <div class="foot-name">Jérôme Potvin</div>
-      <div style="font-size:12.5px;margin-top:4px" class="i18n" data-en="Director, Commercial Strategy — Innovair Solutions" data-fr="Directeur, Stratégie Commerciale — Innovair Solutions">Director, Commercial Strategy — Innovair Solutions</div>
+  <div class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">02</span>
+      <span class="pillar-title"><span class="t-en">Human adoption & leadership</span><span class="t-fr">Adoption humaine & leadership</span></span>
     </div>
-    <div class="foot-links">
-      <a href="http://linkedin.com/in/jeromepotvin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="#projet" class="i18n" data-en="Application" data-fr="Application">Application</a>
-      <a href="#publications" class="i18n" data-en="Publications" data-fr="Publications">Publications</a>
+    <p class="pillar-sub"><span class="d-en">Technology changes nothing without the teams who adopt it — and the structures that prepare them.</span><span class="d-fr">La technologie ne change rien sans les équipes qui l'adoptent — et les structures qui les préparent.</span></p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-venue">Article · Same Voltage Series <span class="sep">/</span> Article · Série Same Voltage</div>
+        <div class="card-title">
+          <span class="t-fr">Promoted to Fail: Why the Peter Principle Is About to Meet Its Match</span>
+          <span class="t-en">Promus pour échouer : le principe de Peter va enfin trouver son égal</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">65% of managers are promoted for the wrong reasons. What AI actually changes — and what it doesn't.</p>
+          <p class="d-en">65% des gestionnaires promus le sont pour les mauvaises raisons. Ce que l'IA change vraiment — et ce qu'elle ne change pas.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Article + carousel <span class="sep">/</span> Article + carrousel</span>
+          <div class="chips"><a class="chip" href="HR peter principle-ai-article-eng.html">EN <span class="arrow">→</span></a><a class="chip" href="HR principe peter-ai-article-fr.html">FR <span class="arrow">→</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-venue">Canadian Electrical Wholesaler <span class="sep">/</span> Le monde de l'électricité</div>
+        <div class="card-title">
+          <span class="t-fr">Same Voltage, Two Outcomes: Why AI in Electrical Distribution Is Won on Change, Not Technology</span>
+          <span class="t-en">Même tension, deux résultats : pourquoi l'IA en distribution électrique se gagne sur le changement, pas la technologie</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">70% of transformations fail due to human resistance — 6× more success with excellent change management.</p>
+          <p class="d-en">70% des transformations échouent à cause de la résistance humaine — 6× plus de succès avec une gestion du changement rigoureuse.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Canadian Electrical Wholesaler <span class="sep">/</span> Le monde de l'électricité</span>
+          <div class="chips"><a class="chip" href="https://www.lemondedelelectricite.ca/articles/meme-tension-deux-resultats-pourquoi-dans-le-domaine-de-la-distribution-electrique-le-succes-de-lia-repose-sur-le-changement-et-non-sur-la-technologie/">FR <span class="arrow">→</span></a><a class="chip" href="https://www.canadianelectricalwholesaler.ca/ai-in-electrical-distribution-potvin/">EN <span class="arrow">→</span></a></div>
+        </div>
+      </div>
     </div>
   </div>
-</footer>
 
-<script>
-/* ── Language toggle ── */
-function setLang(lang){
-  document.documentElement.setAttribute('lang', lang);
-  document.querySelectorAll('.i18n').forEach(function(el){
-    var v = el.getAttribute('data-'+lang);
-    if(v!==null) el.textContent = v;
-  });
-  document.querySelectorAll('.i18n-html').forEach(function(el){
-    var v = el.getAttribute('data-'+lang);
-    if(v!==null) el.innerHTML = v;
-  });
-  var t = document.querySelector('title');
-  if(t){ var tv=t.getAttribute('data-'+lang); if(tv) t.textContent = tv.replace(/&amp;/g,'&'); }
-  document.querySelectorAll('.lang-btn').forEach(function(b){
-    b.classList.toggle('active', b.getAttribute('data-setlang')===lang);
-  });
-}
-document.querySelectorAll('.lang-btn').forEach(function(b){
-  b.addEventListener('click', function(){ setLang(b.getAttribute('data-setlang')); });
-});
-/* English is shown by default on every load */
-setLang('en');
+  <div class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">03</span>
+      <span class="pillar-title"><span class="t-en">Commercial impact & distribution</span><span class="t-fr">Impact commercial & distribution</span></span>
+    </div>
+    <p class="pillar-sub"><span class="d-en">Measurable outcomes — forecasting, partner retention, sales team productivity.</span><span class="d-fr">Des résultats mesurables — prévisions, rétention de partenaires, productivité des équipes de vente.</span></p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-venue">Article · Published in <span class="sep">/</span> Article · Publié dans</div>
+        <div class="card-title">
+          <span class="t-fr">From Instinct to Intelligence</span>
+          <span class="t-en">De l'instinct à l'intelligence</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">Canadian sales directors lose 8–14 hrs/week to admin work. How AI gives them their time — and their teams — back.</p>
+          <p class="d-en">Les directeurs des ventes canadiens perdent 8-14h/semaine en tâches administratives. Comment l'IA leur redonne leur temps — et leurs équipes.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Electrical Trade Magazine · 2026 <span class="sep">/</span> Electrical Trade Magazine · 2026</span>
+          <div class="chips"><a class="chip" href="de-linstinct-a-lintelligence-fr.html">FR <span class="arrow">→</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-venue">Canadian Electrical Wholesaler</div>
+        <div class="card-title">
+          <span class="t-fr">Your Best Rep Can't Remember 10,000 Accounts. AI Can.</span>
+          <span class="t-en">Votre meilleur représentant ne peut pas se souvenir de 10 000 comptes. L'IA, oui.</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">How AI is redefining indirect sales — real cases from Wesco, Rexel, Grainger, and Schneider Electric.</p>
+          <p class="d-en">Comment l'IA redéfinit les ventes indirectes — cas réels de Wesco, Rexel, Grainger et Schneider Electric.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Innovair Group · 2026 <span class="sep">/</span> Innovair Group · 2026</span>
+          <div class="chips"><a class="chip" href="https://www.canadianelectricalwholesaler.ca/ai-reshaping-channel-sales-distributor-relationships/">EN <span class="arrow">→</span></a><a class="chip" href="votre-meilleur-representant-fr.html">FR <span class="arrow">→</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-venue">Analysis — international signal <span class="sep">/</span> Analyse — signal international</div>
+        <div class="card-title">
+          <span class="t-fr">Japan's Signal: The End of the Stand-Alone Gas Water Heater</span>
+          <span class="t-en">Japan's Signal: The End of the Stand-Alone Gas Water Heater</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">Tokyo Gas stopped selling stand-alone gas water heaters. What that signals about how fast an industry can pivot.</p>
+          <p class="d-en">Tokyo Gas a cessé de vendre des chauffe-eaux au gaz autonomes. Ce que ça signale sur la vitesse de transformation d'une industrie.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Innovair Group · 2026 <span class="sep">/</span> Innovair Group · 2026</span>
+          <div class="chips"><a class="chip" href="japan-signal-article-en.html">EN <span class="arrow">→</span></a><a class="chip" href="japan-signal-article.html">FR <span class="arrow">→</span></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-/* ── Reveal on scroll ── */
-var els=document.querySelectorAll('.reveal');
-if('IntersectionObserver' in window){
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  },{threshold:0.12});
-  els.forEach(function(el){ io.observe(el); });
-}else{
-  els.forEach(function(el){ el.classList.add('in'); });
-}
-</script>
+  <div class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">04</span>
+      <span class="pillar-title"><span class="t-en">Tools & automation</span><span class="t-fr">Outils & automatisation</span></span>
+    </div>
+    <p class="pillar-sub"><span class="d-en">Interactive tools designed and deployed at Innovair — shown here with fictional data to protect proprietary information.</span><span class="d-fr">Outils interactifs conçus et déployés chez Innovair — présentés ici avec des données fictives pour protéger l'information propriétaire.</span></p>
+    <div class="cards">
+
+      <a class="card linked" href="projection-ventes-demo.html">
+        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
+        <div class="card-title">
+          <span class="t-fr">Sales Projection Engine</span>
+          <span class="t-en">Moteur de projection des ventes</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">A commercial planning tool projecting revenue by product line and territory from historical CSV data, with adjustable growth assumptions and uncertainty bands.</p>
+          <p class="d-en">Un outil de planification commerciale qui projette le chiffre d'affaires par ligne de produit et territoire à partir de données CSV historiques, avec hypothèses de croissance ajustables et bandes d'incertitude.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-link">→</span>
+        </div>
+      </a>
+
+      <a class="card linked" href="comparateur-prix-demo.html">
+        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
+        <div class="card-title">
+          <span class="t-fr">Retailer Price Comparison Dashboard</span>
+          <span class="t-en">Tableau de bord comparateur de prix détaillants</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">Tracks pricing across multiple retailers, flags MAP violations, and surfaces which retailer wins on price most often — built for channel pricing governance.</p>
+          <p class="d-en">Suit les prix chez plusieurs détaillants, signale les violations de prix MAP, et identifie quel détaillant l'emporte le plus souvent sur le prix — conçu pour la gouvernance des prix en distribution.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-link">→</span>
+        </div>
+      </a>
+
+      <a class="card linked" href="cross-reference-cables-demo.html">
+        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
+        <div class="card-title">
+          <span class="t-fr">Competitive Cross-Reference Tool</span>
+          <span class="t-en">Outil de cross-référence concurrentielle</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">Maps a heating cable catalogue to competitor equivalents by application and spec, surfacing coverage gaps across product families.</p>
+          <p class="d-en">Fait correspondre un catalogue de câbles chauffants aux équivalents concurrents par application et spécification, révélant les lacunes de couverture par famille de produits.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-link">→</span>
+        </div>
+      </a>
+
+      <a class="card linked" href="market-intelligence-demo.html">
+        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
+        <div class="card-title">
+          <span class="t-fr">Market Intelligence Dashboard</span>
+          <span class="t-en">Tableau de bord d'intelligence de marché</span>
+        </div>
+        <div class="card-desc">
+          <p class="d-fr">Sizes the addressable market by product, vertical, and channel from housing-start and permit data, tracks competitive positioning, and surfaces account-level opportunities and macro signals for the sales team to act on.</p>
+          <p class="d-en">Dimensionne le marché adressable par produit, vertical et canal à partir des données de mises en chantier et de permis, suit le positionnement concurrentiel, et fait ressortir les opportunités par compte et les signaux macro pour l'équipe de vente.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-link">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Jérôme Potvin · Director, Commercial Strategy <span class="mono">/</span> Directeur, Stratégie Commerciale · Innovair Group</p>
+  <p><a href="https://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></p>
+</div>
+
 </body>
 </html>
