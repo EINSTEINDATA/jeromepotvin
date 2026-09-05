@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Artificial Intelligence at the Crossroads of Cybersecurity and Governance</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1E6091; --teal:#168AAD; --amber:#F7A400; --coral:#E85D4E;
+    --paper:#FAFAF7; --ink:#141B2D; --grey:#5B6472;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 24px 80px;}
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 55%,var(--teal) 100%);
+    color:#fff; padding:64px 24px 56px; text-align:left;
+  }
+  header.hero .inner{max-width:860px; margin:0 auto;}
+  .kicker{
+    text-transform:uppercase; letter-spacing:.14em; font-size:12.5px; font-weight:700;
+    color:var(--amber); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin:0 0 18px; font-weight:800;}
+  .subtitle{font-size:19px; color:#DCE8F5; max-width:660px; margin:0 0 26px; font-weight:400;}
+  .byline{font-size:14px; color:#B9CBE0; display:flex; gap:8px; flex-wrap:wrap;}
+  .byline b{color:#fff;}
+  h2{
+    font-size:24px; color:var(--navy); margin:52px 0 6px; font-weight:800;
+    border-left:5px solid var(--amber); padding-left:14px;
+  }
+  h3{font-size:18px; color:var(--blue); margin:28px 0 8px; font-weight:700;}
+  p{font-size:16.5px; color:#2A3242;}
+  .lede{font-size:19px; color:var(--navy); font-weight:500; margin-top:34px;}
+  .stat-row{display:flex; gap:16px; flex-wrap:wrap; margin:28px 0;}
+  .stat-card{
+    flex:1 1 220px; background:#fff; border:1px solid #E5E1D8; border-radius:12px;
+    padding:20px 18px; box-shadow:0 2px 10px rgba(11,37,69,0.06);
+  }
+  .stat-card .num{font-size:30px; font-weight:800; color:var(--coral);}
+  .stat-card .lbl{font-size:13.5px; color:var(--grey); margin-top:4px;}
+  .chart-block{
+    background:#fff; border:1px solid #E5E1D8; border-radius:14px; padding:22px 22px 12px;
+    margin:30px 0; box-shadow:0 2px 14px rgba(11,37,69,0.07);
+  }
+  .chart-block .cap{font-size:13px; color:var(--grey); margin-top:10px; text-align:center;}
+  .chart-title{font-size:15px; font-weight:700; color:var(--navy); margin-bottom:10px; text-align:center;}
+  canvas{max-height:320px;}
+  blockquote{
+    border-left:4px solid var(--teal); margin:26px 0; padding:6px 20px; font-style:italic;
+    color:var(--navy); font-size:17px; background:#EFF6F9; border-radius:0 8px 8px 0;
+  }
+  ul{padding-left:22px;}
+  li{font-size:16.5px; color:#2A3242; margin-bottom:8px;}
+  .callout{background:#FFF6E8; border:1px solid #F0D9A6; border-radius:12px; padding:20px 22px; margin:26px 0;}
+  .callout .tag{font-weight:800; color:var(--coral); text-transform:uppercase; font-size:12px; letter-spacing:.08em;}
+  .divider{height:1px; background:linear-gradient(90deg,transparent,#D8D2C4,transparent); margin:48px 0;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .flagbox{border-radius:12px; padding:18px 20px; background:#fff; border:1px solid #E5E1D8;}
+  .flagbox h4{margin:0 0 10px; color:var(--navy); font-size:15.5px;}
+  .flagbox p{font-size:14.5px; margin:0;}
+  footer{margin-top:60px; padding-top:26px; border-top:1px solid #E5E1D8; font-size:14px; color:var(--grey);}
+  .author-box{
+    display:flex; gap:16px; align-items:flex-start; background:#fff; border:1px solid #E5E1D8;
+    border-radius:12px; padding:20px; margin-top:20px;
+  }
+  .author-box .initials{
+    flex:0 0 52px; height:52px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px;
+  }
+  a{color:var(--blue);}
+  .source-note{font-size:12.5px; color:#8A93A3; margin-top:6px;}
+  .langswitch{position:fixed; top:16px; right:16px; z-index:20;}
+  .langswitch a{
+    background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.35); color:#fff;
+    font-size:12px; font-weight:700; padding:6px 12px; border-radius:16px; text-decoration:none;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="langswitch"><a href="ai_cybersecurity_governance_fr.html">Lire en français →</a></div>
+  <div class="inner">
+    <div class="kicker">AI &amp; Cybersecurity · Governance &amp; Critical Infrastructure</div>
+    <h1>Artificial Intelligence at the Crossroads of Cybersecurity and Governance</h1>
+    <p class="subtitle">Why manufacturers, distributors, and electrical and plumbing contractors need an independent AI practice — before shadow AI and ungoverned agents turn convenience into the next breach.</p>
+    <div class="byline">By <b>Jerome Potvin</b> · Director, Commercial Strategy · Innovair Solutions</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<p class="lede">Ask a security leader whether AI changed their risk picture in 2026, and the answer is nearly unanimous. Ask the same organization who owns the AI governance decision — who approved the tools running today, who reviews the agents acting on the company's behalf — and the room usually goes quiet. That gap between adoption and oversight is no longer theoretical. It has a price tag, and in several sectors, it already has victims.</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="num">94%</div><div class="lbl">of cybersecurity leaders call AI the leading driver of change in digital risk for 2026</div></div>
+  <div class="stat-card"><div class="num">$6M</div><div class="lbl">average cost of a data breach involving AI — nearly $1M above the global average</div></div>
+  <div class="stat-card"><div class="num">92%</div><div class="lbl">of those breaches involved missing basic access controls (RBAC, multi-factor authentication)</div></div>
+</div>
+<p class="source-note">Sources: WEF, Global Cybersecurity Outlook 2026; IBM, Cost of a Data Breach Report 2026.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Average Cost of a Data Breach, by the Role of AI — 2026</div>
+  <canvas id="costChart"></canvas>
+  <div class="cap">Breaches touching AI systems cost more, and model-inversion attacks cost more still.</div>
+</div>
+
+<p>AI is already the most widely deployed defensive tool in the security stack — 77% of organizations use it for threat detection. But that same capability cuts both ways. Seven publicly documented incidents between 2025 and 2026 — an unpatched prompt-injection flaw in Microsoft 365 Copilot, an unsanctioned agent action inside Meta's internal tooling, a Salesforce Einstein AI injection exposing customer data, a compromised open-source LiteLLM supply chain, a ten-hour global ChatGPT outage, a Vercel/Context.ai credential breach, and a malicious VS Code extension that sat undetected for months — all trace back to the same root cause: AI systems deployed faster than the review cycles built to govern them.</p>
+
+<blockquote>"AI is evolving faster than the review cycles organizations were built around." — a pattern echoed across nearly every 2026 governance study reviewed for this piece.</blockquote>
+
+<div class="divider"></div>
+
+<h2>A Governance Architecture Moving at Several Speeds</h2>
+<p>Three reference frameworks now structure how organizations govern AI, and they are converging on the same three pillars — risk-based classification, human oversight, and accountability — even though only one carries the force of law. The EU AI Act is a binding regulation with extraterritorial reach and tiered penalties. The U.S. NIST AI Risk Management Framework is voluntary but has become the de facto technical benchmark cited in procurement and insurance. Canada's proposed federal AI law died on the order paper and has not been reintroduced, leaving PIPEDA and a voluntary Code of Conduct as the practical floor nationally.</p>
+
+<div class="chart-block">
+  <div class="chart-title">AI Governance Gaps Observed in the Enterprise — 2026</div>
+  <canvas id="gapChart"></canvas>
+  <div class="cap">The pattern is consistent: governance exists on paper far more often than it exists in practice.</div>
+</div>
+<p class="source-note">Sources: IBM, Cost of a Data Breach Report 2026; Larridin, State of Enterprise AI 2026.</p>
+
+<p>Having a framework on paper and having one that functions are different things. 75% of organizations have no formal AI governance policy at all; of those that were breached, 70% had no dedicated AI governance function in place at the time. A framework that exists only in a policy binder does not stop a breach — it only documents, after the fact, that one was possible.</p>
+
+<div class="divider"></div>
+
+<h2>Why an Independent, Cross-Functional AI Practice Becomes Unavoidable</h2>
+<p>The most commonly cited cause of the gap between policy and practice has a name: shadow AI — tools, models, and browser extensions adopted by employees or business units without security's knowledge or sign-off.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Adoption of "Shadow AI" Inside Organizations — 2026</div>
+  <canvas id="shadowChart"></canvas>
+  <div class="cap">80% of organizations tolerate moderate-to-pervasive shadow AI. Only 25% report none.</div>
+</div>
+<p class="source-note">Source: Optro.ai, Shadow AI Stats 2026.</p>
+
+<p>Only 25% of organizations maintain a complete inventory of the AI systems actually running inside their environment. You cannot govern what you have not counted. This is precisely why AI governance keeps failing when it is treated as an add-on to an existing committee — a security team, a legal team, or an innovation lab each see only their own slice of the problem. An independent AI practice, reporting across functions rather than inside one of them, is what closes that structural blind spot: a living inventory of every AI system in use, risk assessment calibrated against recognized frameworks (NIST AI RMF, ISO/IEC 42001), and formal integration with information security — not parallel, disconnected tracks.</p>
+
+<div class="callout">
+  <span class="tag">What an independent AI practice actually does</span>
+  <p style="margin-top:8px;">Maintains the living inventory of models, agents, and third-party AI tools · classifies each system by risk tier before deployment, not after · owns the relationship with information security rather than duplicating it · sets the baseline metrics a board can actually audit · and is the single point that can say yes or no to a new AI use case, instead of five departments each assuming someone else already did.</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Canada and Quebec: No Federal Floor, a Provincial One Already in Force</h2>
+<p>Canada has no binding federal AI law. The Artificial Intelligence and Data Act died when Parliament was prorogued and has not returned. In that vacuum, Quebec's Law 25 is what actually applies today — fines of up to $25 million or 4% of worldwide revenue, whichever is greater, for organizations doing business in the province regardless of where they are headquartered. With no national floor, every Canadian organization has to build its own — and for organizations operating across provinces or borders, that means designing to the strictest applicable standard rather than waiting to see which jurisdiction moves first.</p>
+
+<div class="divider"></div>
+
+<h2>Sector Focus: Manufacturing, Electricity, Distribution, and Plumbing</h2>
+<p>The abstraction ends the moment you look at operational technology. In IT environments, an AI governance failure usually means a data leak. In OT environments — the plant floor, the substation, the delivery fleet — it can mean physical disruption.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Manufacturing: the #1 Target of Industrial Ransomware — 2025-2026</div>
+  <canvas id="mfgChart"></canvas>
+  <div class="cap">67% of industrial ransomware victims in 2025 were manufacturers, driven largely by IT/OT convergence.</div>
+</div>
+<p class="source-note">Sources: Dragos, Industrial Ransomware Analysis 2025-2026; Verizon DBIR 2026; Ponemon Institute 2025.</p>
+
+<div class="grid2">
+  <div class="flagbox">
+    <h4>⚙️ Manufacturing</h4>
+    <p>Manufacturers are the single most targeted sector for industrial ransomware, precisely because IT/OT convergence means a phishing email on the office network can now reach a production line. 61% of breaches trace back to a third party or supplier, and 56% of manufacturing OT environments cannot detect adversary activity with the tools they already have installed.</p>
+  </div>
+  <div class="flagbox">
+    <h4>⚡ Electricity &amp; Grids</h4>
+    <p>Hydro-Québec's substations have been publicly described as "prime targets." The state-linked Volt Typhoon group has held dormant access inside North American electrical grids for years — a pre-positioned disruption capability, not a conventional data-theft risk. AI-driven grid optimization tools expand that attack surface further if deployed without the same rigor applied to safety-critical systems.</p>
+  </div>
+  <div class="flagbox">
+    <h4>🚚 Distribution</h4>
+    <p>Logistics and distribution cyber incidents rose 61% in 2025. A breach at a single distributor doesn't stay contained — it propagates to hundreds of downstream contractor and retailer accounts that trusted that one vendor's systems.</p>
+  </div>
+  <div class="flagbox">
+    <h4>🔧 Plumbing &amp; Electrical Contractors</h4>
+    <p>Smaller contracting businesses rarely see themselves as a target, but they inherit governance risk from every distributor and manufacturer in their supply chain, while running their own AI-powered scheduling, quoting, and CRM tools with little to no oversight of what those tools do with customer and job-site data.</p>
+  </div>
+</div>
+
+<p><b>What changes, and what doesn't:</b> the technology differs by sector, but the governance discipline is identical — know what AI is running, classify it by risk, name an accountable owner, and integrate with security rather than working around it.</p>
+
+<div class="divider"></div>
+
+<h2>Insights and Lessons Learned</h2>
+<ul>
+  <li>AI governance is a cross-functional problem masquerading as three separate ones — security, compliance, and innovation each own a piece, and none owns the whole.</li>
+  <li>A policy on paper is not a control. The organizations that were breached mostly already had a stated AI policy; what they lacked was a function actually enforcing it.</li>
+  <li>Shadow AI is the symptom, not the disease. It appears wherever governance is slower than the business need it's meant to serve.</li>
+  <li>OT environments change the stakes from data loss to physical and safety consequences — governance frameworks built for office IT do not transfer automatically.</li>
+  <li>In a patchwork regulatory environment (no Canadian federal law, a binding EU standard, sector-specific U.S. enforcement), building to the strictest applicable standard beats waiting for legislation to catch up.</li>
+  <li>An independent AI practice is what converts governance from a document into an operating discipline — because it is the only structure with visibility across every function that touches AI.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">A first step for managers</span>
+  <p style="margin-top:8px;">A free 12-question self-assessment grid — covering AI visibility, governance maturity, and IT/OT resilience — is available in the full article, alongside every source and chart referenced here. It takes about 15 minutes and gives a first, honest read on where your organization actually stands.</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Conclusion</h2>
+<p>None of this argues against adopting AI faster. It argues for building the one structure that lets an organization do so without finding out, after the fact, which tool nobody approved. AI governance is no longer a project you assign to an IT department and revisit next year. It's a condition of resilience — for the office network, the plant floor, and the grid alike.</p>
+
+<div class="author-box">
+  <div class="initials">JP</div>
+  <div>
+    <div style="font-weight:700; color:var(--navy);">Jerome Potvin</div>
+    <div style="font-size:14px; color:var(--grey); margin:2px 0 8px;">Director, Commercial Strategy, Innovair Solutions</div>
+    <div style="font-size:14.5px;">Connect on LinkedIn: <a href="http://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></div>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul style="font-size:13.5px; color:var(--grey);">
+  <li>World Economic Forum, <a href="https://www.weforum.org/publications/global-cybersecurity-outlook-2026/" target="_blank">Global Cybersecurity Outlook 2026</a></li>
+  <li>IBM, <a href="https://www.ibm.com/reports/data-breach" target="_blank">Cost of a Data Breach Report 2026</a></li>
+  <li>Dragos, Industrial Ransomware Analysis 2025-2026</li>
+  <li>Verizon, Data Breach Investigations Report 2026</li>
+  <li>Ponemon Institute, 2025 research on manufacturing OT security</li>
+  <li>DeepStrike, Logistics Cybersecurity Statistics 2026</li>
+  <li>Optro.ai, Shadow AI Stats 2026</li>
+  <li>Larridin, State of Enterprise AI 2026</li>
+  <li>La Presse; Ampyx Cyber, 2026 reporting on Volt Typhoon and Hydro-Québec</li>
+  <li>Government of Quebec, Law 25 (Act to modernize legislative provisions as regards the protection of personal information)</li>
+  <li>Innovation, Science and Economic Development Canada (ISED), status of the Artificial Intelligence and Data Act</li>
+  <li>European Union, AI Act (Regulation (EU) 2024/1689)</li>
+  <li>NIST, AI Risk Management Framework</li>
+</ul>
+
+</div>
+
+<script>
+const navy='#0B2545', blue='#1E6091', teal='#168AAD', amber='#F7A400', coral='#E85D4E', grey='#C9CFDA';
+
+new Chart(document.getElementById('costChart'), {
+  type:'bar',
+  data:{
+    labels:['Global average\n(all breaches)','Breaches involving\nAI','Model inversion\nattacks'],
+    datasets:[{ data:[4.99,5.99,6.07], backgroundColor:[grey,coral,'#8B1E1E'], borderRadius:8, barThickness:60 }]
+  },
+  options:{
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>'$'+c.formattedValue+'M USD'}}},
+    scales:{ y:{ beginAtZero:true, max:7, ticks:{callback:v=>'$'+v+'M'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:11}} } }
+  }
+});
+
+new Chart(document.getElementById('gapChart'), {
+  type:'bar',
+  data:{
+    labels:['Breached systems lacking basic\naccess controls','Organizations without a formal\nAI governance policy','Breached organizations without\ndedicated AI governance','Organizations without a complete\nAI inventory','Organizations with no active\nAI policy whatsoever'],
+    datasets:[{ data:[92,75,70,62,25], backgroundColor:blue, borderRadius:6, barThickness:34 }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ x:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             y:{ grid:{display:false}, ticks:{font:{size:10.5}} } }
+  }
+});
+
+new Chart(document.getElementById('shadowChart'), {
+  type:'doughnut',
+  data:{
+    labels:['Widespread / pervasive','Moderate','Rare or none'],
+    datasets:[{ data:[35,45,20], backgroundColor:[coral,amber,teal], borderColor:'#fff', borderWidth:3 }]
+  },
+  options:{ plugins:{ legend:{position:'bottom', labels:{boxWidth:14,font:{size:12}}} }, cutout:'58%' }
+});
+
+new Chart(document.getElementById('mfgChart'), {
+  type:'bar',
+  data:{
+    labels:['Ransomware incidents causing a\nfull OT-site shutdown','Manufacturers that do not vet supplier\nsecurity before granting access','Manufacturing environments unable to detect\nadversary activity with native tools','Manufacturing breaches involving\na third party or supplier','Industrial ransomware victims that\nare manufacturers (2025)'],
+    datasets:[{ data:[25,54,56,61,67], backgroundColor:'#F7A400', borderRadius:6, barThickness:34 }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ x:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             y:{ grid:{display:false}, ticks:{font:{size:10.5}} } }
+  }
+});
+</script>
+
+</body>
+</html>

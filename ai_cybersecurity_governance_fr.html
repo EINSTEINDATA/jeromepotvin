@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>L'intelligence artificielle à la croisée de la cybersécurité et de la gouvernance</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1E6091; --teal:#168AAD; --amber:#F7A400; --coral:#E85D4E;
+    --paper:#FAFAF7; --ink:#141B2D; --grey:#5B6472;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 24px 80px;}
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 55%,var(--teal) 100%);
+    color:#fff; padding:64px 24px 56px; text-align:left;
+  }
+  header.hero .inner{max-width:860px; margin:0 auto;}
+  .kicker{
+    text-transform:uppercase; letter-spacing:.14em; font-size:12.5px; font-weight:700;
+    color:var(--amber); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin:0 0 18px; font-weight:800;}
+  .subtitle{font-size:19px; color:#DCE8F5; max-width:660px; margin:0 0 26px; font-weight:400;}
+  .byline{font-size:14px; color:#B9CBE0; display:flex; gap:8px; flex-wrap:wrap;}
+  .byline b{color:#fff;}
+  h2{
+    font-size:24px; color:var(--navy); margin:52px 0 6px; font-weight:800;
+    border-left:5px solid var(--amber); padding-left:14px;
+  }
+  h3{font-size:18px; color:var(--blue); margin:28px 0 8px; font-weight:700;}
+  p{font-size:16.5px; color:#2A3242;}
+  .lede{font-size:19px; color:var(--navy); font-weight:500; margin-top:34px;}
+  .stat-row{display:flex; gap:16px; flex-wrap:wrap; margin:28px 0;}
+  .stat-card{
+    flex:1 1 220px; background:#fff; border:1px solid #E5E1D8; border-radius:12px;
+    padding:20px 18px; box-shadow:0 2px 10px rgba(11,37,69,0.06);
+  }
+  .stat-card .num{font-size:30px; font-weight:800; color:var(--coral);}
+  .stat-card .lbl{font-size:13.5px; color:var(--grey); margin-top:4px;}
+  .chart-block{
+    background:#fff; border:1px solid #E5E1D8; border-radius:14px; padding:22px 22px 12px;
+    margin:30px 0; box-shadow:0 2px 14px rgba(11,37,69,0.07);
+  }
+  .chart-block .cap{font-size:13px; color:var(--grey); margin-top:10px; text-align:center;}
+  .chart-title{font-size:15px; font-weight:700; color:var(--navy); margin-bottom:10px; text-align:center;}
+  canvas{max-height:320px;}
+  blockquote{
+    border-left:4px solid var(--teal); margin:26px 0; padding:6px 20px; font-style:italic;
+    color:var(--navy); font-size:17px; background:#EFF6F9; border-radius:0 8px 8px 0;
+  }
+  ul{padding-left:22px;}
+  li{font-size:16.5px; color:#2A3242; margin-bottom:8px;}
+  .callout{background:#FFF6E8; border:1px solid #F0D9A6; border-radius:12px; padding:20px 22px; margin:26px 0;}
+  .callout .tag{font-weight:800; color:var(--coral); text-transform:uppercase; font-size:12px; letter-spacing:.08em;}
+  .divider{height:1px; background:linear-gradient(90deg,transparent,#D8D2C4,transparent); margin:48px 0;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .flagbox{border-radius:12px; padding:18px 20px; background:#fff; border:1px solid #E5E1D8;}
+  .flagbox h4{margin:0 0 10px; color:var(--navy); font-size:15.5px;}
+  .flagbox p{font-size:14.5px; margin:0;}
+  footer{margin-top:60px; padding-top:26px; border-top:1px solid #E5E1D8; font-size:14px; color:var(--grey);}
+  .author-box{
+    display:flex; gap:16px; align-items:flex-start; background:#fff; border:1px solid #E5E1D8;
+    border-radius:12px; padding:20px; margin-top:20px;
+  }
+  .author-box .initials{
+    flex:0 0 52px; height:52px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px;
+  }
+  a{color:var(--blue);}
+  .source-note{font-size:12.5px; color:#8A93A3; margin-top:6px;}
+  .langswitch{position:fixed; top:16px; right:16px; z-index:20;}
+  .langswitch a{
+    background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.35); color:#fff;
+    font-size:12px; font-weight:700; padding:6px 12px; border-radius:16px; text-decoration:none;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="langswitch"><a href="ai_cybersecurity_governance_en.html">Read in English →</a></div>
+  <div class="inner">
+    <div class="kicker">IA &amp; Cybersécurité · Gouvernance &amp; Infrastructures critiques</div>
+    <h1>L'intelligence artificielle à la croisée de la cybersécurité et de la gouvernance</h1>
+    <p class="subtitle">Pourquoi manufacturiers, distributeurs et entrepreneurs en électricité et en plomberie ont besoin d'une pratique IA indépendante — avant que l'IA fantôme et des agents non gouvernés ne transforment une commodité en prochaine violation.</p>
+    <div class="byline">Par <b>Jerome Potvin</b> · Directeur, Stratégie Commerciale · Innovair Solutions</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<p class="lede">Demandez à un dirigeant en cybersécurité si l'IA a changé son portrait de risque en 2026 : la réponse est presque unanime. Demandez à la même organisation qui est responsable de la gouvernance de l'IA — qui a approuvé les outils utilisés aujourd'hui, qui révise les agents qui agissent au nom de l'entreprise — et la salle devient souvent silencieuse. Cet écart entre l'adoption et la surveillance n'est plus théorique. Il a un prix, et dans plusieurs secteurs, il a déjà fait des victimes.</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="num">94 %</div><div class="lbl">des dirigeants en cybersécurité considèrent l'IA comme le principal facteur de changement du risque numérique en 2026</div></div>
+  <div class="stat-card"><div class="num">6 M$</div><div class="lbl">coût moyen d'une violation de données impliquant l'IA — près d'un million de plus que la moyenne mondiale</div></div>
+  <div class="stat-card"><div class="num">92 %</div><div class="lbl">de ces violations impliquaient l'absence de contrôles d'accès pourtant élémentaires (RBAC, authentification multifacteur)</div></div>
+</div>
+<p class="source-note">Sources : WEF, Global Cybersecurity Outlook 2026 ; IBM, Cost of a Data Breach Report 2026.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Coût moyen d'une violation de données selon le rôle de l'IA — 2026</div>
+  <canvas id="costChart"></canvas>
+  <div class="cap">Les violations touchant des systèmes d'IA coûtent plus cher, et les attaques par inversion de modèle encore davantage.</div>
+</div>
+
+<p>L'IA est déjà l'outil défensif le plus largement déployé dans l'arsenal de sécurité — 77 % des organisations l'utilisent pour la détection des menaces. Mais cette même capacité a un revers. Sept incidents documentés publiquement entre 2025 et 2026 — une faille d'injection de invite non corrigée dans Microsoft 365 Copilot, une action d'agent non sanctionnée dans les outils internes de Meta, une injection dans Salesforce Einstein AI exposant des données clients, une chaîne d'approvisionnement LiteLLM compromise, une panne mondiale de ChatGPT de dix heures, une atteinte aux identifiants Vercel/Context.ai, et une extension malveillante sur VS Code restée indétectée pendant des mois — remontent tous à la même cause profonde : des systèmes d'IA déployés plus vite que les cycles de révision censés les encadrer.</p>
+
+<blockquote>« L'IA évolue plus vite que les cycles de révision pour lesquels les organisations ont été conçues. » — un constat répété dans presque toutes les études de gouvernance 2026 consultées pour cet article.</blockquote>
+
+<div class="divider"></div>
+
+<h2>Une architecture normative qui se construit à plusieurs vitesses</h2>
+<p>Trois cadres de référence structurent aujourd'hui la gouvernance de l'IA, et ils convergent vers les trois mêmes piliers — classification par niveau de risque, supervision humaine, imputabilité — même si un seul a force de loi. L'AI Act européen est un règlement contraignant à portée extraterritoriale et à sanctions graduées. Le cadre NIST AI RMF américain est volontaire, mais est devenu la référence technique de facto citée dans les appels d'offres et les polices d'assurance. Le projet de loi fédérale canadienne sur l'IA est mort au feuilleton et n'a pas été redéposé, laissant la LPRPDE et un code de conduite volontaire comme plancher pratique national.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Écarts de gouvernance de l'IA constatés en entreprise — 2026</div>
+  <canvas id="gapChart"></canvas>
+  <div class="cap">Le constat est constant : la gouvernance existe sur papier bien plus souvent qu'en pratique.</div>
+</div>
+<p class="source-note">Sources : IBM, Cost of a Data Breach Report 2026 ; Larridin, State of Enterprise AI 2026.</p>
+
+<p>Avoir un cadre sur papier et en avoir un qui fonctionne, ce sont deux choses différentes. 75 % des organisations n'ont aucune politique formelle de gouvernance de l'IA ; parmi celles qui ont subi une violation, 70 % n'avaient aucune fonction dédiée de gouvernance de l'IA en place au moment des faits. Un cadre qui n'existe que dans un cartable de politiques n'empêche pas une violation — il documente seulement, après coup, qu'elle était possible.</p>
+
+<div class="divider"></div>
+
+<h2>Pourquoi une pratique IA indépendante et transversale devient incontournable</h2>
+<p>La cause la plus souvent citée de cet écart entre politique et pratique porte un nom : l'IA fantôme — des outils, modèles et extensions de navigateur adoptés par des employés ou des unités d'affaires sans que la sécurité en soit informée ni ne les approuve.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Adoption de l'« IA fantôme » au sein des organisations — 2026</div>
+  <canvas id="shadowChart"></canvas>
+  <div class="cap">80 % des organisations tolèrent une IA fantôme modérée à envahissante. Seulement 25 % n'en signalent aucune.</div>
+</div>
+<p class="source-note">Source : Optro.ai, Shadow AI Stats 2026.</p>
+
+<p>Seulement 25 % des organisations maintiennent un inventaire complet des systèmes d'IA réellement en fonction dans leur environnement. On ne peut pas gouverner ce qu'on n'a pas recensé. C'est précisément pourquoi la gouvernance de l'IA échoue lorsqu'elle est traitée comme un ajout à un comité existant — une équipe de sécurité, une équipe juridique ou un laboratoire d'innovation ne voit chacun qu'une tranche du problème. Une pratique IA indépendante, qui relève de plusieurs fonctions plutôt que d'une seule, est ce qui referme cet angle mort structurel : un inventaire vivant de chaque système d'IA en usage, une évaluation des risques calibrée sur les cadres reconnus (NIST AI RMF, ISO/IEC 42001), et une intégration formelle avec la sécurité de l'information — non des filières parallèles et déconnectées.</p>
+
+<div class="callout">
+  <span class="tag">Ce que fait concrètement une pratique IA indépendante</span>
+  <p style="margin-top:8px;">Maintient l'inventaire vivant des modèles, agents et outils d'IA tiers · classe chaque système par niveau de risque avant le déploiement, pas après · assume la relation avec la sécurité de l'information plutôt que de la dupliquer · fixe les indicateurs de référence qu'un conseil d'administration peut réellement auditer · et constitue le point unique qui peut dire oui ou non à un nouvel usage de l'IA, plutôt que cinq services qui présument chacun que quelqu'un d'autre s'en est déjà occupé.</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Canada et Québec : pas de plancher fédéral, un plancher provincial déjà en vigueur</h2>
+<p>Le Canada n'a aucune loi fédérale contraignante sur l'IA. La Loi sur l'intelligence artificielle et les données est morte au feuilleton lors de la prorogation du Parlement et n'est pas revenue. Dans ce vide, c'est la Loi 25 du Québec qui s'applique réellement aujourd'hui — des amendes pouvant atteindre 25 millions de dollars ou 4 % du chiffre d'affaires mondial, selon le montant le plus élevé, pour toute organisation faisant affaire dans la province, peu importe où se trouve son siège social. En l'absence d'un plancher national, chaque organisation canadienne doit construire le sien — et pour celles qui opèrent à travers les provinces ou les frontières, cela signifie concevoir sa gouvernance selon la norme applicable la plus stricte plutôt que d'attendre de voir quelle juridiction bougera en premier.</p>
+
+<div class="divider"></div>
+
+<h2>Focus sectoriel : manufacturier, électricité, distribution et plomberie</h2>
+<p>L'abstraction s'arrête dès qu'on regarde la technologie opérationnelle. Dans les environnements TI, un échec de gouvernance de l'IA se traduit habituellement par une fuite de données. Dans les environnements OT — la ligne de production, le poste électrique, la flotte de livraison — il peut se traduire par une perturbation physique.</p>
+
+<div class="chart-block">
+  <div class="chart-title">Le manufacturier, cible n° 1 du rançongiciel industriel — 2025-2026</div>
+  <canvas id="mfgChart"></canvas>
+  <div class="cap">67 % des victimes de rançongiciel industriel en 2025 étaient des manufacturiers, en grande partie à cause de la convergence IT/OT.</div>
+</div>
+<p class="source-note">Sources : Dragos, Industrial Ransomware Analysis 2025-2026 ; Verizon DBIR 2026 ; Ponemon Institute 2025.</p>
+
+<div class="grid2">
+  <div class="flagbox">
+    <h4>⚙️ Manufacturier</h4>
+    <p>Les manufacturiers sont le secteur le plus ciblé par le rançongiciel industriel, précisément parce que la convergence IT/OT signifie qu'un courriel d'hameçonnage sur le réseau de bureau peut désormais atteindre une ligne de production. 61 % des violations remontent à un tiers ou un fournisseur, et 56 % des environnements OT manufacturiers ne peuvent détecter une activité adverse avec les outils déjà installés.</p>
+  </div>
+  <div class="flagbox">
+    <h4>⚡ Électricité et réseaux</h4>
+    <p>Les postes électriques d'Hydro-Québec ont été publiquement décrits comme des « cibles de choix ». Le groupe Volt Typhoon, lié à un État, maintient un accès dormant dans des réseaux électriques nord-américains depuis des années — une capacité de perturbation prépositionnée, pas un simple risque de vol de données. Les outils d'optimisation de réseau alimentés par l'IA élargissent encore cette surface d'attaque s'ils sont déployés sans la rigueur appliquée aux systèmes critiques pour la sécurité.</p>
+  </div>
+  <div class="flagbox">
+    <h4>🚚 Distribution</h4>
+    <p>Les cyberincidents en logistique et distribution ont bondi de 61 % en 2025. Une brèche chez un seul distributeur ne reste pas confinée — elle se propage à des centaines de comptes d'entrepreneurs et de détaillants en aval qui faisaient confiance aux systèmes de ce fournisseur unique.</p>
+  </div>
+  <div class="flagbox">
+    <h4>🔧 Entrepreneurs en électricité et en plomberie</h4>
+    <p>Les petites entreprises de sous-traitance se voient rarement comme une cible, mais elles héritent du risque de gouvernance de chaque distributeur et manufacturier de leur chaîne d'approvisionnement, tout en exploitant leurs propres outils d'IA de planification, de soumission et de gestion de la relation client avec peu ou pas de supervision de ce que ces outils font des données clients et de chantier.</p>
+  </div>
+</div>
+
+<p><b>Ce qui change, et ce qui ne change pas :</b> la technologie diffère selon le secteur, mais la discipline de gouvernance est identique — savoir quelle IA est en fonction, la classer par risque, nommer un responsable imputable, et s'intégrer à la sécurité plutôt que de la contourner.</p>
+
+<div class="divider"></div>
+
+<h2>Insights et leçons apprises</h2>
+<ul>
+  <li>La gouvernance de l'IA est un problème transversal qui se déguise en trois problèmes distincts — sécurité, conformité et innovation en détiennent chacun une partie, et aucun ne détient l'ensemble.</li>
+  <li>Une politique sur papier n'est pas un contrôle. Les organisations victimes d'une violation avaient déjà, dans la plupart des cas, une politique IA énoncée ; ce qui manquait, c'était une fonction qui l'appliquait réellement.</li>
+  <li>L'IA fantôme est un symptôme, pas la maladie. Elle apparaît partout où la gouvernance est plus lente que le besoin d'affaires qu'elle est censée servir.</li>
+  <li>Les environnements OT changent la nature de l'enjeu : de la perte de données à des conséquences physiques et pour la sécurité — les cadres de gouvernance conçus pour la TI de bureau ne se transposent pas automatiquement.</li>
+  <li>Dans un environnement réglementaire fragmenté (aucune loi fédérale canadienne, une norme européenne contraignante, une application sectorielle américaine), construire selon la norme applicable la plus stricte l'emporte sur l'attente d'une législation qui tarde à rattraper son retard.</li>
+  <li>Une pratique IA indépendante est ce qui transforme la gouvernance d'un document en une discipline opérationnelle — parce qu'elle est la seule structure ayant une visibilité sur toutes les fonctions qui touchent à l'IA.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">Un premier pas pour les gestionnaires</span>
+  <p style="margin-top:8px;">Une grille d'auto-diagnostic gratuite de 12 questions — couvrant la visibilité sur l'IA, la maturité de gouvernance et la résilience IT/OT — est disponible dans l'article intégral, avec l'ensemble des sources et graphiques cités ici. Elle prend environ 15 minutes et donne une première mesure honnête de la position réelle de votre organisation.</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Conclusion</h2>
+<p>Rien de tout cela ne plaide contre une adoption plus rapide de l'IA. Cela plaide pour la mise en place de la seule structure qui permette à une organisation d'avancer sans découvrir, après coup, quel outil personne n'avait approuvé. La gouvernance de l'IA n'est plus un projet qu'on confie à un service informatique et qu'on révise l'an prochain. C'est une condition de résilience — pour le réseau de bureau, la ligne de production et le réseau électrique, tout autant.</p>
+
+<div class="author-box">
+  <div class="initials">JP</div>
+  <div>
+    <div style="font-weight:700; color:var(--navy);">Jerome Potvin</div>
+    <div style="font-size:14px; color:var(--grey); margin:2px 0 8px;">Directeur, Stratégie Commerciale, Innovair Solutions</div>
+    <div style="font-size:14.5px;">Sur LinkedIn : <a href="http://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></div>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul style="font-size:13.5px; color:var(--grey);">
+  <li>World Economic Forum, <a href="https://www.weforum.org/publications/global-cybersecurity-outlook-2026/" target="_blank">Global Cybersecurity Outlook 2026</a></li>
+  <li>IBM, <a href="https://www.ibm.com/reports/data-breach" target="_blank">Cost of a Data Breach Report 2026</a></li>
+  <li>Dragos, Industrial Ransomware Analysis 2025-2026</li>
+  <li>Verizon, Data Breach Investigations Report 2026</li>
+  <li>Ponemon Institute, recherche 2025 sur la sécurité OT manufacturière</li>
+  <li>DeepStrike, Logistics Cybersecurity Statistics 2026</li>
+  <li>Optro.ai, Shadow AI Stats 2026</li>
+  <li>Larridin, State of Enterprise AI 2026</li>
+  <li>La Presse ; Ampyx Cyber, reportages 2026 sur Volt Typhoon et Hydro-Québec</li>
+  <li>Gouvernement du Québec, Loi 25 (Loi modernisant des dispositions législatives en matière de protection des renseignements personnels)</li>
+  <li>Innovation, Sciences et Développement économique Canada (ISDE), statut de la Loi sur l'intelligence artificielle et les données</li>
+  <li>Union européenne, AI Act (Règlement (UE) 2024/1689)</li>
+  <li>NIST, AI Risk Management Framework</li>
+</ul>
+
+</div>
+
+<script>
+const navy='#0B2545', blue='#1E6091', teal='#168AAD', amber='#F7A400', coral='#E85D4E', grey='#C9CFDA';
+
+new Chart(document.getElementById('costChart'), {
+  type:'bar',
+  data:{
+    labels:['Moyenne mondiale\n(toutes violations)','Violations impliquant\nl\'IA','Attaques par inversion\nde modèle'],
+    datasets:[{ data:[4.99,5.99,6.07], backgroundColor:[grey,coral,'#8B1E1E'], borderRadius:8, barThickness:60 }]
+  },
+  options:{
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+' M$ US'}}},
+    scales:{ y:{ beginAtZero:true, max:7, ticks:{callback:v=>v+' M$'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:11}} } }
+  }
+});
+
+new Chart(document.getElementById('gapChart'), {
+  type:'bar',
+  data:{
+    labels:['Systèmes violés sans contrôles\nd\'accès élémentaires','Organisations sans politique\nformelle de gouvernance IA','Organisations violées sans fonction\ndédiée de gouvernance IA','Organisations sans inventaire\ncomplet de l\'IA','Organisations sans aucune\npolitique IA active'],
+    datasets:[{ data:[92,75,70,62,25], backgroundColor:blue, borderRadius:6, barThickness:34 }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ x:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             y:{ grid:{display:false}, ticks:{font:{size:10.5}} } }
+  }
+});
+
+new Chart(document.getElementById('shadowChart'), {
+  type:'doughnut',
+  data:{
+    labels:['Envahissante / répandue','Modérée','Rare ou absente'],
+    datasets:[{ data:[35,45,20], backgroundColor:[coral,amber,teal], borderColor:'#fff', borderWidth:3 }]
+  },
+  options:{ plugins:{ legend:{position:'bottom', labels:{boxWidth:14,font:{size:12}}} }, cutout:'58%' }
+});
+
+new Chart(document.getElementById('mfgChart'), {
+  type:'bar',
+  data:{
+    labels:['Incidents de rançongiciel causant un arrêt\ncomplet du site OT','Manufacturiers qui ne valident pas la sécurité\ndes fournisseurs avant l\'accès','Environnements manufacturiers incapables de détecter\nune activité adverse avec leurs outils natifs','Violations manufacturières impliquant\nun tiers ou un fournisseur','Victimes de rançongiciel industriel\nqui sont des manufacturiers (2025)'],
+    datasets:[{ data:[25,54,56,61,67], backgroundColor:'#F7A400', borderRadius:6, barThickness:34 }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ x:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             y:{ grid:{display:false}, ticks:{font:{size:10.5}} } }
+  }
+});
+</script>
+
+</body>
+</html>
