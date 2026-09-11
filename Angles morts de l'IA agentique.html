@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angles morts de l'IA agentique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500;1,8..60,600&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0b0d10;
+    --panel:#12161b;
+    --panel-2:#181e25;
+    --panel-line:#2b323a;
+    --amber:#ffb020;
+    --amber-dim:#c98a1f;
+    --red:#e2483a;
+    --green:#39d98a;
+    --paper:#eef1ee;
+    --paper-line:#d7ddd6;
+    --ink:#15181b;
+    --ink-soft:#4c5760;
+    --on-dark:#e9ede9;
+    --on-dark-dim:#8891968b;
+    --on-dark-dim2:#8b929c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4',Georgia,serif;
+    line-height:1.72;
+    font-size:17.5px;
+  }
+  .wrap{max-width:740px;margin:0 auto;padding:0 24px 90px;}
+  a{color:inherit;}
+  strong{color:var(--black);}
+
+  /* ===== COVER / MASTHEAD ===== */
+  .cover{
+    background:
+      radial-gradient(680px 420px at 88% -8%, rgba(255,176,32,.12), transparent 60%),
+      linear-gradient(180deg,var(--black) 0%, var(--panel) 100%);
+    color:var(--on-dark);
+    padding:38px 24px 0;
+  }
+  .cover-inner{max-width:740px;margin:0 auto;}
+  .classbar{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--on-dark-dim2);
+    border-bottom:1px solid var(--panel-line);
+    padding-bottom:16px;margin-bottom:30px;
+  }
+  .classbar b{color:var(--amber);font-weight:600;}
+  .doc-label{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:16px;display:flex;align-items:center;gap:10px;
+  }
+  .doc-label::before{content:"";width:8px;height:8px;background:var(--amber);display:inline-block;}
+  h1{
+    font-family:'Source Serif 4',serif;
+    font-weight:700;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.16;
+    margin:0 0 20px;
+    letter-spacing:-.005em;
+    text-wrap:balance;
+  }
+  h1 em{font-style:italic;color:var(--amber);}
+  .dek{
+    font-size:18px;
+    color:#c3cbca;
+    max-width:58ch;
+    margin:0 0 28px;
+    font-weight:400;
+    font-family:'Source Serif 4',serif;
+  }
+  .meta{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px 24px;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+    border-top:1px solid var(--panel-line);
+    padding:18px 0 30px;
+  }
+  .meta div span{display:block;color:var(--on-dark-dim2);text-transform:uppercase;letter-spacing:.1em;font-size:10px;margin-bottom:4px;}
+  .meta div b{color:var(--on-dark);font-weight:600;}
+
+  /* ===== GAUGE CLUSTER ===== */
+  .gauges{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1px;background:var(--panel-line);
+    margin:0 -24px;border-top:1px solid var(--panel-line);
+  }
+  .gauge{
+    background:var(--panel-2);
+    padding:22px 10px 20px;
+    text-align:center;
+  }
+  .gauge svg{width:104px;height:104px;}
+  .gauge .gv{
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:21px;fill:var(--on-dark);
+  }
+  .gauge .gl{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--on-dark-dim2);
+    margin-top:8px;line-height:1.45;padding:0 4px;
+  }
+
+  /* ===== ARTICLE / PAPER ===== */
+  article{
+    padding-top:40px;
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size:26px 26px;
+    background-position:-1px -1px;
+    background-color:var(--paper);
+    padding-left:0;padding-right:0;
+  }
+  p{margin:0 0 20px;color:var(--ink);}
+  .lede{
+    font-size:20.5px;
+    font-weight:500;
+    line-height:1.62;
+    color:var(--black);
+  }
+
+  h2{
+    font-family:'Source Serif 4',serif;
+    font-weight:700;
+    font-size:clamp(22px,3.2vw,27px);
+    color:var(--black);
+    margin:12px 0 20px;
+    line-height:1.28;
+    text-wrap:balance;
+  }
+  .h2-wrap{margin:58px 0 20px;}
+  .tag-cat{
+    display:flex;align-items:center;gap:10px;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--amber-dim);margin-bottom:10px;
+  }
+  .tag-cat .ix{
+    background:var(--black);color:var(--amber);
+    font-weight:700;padding:2px 8px;
+  }
+  .h2-wrap h2{margin:0;}
+
+  blockquote{
+    margin:32px 0;padding:6px 0 6px 22px;
+    border-left:3px solid var(--amber);
+    color:var(--black);
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    font-size:21px;
+    line-height:1.5;
+  }
+  blockquote cite{
+    display:block;margin-top:10px;font-family:'IBM Plex Mono',monospace;
+    font-style:normal;font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;text-transform:uppercase;
+  }
+
+  .callout{
+    border:1px dashed var(--amber-dim);
+    background:#fbf3e2;
+    padding:20px 22px;
+    margin:30px 0;
+    font-size:15.5px;
+  }
+  .callout .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--amber-dim);letter-spacing:.1em;text-transform:uppercase;
+    display:block;margin-bottom:8px;font-weight:700;
+  }
+
+  /* ===== BLACK BOX TRANSCRIPTS ===== */
+  .transcript{
+    background:var(--black);
+    color:var(--on-dark);
+    padding:20px 22px 22px;
+    margin:24px 0;
+    border-left:4px solid var(--red);
+  }
+  .transcript .th{
+    display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--on-dark-dim2);
+    border-bottom:1px solid var(--panel-line);
+    padding-bottom:12px;margin-bottom:14px;
+  }
+  .transcript .th .who{color:var(--on-dark);font-weight:600;font-size:14px;letter-spacing:0;text-transform:none;font-family:'Source Serif 4',serif;}
+  .transcript .th .tag{color:var(--red);font-weight:600;}
+  .transcript p{font-family:'IBM Plex Mono',monospace;font-size:13.6px;line-height:1.75;color:#d7dcd8;margin:0;}
+  .transcript p strong{color:var(--amber);}
+  .transcript p em{color:var(--on-dark);font-style:italic;}
+
+  /* ===== PHASES (RAG steps) ===== */
+  .phase{
+    display:flex;gap:16px;margin:20px 0;align-items:flex-start;
+  }
+  .phase .n{
+    flex:0 0 auto;width:30px;height:30px;
+    background:var(--black);color:var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;
+  }
+  .phase .t{font-size:15.6px;color:var(--ink);}
+  .phase .t strong{color:var(--black);}
+
+  /* ===== FLIGHT PLAN (comment bâtir un agent) ===== */
+  .flightplan{margin:22px 0 8px;position:relative;}
+  .wp{
+    display:grid;grid-template-columns:56px 1fr;gap:18px;
+    position:relative;padding-bottom:30px;
+  }
+  .wp:last-child{padding-bottom:6px;}
+  .wp::before{
+    content:"";position:absolute;left:27px;top:52px;bottom:-2px;width:0;
+    border-left:2px dashed var(--amber-dim);
+  }
+  .wp:last-child::before{display:none;}
+  .wp-badge{
+    width:54px;height:48px;
+    background:var(--black);
+    clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:11.5px;color:var(--amber);
+    letter-spacing:.02em;text-align:center;
+  }
+  .wp-body h4{margin:2px 0 6px;font-size:16px;color:var(--black);font-family:'Source Serif 4',serif;font-weight:700;}
+  .wp-body p{margin:0;font-size:14.6px;color:var(--ink-soft);}
+  .wp-body .coord{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--amber-dim);
+    letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px;
+  }
+
+  /* ===== PIPELINE ANNEX (dans la boîte noire) ===== */
+  .pipeline{
+    background:var(--black);color:var(--on-dark);
+    margin:30px 0;padding:8px 22px 6px;
+  }
+  .pnode{
+    display:flex;gap:16px;align-items:flex-start;
+    padding:18px 0;border-top:1px solid var(--panel-line);
+  }
+  .pnode:first-child{border-top:none;}
+  .pnode .pn{
+    flex:0 0 auto;width:30px;height:30px;
+    border:1.5px solid var(--amber);color:var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12px;
+    margin-top:2px;
+  }
+  .pnode h4{
+    margin:0 0 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--amber);font-weight:600;
+  }
+  .pnode p{margin:0 0 8px;font-size:14.8px;color:#d7dcd8;font-family:'Source Serif 4',serif;}
+  .pnode .toolset{
+    display:inline-flex;flex-wrap:wrap;gap:6px;
+  }
+  .pnode .toolset span{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--on-dark-dim2);
+    border:1px solid var(--panel-line);padding:2px 8px;
+  }
+
+  /* ===== RISK REGISTER (angles morts additionnels) ===== */
+  .risk{
+    display:grid;grid-template-columns:auto 1fr;gap:4px 16px;
+    padding:16px 0;border-top:1px solid var(--paper-line);
+  }
+  .risk:last-of-type{border-bottom:1px solid var(--paper-line);}
+  .risk .sev{
+    grid-row:1 / 3;align-self:start;margin-top:3px;
+    width:10px;height:10px;background:var(--red);
+  }
+  .risk h4{margin:0;font-size:15px;color:var(--black);font-weight:700;font-family:'Source Serif 4',serif;}
+  .risk p{margin:0;font-size:14.3px;color:var(--ink-soft);grid-column:2;}
+
+  /* ===== FINDINGS (lessons) ===== */
+  .finding{
+    display:flex;gap:16px;margin:22px 0;align-items:flex-start;
+  }
+  .finding .n{
+    flex:0 0 auto;width:34px;height:34px;border-radius:50%;
+    border:2px solid var(--black);color:var(--black);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;
+  }
+  .finding .t{font-size:15.6px;}
+  .finding .t strong{color:var(--black);}
+
+  /* ===== CHECKLIST (tool 1) ===== */
+  .clipboard{
+    background:#fff;
+    border:1px solid var(--paper-line);
+    box-shadow:0 1px 0 var(--paper-line);
+    margin:36px 0 10px;
+  }
+  .clip-head{
+    background:var(--black);color:var(--on-dark);
+    padding:18px 22px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
+  }
+  .clip-head .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);
+    letter-spacing:.12em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:6px;
+  }
+  .clip-head h3{font-family:'Source Serif 4',serif;font-size:21px;margin:0;color:#fff;font-weight:700;}
+  .clip-head .cnt{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--on-dark-dim2);
+    border:1px solid var(--panel-line);padding:4px 9px;white-space:nowrap;
+  }
+  .clip-items{padding:6px 22px 8px;}
+  .citem{
+    display:flex;gap:14px;padding:15px 0;border-top:1px solid var(--paper-line);
+  }
+  .citem:first-child{border-top:none;}
+  .citem .box{
+    flex:0 0 auto;width:19px;height:19px;border:2px solid var(--black);margin-top:2px;
+  }
+  .citem h4{margin:0 0 4px;font-size:15px;color:var(--black);font-family:'Source Serif 4',serif;font-weight:700;}
+  .citem p{margin:0;font-size:14px;color:var(--ink-soft);}
+  .clip-foot{
+    padding:14px 22px 18px;font-size:13.6px;color:var(--ink-soft);font-style:italic;
+    border-top:1px solid var(--paper-line);
+  }
+
+  /* ===== GO/NO-GO (tool 2) ===== */
+  .gonogo{
+    background:var(--panel-2);color:var(--on-dark);
+    margin:34px 0;
+    padding:22px 22px 8px;
+  }
+  .gonogo .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);
+    letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  }
+  .gonogo h3{font-family:'Source Serif 4',serif;font-size:21px;margin:8px 0 16px;color:#fff;font-weight:700;}
+  .gate{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:14px 0;border-top:1px solid var(--panel-line);
+  }
+  .gate:first-of-type{border-top:none;}
+  .gate .lamp{
+    flex:0 0 auto;width:38px;height:22px;margin-top:3px;
+    border:1.5px solid var(--amber-dim);position:relative;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:var(--amber);letter-spacing:.05em;
+  }
+  .gate p{margin:0;font-size:15px;color:var(--on-dark);}
+  .gate p strong{color:#fff;}
+
+  .pullline{
+    text-align:center;font-family:'Source Serif 4',serif;font-style:italic;
+    font-size:22px;color:var(--black);margin:54px 0 8px;line-height:1.5;
+    padding-top:26px;position:relative;
+  }
+  .pullline::before{
+    content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:60px;height:2px;background:var(--amber);
+  }
+
+  /* ===== GLOSSARY ===== */
+  .glossary{margin-top:52px;padding-top:22px;border-top:1px solid var(--paper-line);}
+  .gterms{
+    display:grid;grid-template-columns:1fr 1fr;gap:2px;
+    background:var(--paper-line);margin-top:18px;
+  }
+  @media(max-width:600px){.gterms{grid-template-columns:1fr;}}
+  .gterm{background:#fbfaf5;padding:13px 16px;}
+  .gterm b{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber-dim);
+    display:block;margin-bottom:3px;
+  }
+  .gterm span{font-size:13.6px;color:var(--ink-soft);}
+
+  /* ===== LOGBOOK (sources) ===== */
+  .logbook{
+    margin-top:58px;padding-top:24px;border-top:3px solid var(--black);
+  }
+  .logbook .tag-cat{margin-bottom:4px;}
+  .logbook h2{margin-bottom:22px;}
+  .entry{
+    display:grid;grid-template-columns:34px 1fr;gap:14px;
+    padding:13px 0;border-top:1px solid var(--paper-line);
+    font-size:13.6px;color:var(--ink-soft);line-height:1.6;
+  }
+  .entry:last-child{border-bottom:1px solid var(--paper-line);}
+  .entry .eix{
+    font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--amber-dim);font-size:13px;
+  }
+  .entry a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--paper-line);}
+  .entry em{color:var(--black);}
+
+  /* ===== SIGN-OFF STAMP ===== */
+  .signoff{
+    margin-top:56px;background:var(--black);color:var(--on-dark);
+    padding:30px 26px;
+    display:flex;gap:22px;align-items:center;flex-wrap:wrap;
+  }
+  .seal{flex:0 0 auto;width:78px;height:78px;}
+  .sign-body{flex:1 1 260px;}
+  .sign-name{font-family:'Source Serif 4',serif;font-style:italic;font-weight:600;font-size:21px;color:#fff;}
+  .sign-role{font-size:14px;color:var(--on-dark-dim2);margin:4px 0 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .linkrow{display:flex;flex-wrap:wrap;gap:10px 20px;}
+  .linkrow .li{display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
+  .linkrow .li .lbl{color:var(--amber);text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;}
+  .linkrow .li a{color:var(--on-dark);text-decoration:none;border-bottom:1px dotted var(--on-dark-dim2);}
+  .hashtags{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;}
+  .hashtags span{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+    color:var(--amber);border:1px solid var(--panel-line);padding:4px 10px;
+  }
+
+  @media(max-width:560px){
+    .gauges{grid-template-columns:1fr 1fr 1fr;}
+    .gauge svg{width:78px;height:78px;}
+    .gauge .gv{font-size:16px;}
+    .signoff{flex-direction:column;align-items:flex-start;text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="classbar">
+      <span><b>Jerome Potvin</b></span>
+      <span>Directeur, Stratégie Commerciale, Innovair Solutions</span>
+    </div>
+    <span class="doc-label">Gouvernance de l'IA agentique</span>
+    <h1>« On lui fait confiance. » <em>La phrase qui a coulé plus de projets d'agents IA que n'importe quel bug.</em></h1>
+    <p class="dek">Pourquoi les meilleurs gestionnaires continuent de confier des projets stratégiques d'intelligence artificielle aux mauvaises personnes, pas par manque de talent dans l'organisation, mais par manque de structure autour de lui.</p>
+    <div class="meta">
+      <div><span>Rédigé par</span><b>Jerome Potvin</b></div>
+      <div><span>Fonction</span><b>Directeur, Stratégie Commerciale, Innovair Solutions</b></div>
+      <div><span>Émission</span><b>Septembre 2026</b></div>
+      <div><span>Statut</span><b>Diffusion publique</b></div>
+    </div>
+  </div>
+
+  <div class="gauges">
+    <div class="gauge">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#2b323a" stroke-width="9" stroke-dasharray="245.04 326.73" stroke-linecap="round" transform="rotate(-225 60 60)"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#ffb020" stroke-width="9" stroke-dasharray="196.03 326.73" stroke-linecap="round" transform="rotate(-225 60 60)"/>
+        <text x="60" y="67" text-anchor="middle" class="gv">80%+</text>
+      </svg>
+      <div class="gl">des projets d'IA échouent, 2× le taux des projets TI classiques (RAND)</div>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#2b323a" stroke-width="9" stroke-dasharray="245.04 326.73" stroke-linecap="round" transform="rotate(-225 60 60)"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#e2483a" stroke-width="9" stroke-dasharray="205.84 326.73" stroke-linecap="round" transform="rotate(-225 60 60)"/>
+        <text x="60" y="67" text-anchor="middle" class="gv">84%</text>
+      </svg>
+      <div class="gl">des échecs sont d'origine décisionnelle, pas technique (RAND)</div>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#2b323a" stroke-width="9" stroke-dasharray="245.04 326.73" stroke-linecap="round" transform="rotate(-225 60 60)"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#ffb020" stroke-width="9" stroke-dasharray="98.02 326.73" stroke-linecap="round" transform="rotate(-225 60 60)"/>
+        <text x="60" y="67" text-anchor="middle" class="gv">40%+</text>
+      </svg>
+      <div class="gl">des projets d'IA agentique seront annulés d'ici 2027 (Gartner)</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <article>
+    <p class="lede">Un vendredi après-midi, un comité de direction doit nommer un responsable pour lancer un agent IA au service à la clientèle. Deux noms circulent. La première personne&nbsp;: quinze ans dans l'entreprise, aucune formation technique, mais tout le monde lui fait confiance. La deuxième&nbsp;: analyste de données, deux ans d'ancienneté, peu connue en dehors de son équipe. Le choix se fait en trois minutes. « On donne ça à elle. C'est une personne fiable. »</p>
+
+    <p>Personne dans la salle ne s'est demandé si « fiable » et « capable de superviser un système qui invente parfois ses propres faits avec assurance » étaient la même compétence.</p>
+
+    <p>Ce n'est pas un cas isolé, c'est un patron statistique. Selon RAND Corporation, plus de 80&nbsp;% des projets d'IA échouent, le double du taux d'échec des projets TI conventionnels, et dans 84&nbsp;% des cas étudiés, la cause première n'est pas technique&nbsp;: c'est un désalignement entre ce que la direction demande et ce que le projet peut réellement livrer. Gartner, de son côté, prévoit que plus de 40&nbsp;% des projets d'IA agentique seront annulés d'ici la fin de 2027, à cause de coûts qui dérapent, d'une valeur d'affaires mal définie dès le départ, et de contrôles de risque insuffisants.</p>
+
+    <p>Le problème n'est presque jamais l'intelligence artificielle elle-même. C'est la structure, ou plutôt son absence, autour de la personne à qui on vient de la confier.</p>
+
+    <div class="h2-wrap">
+      <div class="tag-cat"><span class="ix">01</span>Facteur contributif</div>
+      <h2>Le duel qu'on n'aurait jamais dû organiser</h2>
+    </div>
+
+    <p>On oppose trop souvent deux profils comme s'il fallait trancher entre eux. D'un côté, la personne qui connaît l'entreprise par cœur, ses clients, ses processus, ses non-dits, mais qui n'a jamais ouvert une console ni lu un schéma d'architecture. De l'autre, la personne technique, qui comprend les modèles, les API et les pipelines de données, mais qui découvre l'organigramme informel de l'entreprise en même temps que le projet.</p>
+
+    <p>Le réflexe de gestion classique tranche presque toujours en faveur de la confiance relationnelle. Et sur le plan humain, c'est compréhensible&nbsp;: on ne délègue pas un mandat stratégique à un inconnu. Mais la confiance n'est pas une compétence. Elle ne détecte pas une hallucination, ne configure pas une permission d'écriture, ne sait pas reconnaître une source de vérité fiable pour un modèle.</p>
+
+    <blockquote>La confiance n'a jamais lu un journal d'erreurs. Et un journal d'erreurs ne s'est jamais soucié de qui vous êtes dans l'organigramme.<cite>Constat, le croisement qui manque à la plupart des projets d'IA</cite></blockquote>
+
+    <p>Le vrai croisement dont les organisations ont besoin n'est pas un choix entre les deux profils, c'est une structure qui les fait travailler ensemble, avec une gouvernance claire sur qui décide quoi. RAND est sans équivoque&nbsp;: la cause la plus fréquente d'échec n'est ni le manque de talent technique ni le manque de connaissance d'affaires dans l'organisation. C'est l'absence de traduction structurée entre les deux, et l'habitude des dirigeants d'optimiser pour la mauvaise métrique, « on veut un algorithme qui fixe le prix », alors que le besoin réel est le prix qui maximise la marge.</p>
+
+    <div class="h2-wrap">
+      <div class="tag-cat"><span class="ix">02</span>Note technique</div>
+      <h2>Un agent IA, en clair, et pourquoi le RAG change la donne</h2>
+    </div>
+
+    <p>Un agent IA n'est pas un clavardeur amélioré. C'est un système capable de recevoir un objectif, de décomposer les étapes pour l'atteindre, d'utiliser des outils, une base de données, un courriel, un système CRM, et d'agir avec un certain degré d'autonomie, parfois sans validation humaine à chaque étape. C'est précisément cette autonomie qui en fait un actif stratégique. Et un risque, si personne ne sait où se trouvent les garde-fous.</p>
+
+    <p>L'une des techniques les plus citées pour réduire les hallucinations, ces réponses inventées, formulées avec un aplomb total, est le <strong>RAG</strong>, ou génération augmentée par récupération (<em>retrieval-augmented generation</em>). Le concept a été formalisé en 2020 par une équipe de Facebook AI Research et de University College London (Lewis et al., NeurIPS 2020)&nbsp;: plutôt que de laisser le modèle répondre uniquement à partir de ce qu'il a « appris » pendant son entraînement, on le connecte à une base documentaire externe et vérifiable. Le modèle va chercher l'information avant de répondre, puis construit sa réponse à partir de ce qui a été trouvé.</p>
+
+    <p>C'est une avancée réelle. Mais c'est aussi là que se cache l'angle mort que peu de gestionnaires non techniques voient venir&nbsp;: un RAG mal construit, documents périmés, sources contradictoires, base documentaire incomplète, donne au modèle une fausse impression de rigueur. Le système ne dit plus « je ne sais pas ». Il cite. Il a l'air sérieux. Et il peut quand même se tromper, avec les mêmes conséquences opérationnelles et juridiques qu'une hallucination pure.</p>
+
+    <div class="tag-cat" style="margin-top:36px;"><span class="ix">02.1</span>Procédure, 5 phases</div>
+    <h2 style="font-size:20px;margin:0 0 16px;">Les cinq étapes d'une mise en place de RAG</h2>
+
+    <p>On n'a pas besoin de savoir coder pour superviser un projet de RAG, mais on doit savoir quelles questions poser à chaque étape. Voici les cinq, dans l'ordre où elles se posent réellement.</p>
+
+    <div class="phase"><div class="n">1</div><div class="t"><strong>Cartographier les sources autorisées.</strong> Quels documents ont le droit d'alimenter le système, politiques internes, catalogues produits, contrats-types, grilles tarifaires&nbsp;? Qui les approuve, et à quelle fréquence sont-ils révisés&nbsp;?</div></div>
+    <div class="phase"><div class="n">2</div><div class="t"><strong>Découper et indexer l'information.</strong> Les documents sont fragmentés en blocs (<em>chunks</em>) puis transformés en représentations numériques (vecteurs) qui permettent au système de retrouver le passage pertinent, pas seulement un mot-clé qui apparaît dans le texte.</div></div>
+    <div class="phase"><div class="n">3</div><div class="t"><strong>Récupérer avant de générer.</strong> À chaque question, le système cherche d'abord dans cette base, classe les extraits les plus pertinents, puis construit sa réponse à partir d'eux, idéalement, et seulement d'eux.</div></div>
+    <div class="phase"><div class="n">4</div><div class="t"><strong>Exiger la citation de la source.</strong> Une réponse d'agent à vocation d'affaires devrait toujours pouvoir indiquer sur quel document elle s'appuie. Si elle ne peut pas le faire, c'est un signal d'alarme, pas un détail technique.</div></div>
+    <div class="phase"><div class="n">5</div><div class="t"><strong>Nommer un propriétaire de la mise à jour.</strong> Une base documentaire livrée puis abandonnée redevient une source d'erreurs en quelques mois. Il faut quelqu'un dont le mandat explicite est de la tenir à jour, pas un projet qu'on considère « terminé » après le lancement.</div></div>
+
+    <div class="callout">
+      <span class="tag">Note d'enquêteur, bâtir, acheter ou orchestrer&nbsp;?</span>
+      Ce choix, équipe interne, fournisseur, ou assemblage de briques existantes, vient après ces cinq étapes, pas avant. Dans les trois cas, elles doivent être répondues, jamais contournées. Avant de signer avec un fournisseur, trois questions suffisent à révéler s'il a vraiment fait le travail&nbsp;: <strong>Pouvez-vous le démontrer sur nos données, pas sur une démo&nbsp;?</strong> <strong>À quoi ressemble un échec du système, et comment le détecte-t-on&nbsp;?</strong> <strong>Qui est responsable quand la réponse est fausse&nbsp;?</strong> Un fournisseur sérieux accueille ces questions. Celui qui les esquive vient de répondre à la troisième.
+    </div>
+
+    <div class="h2-wrap">
+      <div class="tag-cat"><span class="ix">03</span>Plan de vol</div>
+      <h2>Comment bâtir un agent, étape par étape</h2>
+    </div>
+
+    <p>Pas besoin d'être technique pour piloter ce plan de vol, seulement de refuser de sauter une étape parce que quelqu'un d'autre a hâte de décoller. Il s'applique autant à une équipe interne qu'à un fournisseur externe.</p>
+
+    <div class="flightplan">
+      <div class="wp">
+        <div class="wp-badge">WP1<br>MISSION</div>
+        <div class="wp-body"><span class="coord">Avant tout le reste</span><h4>Définir la mission, pas la technologie</h4><p>Quel problème précis l'agent résout-il, pour qui, et, tout aussi important, que lui interdit-on explicitement de faire&nbsp;? Un agent sans mission écrite est un agent sans limite.</p></div>
+      </div>
+      <div class="wp">
+        <div class="wp-badge">WP2<br>TERRAIN</div>
+        <div class="wp-body"><span class="coord">Cartographie</span><h4>Cartographier le terrain</h4><p>Quelles données et quels systèmes, CRM, ERP, base de connaissances, l'agent doit-il toucher, et lesquels lui restent absolument interdits&nbsp;? C'est ici que la base documentaire du RAG (section précédente) prend forme.</p></div>
+      </div>
+      <div class="wp">
+        <div class="wp-badge">WP3<br>ÉQUIPAGE</div>
+        <div class="wp-body"><span class="coord">Rôles</span><h4>Nommer l'équipage au complet</h4><p>Un responsable d'affaires <em>et</em> un copilote technique, nommés ensemble dès le jour&nbsp;1, jamais l'un après l'incident de l'autre.</p></div>
+      </div>
+      <div class="wp">
+        <div class="wp-badge">WP4<br>INSTR.</div>
+        <div class="wp-body"><span class="coord">Contrôles</span><h4>Configurer les instruments</h4><p>Permissions techniques réelles, pas des consignes écrites dans un prompt, garde-fous testés, et un plan d'escalade rédigé avant l'arrivée du premier utilisateur réel.</p></div>
+      </div>
+      <div class="wp">
+        <div class="wp-badge">WP5<br>ESSAI</div>
+        <div class="wp-body"><span class="coord">Validation</span><h4>Un vol d'essai supervisé</h4><p>Un groupe restreint d'utilisateurs, un échantillon de réponses relu chaque jour, un critère d'arrêt écrit à l'avance, jamais un lancement à tout le monde en même temps.</p></div>
+      </div>
+      <div class="wp">
+        <div class="wp-badge">WP6<br>GO</div>
+        <div class="wp-body"><span class="coord">Mise en service</span><h4>Décollage progressif, jamais en un seul geste</h4><p>On élargit par paliers, seulement quand les indicateurs du vol d'essai sont au vert, et on garde la main pour interrompre le vol à tout moment.</p></div>
+      </div>
+    </div>
+
+    <p>Sauter une de ces six étapes ne fait pas gagner de temps, ça déplace simplement le risque plus loin dans le vol, là où il coûte plus cher à corriger.</p>
+
+    <div class="tag-cat" style="margin-top:36px;"><span class="ix">03.1</span>Dans la boîte noire</div>
+    <h2 style="font-size:20px;margin:0 0 6px;">Le pipeline RAG, bloc par bloc</h2>
+    <p style="margin-bottom:4px;color:var(--ink-soft);font-size:15px;">Pour qui veut ouvrir le capot, ou simplement comprendre ce que le fournisseur facture.</p>
+
+    <div class="pipeline">
+      <div class="pnode"><div class="pn">1</div><div><h4>Sources</h4><p>Rassembler et nettoyer les documents autorisés, politiques, catalogues, grilles tarifaires, dans un seul emplacement, en format texte ou PDF propre.</p><div class="toolset"><span>Drive</span><span>SharePoint</span><span>Airtable</span></div></div></div>
+      <div class="pnode"><div class="pn">2</div><div><h4>Découpage (chunking)</h4><p>Fragmenter chaque document en blocs de 300 à 500 mots, avec chevauchement, en conservant le titre, la date et la source de chaque bloc, c'est ce qui permettra de citer la bonne référence plus tard.</p></div></div>
+      <div class="pnode"><div class="pn">3</div><div><h4>Embeddings</h4><p>Transformer chaque bloc en vecteur numérique, pour que le système compare des sens plutôt que des mots-clés.</p><div class="toolset"><span>Voyage AI</span><span>OpenAI text-embedding-3</span></div></div></div>
+      <div class="pnode"><div class="pn">4</div><div><h4>Base vectorielle</h4><p>Stocker ces vecteurs pour une recherche par similarité. Version prototype plus légère&nbsp;: une recherche par mots-clés dans une base structurée, en attendant d'investir dans le vrai vectoriel.</p><div class="toolset"><span>Pinecone</span><span>Supabase (pgvector)</span></div></div></div>
+      <div class="pnode"><div class="pn">5</div><div><h4>Orchestration</h4><p>Le flux qui tourne à chaque question&nbsp;: vectoriser la requête, chercher les blocs les plus pertinents, les insérer dans le prompt avec instruction explicite de citer la source, puis appeler le modèle.</p><div class="toolset"><span>n8n</span><span>API Claude</span></div></div></div>
+      <div class="pnode"><div class="pn">6</div><div><h4>Mise à jour</h4><p>Un second flux, déclenché sur une cadence ou à chaque changement de document, qui refait les blocs 1 à 4 pour garder la base vivante, sans lui, la base se périme en quelques mois.</p></div></div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Note d'enquêteur, avant de mettre à l'échelle</span>
+      La qualité du découpage (bloc 2) et le nombre de blocs récupérés à chaque question (bloc 4) sont ce qui distingue un RAG qui répond bien d'un RAG qui rate le bon passage. Ça se teste sur une vingtaine de questions réelles avant un déploiement à grande échelle, pas après.
+    </div>
+
+    <div class="h2-wrap">
+      <div class="tag-cat"><span class="ix">04</span>Pièces au dossier</div>
+      <h2>Les angles morts que la confiance ne voit jamais venir</h2>
+    </div>
+
+    <p>Deux cas récents, bien documentés, montrent ce qui se passe quand personne dans la chaîne de décision n'a eu le mandat, ou la compétence, de poser les bonnes questions avant le lancement.</p>
+
+    <div class="transcript">
+      <div class="th"><span class="who">Pièce 1, Air Canada</span><span class="tag">14 févr. 2024 · BCCRT 149</span></div>
+      <p>Un client endeuillé demande au clavardeur du site web les conditions d'un tarif de compassion. Le bot invente une politique de remboursement rétroactif qui n'existe pas. Le client s'y fie, réclame le remboursement, se le fait refuser. Le Tribunal des petites créances de la Colombie-Britannique (<em>Moffatt v. Air Canada</em>) tranche&nbsp;: Air Canada est responsable de négligence dans ses représentations. L'entreprise avait plaidé que le clavardeur était, en substance, une entité distincte responsable de ses propres propos. <strong>Le tribunal a rejeté cet argument sans détour</strong>, une entreprise répond de tout ce qui figure sur son site, agent conversationnel inclus. Facture&nbsp;: 812,02&nbsp;$ et une jurisprudence désormais citée partout en gouvernance IA.</p>
+    </div>
+
+    <div class="transcript">
+      <div class="th"><span class="who">Pièce 2, Replit</span><span class="tag">Juillet 2025 · Incident n° 1152</span></div>
+      <p>Un agent IA de programmation autonome, en plein gel de code explicitement demandé par l'utilisateur, supprime une base de données de production contenant les dossiers de plus de 1&nbsp;200 dirigeants et 1&nbsp;196 entreprises. Interrogé, l'agent affirme d'abord avoir « paniqué » en voyant une base vide et avoir jugé la suppression sécuritaire. Il reconnaîtra ensuite&nbsp;: <strong>« J'ai violé des instructions explicites, détruit des mois de travail. C'est un échec catastrophique de ma part. »</strong> Le PDG de Replit qualifiera l'incident d'« inacceptable et qui n'aurait jamais dû être possible ».</p>
+    </div>
+
+    <p>Dans les deux cas, la technologie a fait exactement ce que des systèmes probabilistes font parfois&nbsp;: produire une réponse plausible, formulée avec assurance, et fausse. Le vrai bris n'est pas survenu au moment de l'erreur. Il est survenu bien avant, au moment où personne n'avait posé de garde-fou technique, de plan d'escalade, ni de zone de non-permission claire.</p>
+
+    <div class="tag-cat" style="margin-top:36px;"><span class="ix">04.1</span>Registre des risques</div>
+    <h2 style="font-size:20px;margin:0 0 6px;">Quatre autres angles morts à mettre sur la liste</h2>
+    <p style="margin-bottom:4px;color:var(--ink-soft);font-size:15px;">Moins spectaculaires que les pièces 1 et 2. Tout aussi coûteux.</p>
+
+    <div class="risk"><div class="sev"></div><h4>La flagornerie (<em>sycophancy</em>)</h4><p>Un modèle entraîné à être utile a parfois tendance à confirmer l'utilisateur plutôt qu'à le contredire, même quand celui-ci a tort. Une équipe de recherche d'Anthropic l'a documenté formellement en 2023. Un gestionnaire qui formule sa question de façon à sous-entendre la réponse qu'il souhaite entendre risque de la recevoir, peu importe si elle est exacte.</p></div>
+    <div class="risk"><div class="sev"></div><h4>La fuite de données confidentielles</h4><p>En 2023, des employés de Samsung ont involontairement partagé du code source et des notes de réunion internes en les collant dans ChatGPT, ce qui a mené l'entreprise à interdire l'usage d'outils IA grand public en entreprise. Sans politique claire sur ce qui peut, ou ne peut pas, être saisi dans un outil public, ce risque n'a rien de théorique.</p></div>
+    <div class="risk"><div class="sev"></div><h4>Le biais hérité des données d'entraînement</h4><p>Les modèles reproduisent les régularités présentes dans leurs données d'entraînement, y compris des biais historiques documentés par la recherche universitaire, notamment des travaux publiés par Stanford Law School. Un agent utilisé en dotation, en crédit ou en évaluation de performance mérite une révision humaine, pas une confiance automatique.</p></div>
+    <div class="risk"><div class="sev"></div><h4>La fenêtre de contexte et l'incohérence</h4><p>Un agent qui traite une longue conversation ou un long document peut perdre le fil de l'information la plus ancienne, et une même question posée deux fois peut produire deux réponses différentes. Ce ne sont pas des bugs isolés, ce sont des comportements connus des fournisseurs eux-mêmes, à tester avant de confier à un agent une tâche qui exige une reproductibilité exacte (conformité, audit, calculs financiers).</p></div>
+
+    <div class="h2-wrap">
+      <div class="tag-cat"><span class="ix">05</span>Constatations</div>
+      <h2>Ce que ces échecs nous enseignent</h2>
+    </div>
+
+    <div class="finding"><div class="n">1</div><div class="t"><strong>La responsabilité ne se délègue jamais à l'outil.</strong> Un tribunal l'a confirmé noir sur blanc&nbsp;: l'entreprise répond de son agent IA comme de n'importe quel employé qui parle en son nom.</div></div>
+    <div class="finding"><div class="n">2</div><div class="t"><strong>Une instruction n'est pas un garde-fou.</strong> Demander à un agent de ne rien modifier pendant un gel de code n'a rien empêché. Les permissions techniques, accès en lecture seule, environnements cloisonnés, doivent être configurées, pas seulement demandées poliment.</div></div>
+    <div class="finding"><div class="n">3</div><div class="t"><strong>Un projet pilote sans structure reste un pilote pour toujours.</strong> Selon le rapport MIT NANDA 2025 sur l'état de l'IA en entreprise, 95&nbsp;% des projets pilotes d'IA générative ne génèrent aucun retour financier mesurable, souvent parce qu'ils restent des expérimentations isolées, sans intégration réelle dans un flux de travail ni propriétaire clairement identifié.</div></div>
+    <div class="finding"><div class="n">4</div><div class="t"><strong>La valeur d'affaires et le seuil de coût se définissent avant le feu vert, pas après.</strong> C'est exactement ce que pointe Gartner pour expliquer pourquoi plus de 40&nbsp;% des projets d'IA agentique seront abandonnés d'ici 2027.</div></div>
+    <div class="finding"><div class="n">5</div><div class="t"><strong>La compétence technique n'a pas besoin d'être au sommet, mais elle doit être à la table.</strong> RAND observe que le problème n'est presque jamais un manque de talent quelque part dans l'organisation&nbsp;; c'est l'absence de pont structuré entre ce talent et la personne qui prend la décision finale.</div></div>
+
+    <div class="clipboard">
+      <div class="clip-head">
+        <div><span class="tag">Outil 1, avant de nommer qui que ce soit</span><h3>Checklist pré-vol</h3></div>
+        <span class="cnt">6 points</span>
+      </div>
+      <div class="clip-items">
+        <div class="citem"><div class="box"></div><div><h4>01, Traçabilité des sources</h4><p>D'où vient chaque réponse du système&nbsp;? Existe-t-il une base documentaire vérifiée, à jour, et sait-on qui la maintient&nbsp;?</p></div></div>
+        <div class="citem"><div class="box"></div><div><h4>02, Permissions réelles, pas des promesses</h4><p>Quelles actions l'agent peut-il exécuter sans validation humaine&nbsp;? Ces limites sont-elles imposées techniquement, ou seulement écrites dans une consigne&nbsp;?</p></div></div>
+        <div class="citem"><div class="box"></div><div><h4>03, Copilote technique nommé</h4><p>Qui, dans l'équipe technique, est formellement associé à la personne responsable, pas consulté au besoin, mais redevable au même titre&nbsp;?</p></div></div>
+        <div class="citem"><div class="box"></div><div><h4>04, Seuil de coût et de valeur</h4><p>Quel résultat d'affaires mesurable est attendu, et à quel montant ou délai le projet doit-il être révisé ou arrêté&nbsp;?</p></div></div>
+        <div class="citem"><div class="box"></div><div><h4>05, Point d'escalade humain</h4><p>Quand un client conteste une réponse de l'agent, qui tranche, et en combien de temps&nbsp;?</p></div></div>
+        <div class="citem"><div class="box"></div><div><h4>06, Cadence de surveillance</h4><p>Qui relit un échantillon des réponses chaque semaine, et que se passe-t-il quand une hallucination est détectée&nbsp;?</p></div></div>
+      </div>
+      <div class="clip-foot">Une case sans réponse claire est un angle mort. Trois cases sans réponse, et le projet n'est pas prêt à être confié à qui que ce soit.</div>
+    </div>
+
+    <div class="gonogo">
+      <span class="tag">Outil 2, avant qu'une réponse d'agent sorte de l'organisation</span>
+      <h3>Décision go / no-go</h3>
+      <div class="gate"><div class="lamp">01</div><p><strong>Est-elle exacte&nbsp;?</strong> Les faits avancés sont-ils vérifiables, ou l'agent a-t-il comblé un manque d'information par une inférence présentée comme un fait&nbsp;?</p></div>
+      <div class="gate"><div class="lamp">02</div><p><strong>Est-elle à jour&nbsp;?</strong> S'appuie-t-elle sur une source datée, périmée, ou sur la date de coupure des connaissances du modèle plutôt que sur la réalité actuelle&nbsp;?</p></div>
+      <div class="gate"><div class="lamp">03</div><p><strong>Est-elle complète&nbsp;?</strong> Manque-t-il une nuance, un risque ou une exception qui changerait la décision du client ou de l'employé qui la reçoit&nbsp;?</p></div>
+      <div class="gate"><div class="lamp">04</div><p><strong>Est-elle appropriée au contexte&nbsp;?</strong> Le ton, le niveau de détail et la portée conviennent-ils à la situation, un remboursement, un contrat, une politique RH, ou l'agent généralise-t-il une réponse type&nbsp;?</p></div>
+    </div>
+
+    <p class="pullline">« On lui fait confiance » n'a jamais été une réponse à ces dix questions.</p>
+
+    <div class="h2-wrap">
+      <div class="tag-cat"><span class="ix">06</span>Conclusion de l'enquête</div>
+      <h2>Retour à la salle de comité</h2>
+    </div>
+
+    <p>Le problème, ce vendredi après-midi, n'était pas le choix entre les deux noms, les deux avaient probablement leur place dans ce projet. Le problème, c'est qu'aucune structure n'existait pour les faire travailler ensemble, avec des responsabilités claires et des garde-fous réels.</p>
+
+    <p>Les organisations n'ont pas de pénurie de personnes de confiance. Elles ont, la plupart du temps, aussi les ressources technologiques nécessaires, une équipe TI, un analyste de données, parfois même un ou une spécialiste IA, pour structurer un projet correctement. Ce qui manque rarement, c'est le talent. <strong>Ce qui manque presque toujours, c'est la décision de gestion d'assembler ce talent avant de lancer, plutôt que de le découvrir après le premier incident.</strong></p>
+
+    <p>La prochaine fois qu'un projet stratégique d'intelligence artificielle atterrit sur votre bureau, la question n'est pas « en qui puis-je avoir confiance? » Vous le savez déjà. La vraie question est&nbsp;:</p>
+
+    <blockquote>Ai-je construit, autour de cette personne, la structure qui rendra cette confiance méritée&nbsp;?<cite>Recommandation finale, la seule question qui compte avant le feu vert</cite></blockquote>
+
+  </article>
+
+  <div class="glossary">
+    <div class="tag-cat"><span class="ix">Lex.</span>Lexique du dossier</div>
+    <h2 style="font-size:20px;margin:0;">Acronymes et sigles utilisés</h2>
+    <div class="gterms">
+      <div class="gterm"><b>IA</b><span>Intelligence artificielle</span></div>
+      <div class="gterm"><b>RAG</b><span><em>Retrieval-Augmented Generation</em>, génération augmentée par récupération</span></div>
+      <div class="gterm"><b>TI</b><span>Technologies de l'information</span></div>
+      <div class="gterm"><b>API</b><span><em>Application Programming Interface</em>, interface de programmation qui permet à deux systèmes de communiquer</span></div>
+      <div class="gterm"><b>CRM</b><span><em>Customer Relationship Management</em>, système de gestion de la relation client</span></div>
+      <div class="gterm"><b>ERP</b><span><em>Enterprise Resource Planning</em>, progiciel de gestion intégré (comptabilité, inventaire, opérations)</span></div>
+      <div class="gterm"><b>RH</b><span>Ressources humaines</span></div>
+      <div class="gterm"><b>PDG</b><span>Président-directeur général</span></div>
+      <div class="gterm"><b>BCCRT</b><span><em>British Columbia Civil Resolution Tribunal</em>, le tribunal des petites créances de la Colombie-Britannique qui a tranché la cause Air Canada</span></div>
+      <div class="gterm"><b>NeurIPS</b><span><em>Conference on Neural Information Processing Systems</em>, l'une des plus importantes conférences scientifiques en intelligence artificielle, où le RAG a été présenté en 2020</span></div>
+      <div class="gterm"><b>RAND</b><span>À l'origine une contraction de <em>research and development</em>; l'organisation se nomme aujourd'hui simplement RAND</span></div>
+      <div class="gterm"><b>MIT NANDA</b><span>Projet du MIT Media Lab, <em>Networked Agents and Decentralized AI</em>, derrière le rapport <em>State of AI in Business 2025</em> cité dans ce dossier</span></div>
+      <div class="gterm"><b>WP</b><span><em>Waypoint</em>, terme aéronautique désignant un point de passage sur un plan de vol; utilisé ici pour structurer les six étapes de la section 03</span></div>
+      <div class="gterm"><b>Go / no-go</b><span>Décision binaire d'aller ou non de l'avant, empruntée au vocabulaire aéronautique, utilisée ici pour le test à quatre questions avant qu'une réponse d'agent ne sorte de l'organisation</span></div>
+    </div>
+  </div>
+
+  <div class="logbook">
+    <div class="tag-cat"><span class="ix">Réf.</span>Journal de bord</div>
+    <h2>Références vérifiables</h2>
+    <div class="entry"><span class="eix">01</span><span>Lewis, P. et al. (2020). <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.</em> NeurIPS 2020 / arXiv:2005.11401. <a href="https://arxiv.org/abs/2005.11401" target="_blank">arxiv.org/abs/2005.11401</a></span></div>
+    <div class="entry"><span class="eix">02</span><span>RAND Corporation (2025). <em>Why AI Projects Fail and How They Can Succeed</em> (RRA2680-1). <a href="https://www.rand.org/pubs/research_reports/RRA2680-1.html" target="_blank">rand.org/pubs/research_reports/RRA2680-1</a></span></div>
+    <div class="entry"><span class="eix">03</span><span>Gartner (25 juin 2025). <em>Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled by End of 2027.</em> <a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027" target="_blank">gartner.com</a></span></div>
+    <div class="entry"><span class="eix">04</span><span>MIT NANDA (2025). <em>The GenAI Divide, State of AI in Business 2025.</em> <a href="https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf" target="_blank">Rapport complet (PDF)</a></span></div>
+    <div class="entry"><span class="eix">05</span><span>Tribunal des petites créances de la Colombie-Britannique. <em>Moffatt v. Air Canada</em>, 2024 BCCRT 149 (14 février 2024). <a href="https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html" target="_blank">Décision, CanLII</a> · <a href="https://www.forbes.com/sites/marisagarcia/2024/02/19/what-air-canada-lost-in-remarkable-lying-ai-chatbot-case/" target="_blank">Forbes, 19 février 2024</a></span></div>
+    <div class="entry"><span class="eix">06</span><span>eWeek (2025). <em>AI Agent Wipes Production Database, Then Lies About It.</em> <a href="https://www.eweek.com/news/replit-ai-coding-assistant-failure/" target="_blank">eweek.com</a> · <a href="https://incidentdatabase.ai/cite/1152/" target="_blank">AI Incident Database, n° 1152</a></span></div>
+    <div class="entry"><span class="eix">07</span><span>Cloudflare. <em>Que sont les hallucinations de l'intelligence artificielle (IA)&nbsp;?</em> <a href="https://www.cloudflare.com/learning/ai/what-are-ai-hallucinations/" target="_blank">cloudflare.com</a></span></div>
+    <div class="entry"><span class="eix">08</span><span>AWS. <em>What Is RAG?</em> <a href="https://aws.amazon.com/what-is/retrieval-augmented-generation/" target="_blank">aws.amazon.com</a> · IBM. <em>What is RAG?</em> <a href="https://www.ibm.com/think/topics/retrieval-augmented-generation" target="_blank">ibm.com</a></span></div>
+    <div class="entry"><span class="eix">09</span><span>Anthropic (2023). <em>Towards Understanding Sycophancy in Language Models.</em> <a href="https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models" target="_blank">anthropic.com</a> · <a href="https://arxiv.org/abs/2310.13548" target="_blank">arXiv:2310.13548</a></span></div>
+    <div class="entry"><span class="eix">10</span><span>Forbes (2 mai 2023). <em>Samsung Bans ChatGPT Among Employees After Sensitive Code Leak.</em> <a href="https://www.forbes.com/sites/siladityaray/2023/05/02/samsung-bans-chatgpt-and-other-chatbots-for-employees-after-sensitive-code-leak/" target="_blank">forbes.com</a></span></div>
+    <div class="entry"><span class="eix">11</span><span>Stanford Law School. <em>Bias in Large Language Models, and Who Should Be Held Accountable.</em> <a href="https://law.stanford.edu/press/bias-in-large-language-models-and-who-should-be-held-accountable/" target="_blank">law.stanford.edu</a></span></div>
+  </div>
+
+  <div class="signoff">
+    <svg class="seal" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#ffb020" stroke-width="2"/>
+      <circle cx="50" cy="50" r="39" fill="none" stroke="#ffb020" stroke-width="1"/>
+      <path id="sealtext" fill="none" d="M 50,11 A 39,39 0 1 1 49.9,11"/>
+      <text font-family="IBM Plex Mono" font-size="7.2" font-weight="700" fill="#ffb020" letter-spacing="2">
+        <textPath href="#sealtext" startOffset="2">JEROME POTVIN · STRATÉGIE COMMERCIALE ·</textPath>
+      </text>
+      <text x="50" y="47" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="700" fill="#fff">JP</text>
+      <text x="50" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="6.5" fill="#8b929c">INNOVAIR</text>
+    </svg>
+    <div class="sign-body">
+      <div class="sign-name">Jerome Potvin</div>
+      <div class="sign-role">DIRECTEUR, STRATÉGIE COMMERCIALE, INNOVAIR SOLUTIONS</div>
+      <div class="linkrow">
+        <span class="li"><span class="lbl">LinkedIn</span><a href="http://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></span>
+        <span class="li"><span class="lbl">Portfolio</span><a href="https://einsteindata.github.io/jeromepotvin/" target="_blank">einsteindata.github.io/jeromepotvin</a></span>
+      </div>
+      <div class="hashtags">
+        <span>#IntelligenceArtificielle</span><span>#IAAgentique</span><span>#Leadership</span><span>#GouvernanceIA</span><span>#RAG</span><span>#TransformationNumérique</span><span>#GestionDeProjet</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
