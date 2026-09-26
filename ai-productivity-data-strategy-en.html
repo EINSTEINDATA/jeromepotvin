@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Alone Won't Make Your Company More Productive</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1E6091; --teal:#168AAD; --amber:#F7A400; --coral:#E85D4E;
+    --paper:#FAFAF7; --ink:#141B2D; --grey:#5B6472;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 24px 80px;}
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 55%,var(--teal) 100%);
+    color:#fff; padding:64px 24px 56px; text-align:left;
+  }
+  header.hero .inner{max-width:860px; margin:0 auto;}
+  .kicker{
+    text-transform:uppercase; letter-spacing:.14em; font-size:12.5px; font-weight:700;
+    color:var(--amber); margin-bottom:14px;
+  }
+  h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin:0 0 18px; font-weight:800;}
+  .subtitle{font-size:19px; color:#DCE8F5; max-width:640px; margin:0 0 26px; font-weight:400;}
+  .byline{font-size:14px; color:#B9CBE0; display:flex; gap:8px; flex-wrap:wrap;}
+  .byline b{color:#fff;}
+  h2{
+    font-size:24px; color:var(--navy); margin:52px 0 6px; font-weight:800;
+    border-left:5px solid var(--amber); padding-left:14px;
+  }
+  h3{font-size:18px; color:var(--blue); margin:28px 0 8px; font-weight:700;}
+  p{font-size:16.5px; color:#2A3242;}
+  .lede{font-size:19px; color:var(--navy); font-weight:500; margin-top:34px;}
+  .stat-row{
+    display:flex; gap:16px; flex-wrap:wrap; margin:28px 0;
+  }
+  .stat-card{
+    flex:1 1 220px; background:#fff; border:1px solid #E5E1D8; border-radius:12px;
+    padding:20px 18px; box-shadow:0 2px 10px rgba(11,37,69,0.06);
+  }
+  .stat-card .num{font-size:30px; font-weight:800; color:var(--coral);}
+  .stat-card .lbl{font-size:13.5px; color:var(--grey); margin-top:4px;}
+  .chart-block{
+    background:#fff; border:1px solid #E5E1D8; border-radius:14px; padding:22px 22px 12px;
+    margin:30px 0; box-shadow:0 2px 14px rgba(11,37,69,0.07);
+  }
+  .chart-block .cap{font-size:13px; color:var(--grey); margin-top:10px; text-align:center;}
+  .chart-title{font-size:15px; font-weight:700; color:var(--navy); margin-bottom:10px; text-align:center;}
+  canvas{max-height:320px;}
+  blockquote{
+    border-left:4px solid var(--teal); margin:26px 0; padding:6px 20px; font-style:italic;
+    color:var(--navy); font-size:17px; background:#EFF6F9; border-radius:0 8px 8px 0;
+  }
+  ul{padding-left:22px;}
+  li{font-size:16.5px; color:#2A3242; margin-bottom:8px;}
+  .callout{
+    background:#FFF6E8; border:1px solid #F0D9A6; border-radius:12px; padding:20px 22px; margin:26px 0;
+  }
+  .callout .tag{font-weight:800; color:var(--coral); text-transform:uppercase; font-size:12px; letter-spacing:.08em;}
+  .divider{height:1px; background:linear-gradient(90deg,transparent,#D8D2C4,transparent); margin:48px 0;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .flagbox{
+    border-radius:12px; padding:18px 20px; background:#fff; border:1px solid #E5E1D8;
+  }
+  .flagbox h4{margin:0 0 10px; color:var(--navy); font-size:15.5px;}
+  .flagbox p{font-size:14.5px; margin:0;}
+  footer{
+    margin-top:60px; padding-top:26px; border-top:1px solid #E5E1D8; font-size:14px; color:var(--grey);
+  }
+  .author-box{
+    display:flex; gap:16px; align-items:flex-start; background:#fff; border:1px solid #E5E1D8;
+    border-radius:12px; padding:20px; margin-top:20px;
+  }
+  .author-box .initials{
+    flex:0 0 52px; height:52px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px;
+  }
+  a{color:var(--blue);}
+  .source-note{font-size:12.5px; color:#8A93A3; margin-top:6px;}
+  .lesson-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0;}
+  @media(max-width:640px){.lesson-grid{grid-template-columns:1fr;}}
+  .lesson{background:#fff; border:1px solid #E5E1D8; border-radius:10px; padding:14px 16px;}
+  .lesson .n{color:var(--amber); font-weight:800; font-size:14px;}
+  .lesson p{margin:4px 0 0; font-size:14.5px;}
+  .formula-box{
+    background:var(--navy); color:#F7A400; border-radius:12px; padding:20px 22px; margin:24px 0;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:15px; line-height:1.6;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="kicker">AI &amp; Data Strategy · Electrical &amp; HVAC Distribution</div>
+    <h1>AI Alone Won't Make Your Company More Productive</h1>
+    <p class="subtitle">Statistics Canada just proved it with hard numbers. A world tour, a Canada tour, and a stop in Quebec — built from 47 verified sources — on why the "AI premium" melts away the moment you count the foundations underneath it.</p>
+    <div class="byline">By <b>Jerome Potvin</b> · Director, Commercial Strategy · Innovair Solutions</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<p class="lede">Ask any distributor which line item on the budget is labeled "AI." Now ask which line item is labeled "fixing our product data." The second one usually doesn't exist — even though, according to Statistics Canada, it's the difference between a real productivity gain and a rounding error.</p>
+
+<div class="chart-block">
+  <div class="chart-title">The "AI Premium" Melts Once You Count the Foundations</div>
+  <canvas id="gapChart"></canvas>
+  <div class="cap">The raw productivity gap between AI adopters and non-adopters shrinks by two-thirds once prior productivity is controlled for — and disappears into statistical noise once analytics, cloud, and R&amp;D capacity are accounted for.</div>
+</div>
+<p class="source-note">Source: Statistics Canada, April 2026 — productivity gap, adopters vs. non-adopters.</p>
+
+<p>That's not an argument against AI. It's an argument against believing AI is the variable doing the work. The companies showing up as "AI winners" in the data were already ahead on the boring stuff — clean data, cloud infrastructure, an R&amp;D habit — before the model ever touched a workflow.</p>
+
+<div class="callout">
+  <span class="tag">In this piece</span>
+  <p style="margin-top:8px;">Why almost everyone uses AI and almost no one profits from it · how Canada's wholesalers compare to Poland, Denmark, and the EU · where the money is actually going in Canada's AI build-out · Quebec's fading lead over Ontario · the real cost of the bad product data every distributor already has · a 60-second test you can run this week · and eight lessons from re-reading 47 sources.</p>
+</div>
+
+<h2>Almost Everyone Uses AI. Almost No One Profits From It.</h2>
+<p>McKinsey's 2026 State of AI survey, spanning 1,719 respondents across 97 countries, lays out the drop-off in stark terms.</p>
+
+<div class="chart-block">
+  <div class="chart-title">The Paradox</div>
+  <canvas id="paradoxChart"></canvas>
+  <div class="cap">Each stage of scaling loses more than half the field. By the time you reach measurable profit, six companies in a hundred are left standing.</div>
+</div>
+<p class="source-note">Source: McKinsey, The State of AI, August 2026 — 1,719 respondents, 97 countries.</p>
+
+<p>Eighty-nine percent of organizations use AI somewhere. Forty-four percent scale it beyond a single team. Thirty-seven percent see any measurable effect on EBIT. Six percent get five points or more of EBIT from it. That funnel is the real story of 2026 — not adoption, which is functionally universal, but the collapse between adoption and value.</p>
+
+<div class="divider"></div>
+
+<h2>Canada's Wholesalers Adopt AI at Poland's Pace</h2>
+<p>Zoom out to a world tour and the picture sharpens further. Statistics Canada and Eurostat don't use identical definitions, so the comparison is directional rather than exact — but the direction is not flattering.</p>
+
+<div class="chart-block">
+  <div class="chart-title">World Tour: AI Adoption Rate by Market</div>
+  <canvas id="worldTourChart"></canvas>
+  <div class="cap">Canada's wholesale trade sector — the segment electrical and HVAC distributors sit in — trails Canada's own national average, and adopts at roughly Poland's rate.</div>
+</div>
+<p class="source-note">Sources: Eurostat 2025 (10+ employees) · Statistics Canada, Q2 2026. Definitions differ between jurisdictions.</p>
+
+<p>Denmark leads at 42%. The EU average sits at 20%. Canada, across all businesses, comes in at 19.2% — respectable, until you isolate wholesale trade specifically, where the rate drops to 7.9%, just under Poland's 8.4%. Distribution is adopting AI more slowly than the rest of the Canadian economy, in a segment where product data — SKUs, specs, cross-references, pricing — is the actual raw material AI needs to be useful.</p>
+
+<h2>Quebec Trains the World's AI Minds. Ontario Just Overtook It.</h2>
+<p>Quebec has spent a decade building AI research capacity — Mila, IVADO, a research ecosystem other provinces study rather than compete with. That head start shows up in talent and research output. It does not show up, anymore, in business adoption.</p>
+
+<div class="chart-block">
+  <div class="chart-title">The Champion's Paradox: Quebec vs. Ontario Adoption</div>
+  <canvas id="qcOnChart"></canvas>
+  <div class="cap">Ontario has closed the gap and, on stated intentions, is set to pull ahead — despite Quebec's research advantage.</div>
+</div>
+<p class="source-note">Source: Institut de la statistique du Québec, November 2025. Ontario 2024 figure derived (13.3% − 7.8 points).</p>
+
+<p>In Q2 2024, Quebec led Ontario 9.4% to an estimated 5.5%. By Q2 2025, Ontario had already pulled even at 13.3% against Quebec's 12.7%. On stated intentions going forward, Ontario projects to 16.5% while Quebec edges up to only 13.1%. Research leadership and business-adoption leadership, it turns out, are two different races — and Quebec is currently winning the one that produces papers, not the one that produces adopters.</p>
+
+<div class="divider"></div>
+
+<h2>$52.5B for Compute. $0 Named for Product Data.</h2>
+<p>Follow the money and the priority becomes obvious. Reviewing the announced 2026 AI investments most relevant to this sector's infrastructure — compute, sovereign AI capacity, provincial and federal AI strategy funding — turns up a lopsided picture.</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="num">$52.5B</div><div class="lbl">Bell Canada / Saskatchewan sovereign AI infrastructure — the single largest announcement reviewed</div></div>
+  <div class="stat-card"><div class="num">$911M</div><div class="lbl">every other announcement reviewed, combined — 57 times smaller</div></div>
+  <div class="stat-card"><div class="num">$0</div><div class="lbl">named specifically for product data clean-up, in any announcement reviewed</div></div>
+</div>
+<p class="source-note">Source: official 2026 government and corporate releases.</p>
+
+<p>None of the capital flowing into compute and sovereign infrastructure is wasted — Canada needs that capacity. But for a distributor, the bottleneck was never a shortage of compute. It's that the product catalogue an AI tool would read from is still full of duplicate SKUs, inconsistent specs, and cross-references nobody has cleaned up since the last ERP migration. No press release announces funding for that. Every company waiting on it has to fund it themselves.</p>
+
+<h2>You Already Pay for Bad Data</h2>
+<p>The bill for that gap isn't hypothetical. It's already being paid, quietly, inside the P&amp;L.</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="num">US$2B+</div><div class="lbl">lost per year to bad product data in U.S. electrical distribution alone</div></div>
+  <div class="stat-card"><div class="num">20%</div><div class="lbl">of an order's value — the average cost of a return caused by a data error</div></div>
+  <div class="stat-card"><div class="num">0.5–1.5</div><div class="lbl">full-time staff most distributors already have quietly fixing records by hand</div></div>
+</div>
+<p class="source-note">Source: NAED Foundation &amp; Gold Research, Product Data Journey Map and Report, 2023.</p>
+
+<blockquote>Every AI tool you deploy will read the same records your counter reps read today. It will just read them faster. And it will believe every one of them.</blockquote>
+
+<div class="divider"></div>
+
+<h2>The 60-Second Test</h2>
+<p>You don't need a study to find out where your organization stands. You need one counter rep and sixty seconds.</p>
+
+<div class="chart-block" style="padding:26px 22px;">
+  <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;">
+    <div style="flex:1 1 220px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">1</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Search</div>
+      <div style="font-size:12.5px; color:var(--grey);">a common product in your system</div>
+    </div>
+    <div style="flex:1 1 220px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">2</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Listen</div>
+      <div style="font-size:12.5px; color:var(--grey);">do they trust the first result?</div>
+    </div>
+    <div style="flex:1 1 220px; text-align:center;">
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 8px;">3</div>
+      <div style="font-size:13.5px; font-weight:700; color:var(--navy);">Decide</div>
+      <div style="font-size:12.5px; color:var(--grey);">if they hesitate, that's your first project</div>
+    </div>
+  </div>
+</div>
+
+<h2>Eight Lessons From Re-Reading 47 Sources</h2>
+<div class="lesson-grid">
+  <div class="lesson"><span class="n">01</span><p>Adoption is not value.</p></div>
+  <div class="lesson"><span class="n">02</span><p>The premium comes from the foundations, not the model.</p></div>
+  <div class="lesson"><span class="n">03</span><p>Prepare data per use case — not once, in general.</p></div>
+  <div class="lesson"><span class="n">04</span><p>Adopt a standard, like ETIM — don't invent your own.</p></div>
+  <div class="lesson"><span class="n">05</span><p>Leading countries fund the plumbing, not just the model.</p></div>
+  <div class="lesson"><span class="n">06</span><p>In Canada, the money currently goes to compute.</p></div>
+  <div class="lesson"><span class="n">07</span><p>In Quebec, Law 25 compliance work is a shortcut to AI-ready data.</p></div>
+  <div class="lesson"><span class="n">08</span><p>A viral stat is not evidence — 47 sources, cross-checked, is closer.</p></div>
+</div>
+
+<div class="divider"></div>
+
+<h2>Conclusion: AI Pays Off to the Extent a Data Strategy Exists</h2>
+<p>Put the pieces from Statistics Canada, Gartner, and McKinsey side by side and a formula emerges — not a precise equation, but a working model for where the value actually comes from.</p>
+
+<div class="formula-box">
+  AI return ≈ data strategy × AI-ready data (per use case) × redesigned workflow (measured)<br>
+  One factor at zero, the product is zero.
+</div>
+
+<p>A data strategy makes a company 15 percentage points more likely to adopt AI at all, per Statistics Canada. AI-ready data, prepared per use case rather than in general, is the difference Gartner points to when 60% of AI projects get abandoned for lack of it. And McKinsey's research shows three-quarters of high performers redesign the underlying workflow before they call an AI deployment done — against roughly a quarter of everyone else. Skip any one of the three, and the return on the model itself — however good the model is — rounds to zero.</p>
+
+<h3>Lessons Learned</h3>
+<ul>
+  <li>The AI premium is real, but it belongs mostly to companies that were already ahead on data, cloud, and R&amp;D — not to the model itself.</li>
+  <li>Canadian wholesale distribution adopts AI more slowly than the Canadian economy overall, in the one segment where clean product data is the actual product.</li>
+  <li>Public AI investment in Canada is concentrated in compute and sovereign infrastructure — not in the data clean-up that determines whether that compute gets used well.</li>
+  <li>The fastest, cheapest first move costs nothing: ask your best counter rep what they don't trust in the system, and fix that first.</li>
+</ul>
+
+<div class="callout">
+  <span class="tag">Your turn</span>
+  <p style="margin-top:8px;">Run the 60-second test on your own catalogue this week. I'd genuinely like to hear what you find — drop your result in the comments on LinkedIn or send me a message.</p>
+</div>
+
+<div class="author-box">
+  <div class="initials">JP</div>
+  <div>
+    <div style="font-weight:700; color:var(--navy);">Jerome Potvin</div>
+    <div style="font-size:14px; color:var(--grey); margin:2px 0 8px;">Director, Commercial Strategy, Innovair Solutions</div>
+    <div style="font-size:14.5px;">Connect on LinkedIn: <a href="http://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></div>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<p class="source-note">Main sources: Statistics Canada · McKinsey · Gartner · Eurostat · Institut de la statistique du Québec (ISQ) · NAED Foundation · Bank of Canada · ISED · Commission d'accès à l'information du Québec (Law 25). All 47 sources below.</p>
+<ul style="font-size:13.5px; color:var(--grey); column-count:2; column-gap:32px;">
+  <li>McKinsey &amp; Company — The State of AI: Global Survey, 2026</li>
+  <li>Gartner — Lack of AI-Ready Data Puts AI Projects at Risk, 2025</li>
+  <li>Gartner — Data Quality: Why It Matters and How to Achieve It, 2020</li>
+  <li>Statistics Canada — Analysis on artificial intelligence use by businesses in Canada, Q2 2026</li>
+  <li>Statistics Canada — Artificial intelligence adoption and productivity in Canadian firms, 2026</li>
+  <li>Statistics Canada — Table 33-10-1167-01, Use of AI by businesses and organizations, Q2 2026</li>
+  <li>Gold Research for the NAED Education &amp; Research Foundation — Product Data Journey Map and Report, 2023</li>
+  <li>Supply House Times — The State of AI in Distribution, 2026</li>
+  <li>MIT NANDA — The GenAI Divide: State of AI in Business, 2025</li>
+  <li>European Commission — AI Continent, 2025</li>
+  <li>UK Government — AI Opportunities Action Plan: One Year On, 2026</li>
+  <li>UK Parliament — Written statement HLWS1290, 2026</li>
+  <li>Singapore Ministry of Digital Development and Information — National AI Impact Programme, 2026</li>
+  <li>The Hub — Canadian businesses are closing the AI adoption gap with U.S. counterparts, but productivity gap remains, 2026</li>
+  <li>Eurostat — 20% of EU enterprises use AI technologies, 2025</li>
+  <li>Innovation, Science and Economic Development Canada — Canada's National AI Strategy: AI for All, 2026</li>
+  <li>Prime Minister of Canada — Prime Minister Carney launches AI for All, 2026</li>
+  <li>Bank of Canada — Canadian businesses' use of AI: What the evidence shows, 2026</li>
+  <li>Le monde de l'électricité — Stratégie du Canada en matière d'IA : ce que cela signifie pour le secteur de l'électricité et de l'automatisation, 2026</li>
+  <li>Le monde de l'électricité — Même tension, deux résultats, 2026</li>
+  <li>PacifiCan — Accelerating commercialization and adoption of AI and quantum technologies in British Columbia, 2026</li>
+  <li>BetaKit — Alberta to invest $50 million into Amii over five years, 2026</li>
+  <li>Government of Alberta — Artificial Intelligence Data Centres Strategy, 2026</li>
+  <li>ISED Canada — Government of Canada welcomes major new investment in sovereign AI infrastructure in Saskatchewan, 2026</li>
+  <li>PrairiesCan — Government of Canada backs Manitoba companies using AI to scale, compete and lead, 2026</li>
+  <li>Ontario Centre of Innovation — Ontario investing additional $5 million to help small businesses modernize and grow, 2026</li>
+  <li>BetaKit — Vector Institute, Ontario Centre of Innovation secure combined $77-million provincial funding, 2023</li>
+  <li>Atlantic Canada Opportunities Agency — Minister Solomon announces $8.5M for 40 AI projects, 2026</li>
+  <li>Atlantic Canada Opportunities Agency — Projects supporting the growth of Atlantic Canada's AI ecosystem, 2026</li>
+  <li>Institut de la statistique du Québec — Adoption et utilisation de l'intelligence artificielle par les entreprises au Québec en 2024 et en 2025, 2025</li>
+  <li>Institut de la statistique du Québec — L'intelligence artificielle dans les entreprises au Québec, 2025</li>
+  <li>Anthropic — How Canada uses Claude, 2026</li>
+  <li>Mila — The Quebec Government Grants $36M to Mila, 2026</li>
+  <li>IVADO — The Quebec government grants $8 million to IVADO, 2024</li>
+  <li>Global Innovation Clusters — Canada's AI-Powered Supply Chains Cluster (Scale AI)</li>
+  <li>Government of Quebec — Plan PME 2025-2028</li>
+  <li>Commission d'accès à l'information du Québec — Principaux changements de la Loi 25</li>
+  <li>Demers Beaulne — IA : l'adoption s'accélère, mais la transformation organisationnelle reste à faire, 2026</li>
+  <li>Syntell — Enjeux et conditions de succès des initiatives IA et données dans les PME manufacturières québécoises, 2026</li>
+  <li>ETIM North America — 10 Reasons Distributors Are Adopting ETIM for Product Data</li>
+  <li>ETIM North America — Turning Product Data into Profit, 2026</li>
+  <li>Sitation — What Is ETIM, and Why Are Your Biggest Customers Asking for It?, 2026</li>
+  <li>Stibo Systems — Building the future of construction with AI and MDM, 2026</li>
+  <li>Grainger (via The Motley Fool) — Q4 2025 earnings call transcript, 2026</li>
+  <li>Databricks — Grainger customer story</li>
+  <li>Leandro DalleMule and Thomas H. Davenport — What's Your Data Strategy?, 2017</li>
+  <li>Treasury Board of Canada Secretariat — 2023–2026 Data Strategy for the Federal Public Service, 2023</li>
+</ul>
+
+</div>
+
+<script>
+const navy='#0B2545', blue='#1E6091', teal='#168AAD', amber='#F7A400', coral='#E85D4E', grey='#C9CFDA';
+
+new Chart(document.getElementById('gapChart'), {
+  type:'bar',
+  data:{
+    labels:['Raw gap','After prior productivity','After analytics, cloud, R&D'],
+    datasets:[{
+      data:[16.8,10.2,5.1],
+      backgroundColor:[coral,coral,'#F3B8B0'],
+      borderRadius:8,
+      barThickness:70
+    }]
+  },
+  options:{
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ y:{ beginAtZero:true, max:20, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:12}} } }
+  }
+});
+
+new Chart(document.getElementById('paradoxChart'), {
+  type:'bar',
+  data:{
+    labels:['Use AI','Scale it across the firm','See any EBIT impact','Get 5%+ of EBIT from AI'],
+    datasets:[{
+      data:[89,44,37,6],
+      backgroundColor:[navy,'#8891A0','#8891A0',coral],
+      borderRadius:8,
+      barThickness:46
+    }]
+  },
+  options:{
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ y:{ beginAtZero:true, max:100, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false}, ticks:{font:{size:11}} } }
+  }
+});
+
+new Chart(document.getElementById('worldTourChart'), {
+  type:'bar',
+  data:{
+    labels:['Denmark','European Union','Canada, all businesses','Poland','Canada, wholesale trade'],
+    datasets:[{
+      data:[42.0,20.0,19.2,8.4,7.9],
+      backgroundColor:['#8891A0','#8891A0',navy,'#8891A0',coral],
+      borderRadius:6
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.formattedValue+'%'}}},
+    scales:{ x:{ beginAtZero:true, max:45, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             y:{ grid:{display:false}, ticks:{font:{size:12}} } }
+  }
+});
+
+new Chart(document.getElementById('qcOnChart'), {
+  type:'line',
+  data:{
+    labels:['Q2 2024','Q2 2025','Intentions'],
+    datasets:[{
+      label:'Quebec',
+      data:[9.4,12.7,13.1],
+      borderColor:blue, backgroundColor:blue, tension:0.15
+    },{
+      label:'Ontario',
+      data:[5.5,13.3,16.5],
+      borderColor:navy, backgroundColor:navy, borderDash:[6,4], tension:0.15
+    }]
+  },
+  options:{
+    plugins:{legend:{position:'bottom', labels:{boxWidth:14,font:{size:12}}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.formattedValue+'%'}}},
+    scales:{ y:{ beginAtZero:true, max:20, ticks:{callback:v=>v+'%'}, grid:{color:'#EEE9DE'} },
+             x:{ grid:{display:false} } }
+  }
+});
+</script>
+
+</body>
+</html>
