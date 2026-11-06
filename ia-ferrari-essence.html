@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Votre IA roule en Ferrari. Qui paie l’essence ?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F7; --surface:#FFFFFF; --ink:#13293D; --muted:#5A6B78; --line:#D5DCE1;
+  --blue:#2B6FD1; --amber:#E0860F; --red:#C23B2E; --green:#2E8B57;
+  --paper:#FFFFFF; --paper-ink:#1E1E1E; --paper-muted:#6D6D6D;
+  --bar-bg:#E6EBEF;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1A24; --surface:#15232F; --ink:#E6EDF2; --muted:#9AACBA; --line:#2A3B48;
+    --blue:#5B9BEA; --amber:#F2A33A; --red:#E5675A; --green:#4FBF83;
+    --paper:#F2F0EA; --paper-ink:#1E1E1E; --paper-muted:#6A6A6A; --bar-bg:#22323F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1A24; --surface:#15232F; --ink:#E6EDF2; --muted:#9AACBA; --line:#2A3B48;
+  --blue:#5B9BEA; --amber:#F2A33A; --red:#E5675A; --green:#4FBF83;
+  --paper:#F2F0EA; --paper-ink:#1E1E1E; --paper-muted:#6A6A6A; --bar-bg:#22323F;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.1rem;line-height:1.65}
+img{max-width:100%}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{max-width:42rem;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3,.display{font-family:"Archivo","Arial Narrow",Arial,sans-serif;font-stretch:115%;letter-spacing:-.01em;line-height:1.08}
+h2{font-size:clamp(1.6rem,4.5vw,2.25rem);font-weight:800;margin:4.5rem 0 1rem}
+h3{font-size:1.25rem;font-weight:700;margin:2rem 0 .5rem}
+p{margin:0 0 1.1rem}
+.lede{font-size:1.25rem;line-height:1.55}
+.note{font-size:.9rem;color:var(--muted);line-height:1.5}
+
+/* Hero */
+.hero{padding:3.5rem 0 2.5rem;border-bottom:1px solid var(--line);background:var(--surface)}
+.hero-grid{max-width:62rem;margin:0 auto;padding:0 1.25rem;display:grid;grid-template-columns:1.15fr .85fr;gap:2.5rem;align-items:center}
+.hero h1{font-size:clamp(2.2rem,6vw,3.9rem);font-weight:900;font-stretch:108%;margin:0 0 1.25rem}
+.byline{font-family:"Archivo",Arial,sans-serif;font-size:.95rem;color:var(--muted);margin:0}
+.gauge-card{text-align:center}
+.gauge-card svg{width:100%;max-width:22rem;height:auto;display:block;margin:0 auto}
+.gauge-caption{font-family:"Archivo",Arial,sans-serif;font-size:1.05rem;line-height:1.4;margin:.75rem auto 0;max-width:20rem}
+.gauge-caption strong{font-size:1.6rem;display:block;color:var(--red)}
+.needle{transform-origin:150px 150px;transform:rotate(-90deg);animation:sweep 2.4s cubic-bezier(.3,1.4,.5,1) .4s forwards}
+@keyframes sweep{to{transform:rotate(-43deg)}}
+@media (prefers-reduced-motion:reduce){.needle{animation:none;transform:rotate(-43deg)}}
+
+/* Bars */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.4rem 1.25rem 1.1rem;margin:1.5rem 0 2rem}
+.chart-title{font-family:"Archivo",Arial,sans-serif;font-weight:800;font-size:1.25rem;line-height:1.2;margin:0 0 .3rem}
+.chart-sub{font-family:"Archivo",Arial,sans-serif;font-size:.9rem;color:var(--muted);margin:0 0 1.2rem}
+.row{display:grid;grid-template-columns:9.5rem 1fr;gap:.75rem;align-items:center;margin:.55rem 0;font-family:"Archivo",Arial,sans-serif}
+.row .lab{font-size:.92rem;line-height:1.2;font-weight:600}
+.row .lab small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.track{display:flex;align-items:center;gap:.5rem}
+.bar{height:1.35rem;border-radius:3px;background:var(--blue);min-width:3px}
+.val{font-weight:700;font-size:.95rem;white-space:nowrap}
+.split{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;font-family:"Archivo",Arial,sans-serif;font-weight:700;color:#fff;font-size:.95rem}
+.split div{display:flex;align-items:center;padding:0 .8rem}
+.legend{display:flex;flex-wrap:wrap;gap:1.2rem;font-family:"Archivo",Arial,sans-serif;font-size:.88rem;margin:0 0 1rem}
+.legend span::before{content:"";display:inline-block;width:.8rem;height:.8rem;border-radius:2px;margin-right:.4rem;vertical-align:-1px;background:var(--c)}
+
+/* Hidden costs list */
+.costs{list-style:none;padding:0;margin:1.25rem 0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.costs li{background:var(--surface);padding:1rem 1.1rem;font-size:.98rem;line-height:1.45}
+.costs b{display:block;font-family:"Archivo",Arial,sans-serif;font-size:1rem;margin-bottom:.2rem}
+.costs .n{font-family:"Archivo",Arial,sans-serif;font-weight:900;color:var(--amber);margin-right:.35rem}
+.costs li:last-child{grid-column:1/-1}
+
+blockquote{margin:2.5rem 0;padding:0 0 0 1.25rem;border-left:5px solid var(--amber);font-family:"Archivo",Arial,sans-serif;font-stretch:105%;font-size:clamp(1.3rem,3.6vw,1.65rem);font-weight:700;line-height:1.3}
+
+/* Receipt — the memorable moment */
+.receipt-zone{background:var(--ink);color:var(--bg);margin:3rem 0;padding:3.5rem 1.25rem 4rem}
+.receipt-zone h2{color:var(--bg);margin-top:0}
+.receipt-zone p{color:var(--bg);opacity:.9}
+.receipt{background:var(--paper);color:var(--paper-ink);font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.92rem;max-width:26rem;margin:2rem auto 0;padding:1.6rem 1.4rem 2.2rem;
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 100%;
+          mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 100%;
+  box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.receipt .head{text-align:center;border-bottom:1px dashed var(--paper-muted);padding-bottom:.9rem;margin-bottom:.9rem}
+.receipt .head b{display:block;font-size:1.05rem}
+.receipt .head span{color:var(--paper-muted);font-size:.8rem}
+.line{display:flex;justify-content:space-between;gap:1rem;padding:.22rem 0}
+.line span:last-child{white-space:nowrap}
+.tot{border-top:1px dashed var(--paper-muted);margin-top:.6rem;padding-top:.6rem;font-weight:600;font-size:1.05rem}
+.hidden-lines{display:grid;grid-template-rows:0fr;transition:grid-template-rows .9s ease}
+.hidden-lines>div{overflow:hidden}
+.receipt.open .hidden-lines{grid-template-rows:1fr}
+.hidden-lines .line{color:#B5650A}
+.hidden-lines .line:first-child{margin-top:.6rem;border-top:1px dashed var(--paper-muted);padding-top:.7rem}
+.stamp{font-family:"Archivo",Arial,sans-serif;font-weight:900;font-size:1.5rem;color:#B3261E;text-align:center;margin-top:1rem;opacity:0;transform:scale(1.4) rotate(-6deg);transition:opacity .4s ease .8s,transform .4s ease .8s}
+.receipt.open .stamp{opacity:1;transform:scale(1) rotate(-6deg)}
+@media (prefers-reduced-motion:reduce){.hidden-lines,.stamp{transition:none}}
+.reveal{display:block;margin:1.6rem auto 0;font-family:"Archivo",Arial,sans-serif;font-weight:800;font-size:1rem;background:var(--amber);color:#1E1E1E;border:0;border-radius:4px;padding:.9rem 1.4rem;cursor:pointer}
+.reveal[aria-expanded="true"]{background:transparent;color:var(--bg);border:1px solid var(--bg)}
+.takeaways{max-width:42rem;margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.takeaways div{border-top:3px solid var(--amber);padding-top:.7rem;font-size:.98rem;line-height:1.45;color:var(--bg)}
+.takeaways b{display:block;font-family:"Archivo",Arial,sans-serif;font-size:1.5rem;font-weight:900}
+
+/* Calculator */
+.calc{background:var(--surface);border:2px solid var(--ink);border-radius:6px;padding:1.5rem 1.25rem;margin:1.5rem 0 2rem}
+.calc label{font-family:"Archivo",Arial,sans-serif;font-weight:700;display:block;margin-bottom:.4rem}
+.calc input[type=range]{width:100%;accent-color:var(--blue);height:2rem}
+.calc-out{font-family:"Archivo",Arial,sans-serif;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1.5rem;margin:.75rem 0 1.25rem}
+.calc-out .big{font-size:2rem;font-weight:900;line-height:1.1}
+.calc-out small{display:block;color:var(--muted);font-size:.85rem;font-weight:400}
+.yrs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;height:17rem;position:relative;font-family:"Archivo",Arial,sans-serif}
+.yrs::after{content:"";position:absolute;left:0;right:0;top:9rem;border-top:1.5px solid var(--muted)}
+.yr{position:relative}
+.yr .b{position:absolute;left:18%;right:18%;border-radius:3px;transition:all .25s ease}
+.yr .v{position:absolute;left:0;right:0;text-align:center;font-weight:800;font-size:.95rem}
+.yr .t{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:.85rem;color:var(--muted)}
+
+/* Checklist */
+.check{list-style:none;padding:0;margin:1.25rem 0}
+.check li{border-bottom:1px solid var(--line)}
+.check label{display:flex;gap:.9rem;align-items:flex-start;padding:.9rem .25rem;cursor:pointer;font-size:1.05rem;line-height:1.45}
+.check input{width:1.3rem;height:1.3rem;margin-top:.2rem;accent-color:var(--green);flex:none}
+.check input:checked+span{color:var(--muted);text-decoration:line-through}
+.score{font-family:"Archivo",Arial,sans-serif;font-weight:800;font-size:1.05rem;padding:.8rem 1rem;border-radius:4px;background:var(--bar-bg)}
+
+.levers{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 1.75rem;margin:1.25rem 0 2rem}
+.levers div{font-size:.98rem;line-height:1.5}
+.levers b{display:block;font-family:"Archivo",Arial,sans-serif;font-size:1.05rem}
+.levers .fig{font-family:"Archivo",Arial,sans-serif;font-weight:900;color:var(--green);font-size:1.35rem;display:block}
+
+.finale{background:var(--surface);border-top:1px solid var(--line);margin-top:4rem;padding:3.5rem 0}
+.finale .display{font-size:clamp(1.8rem,5vw,2.7rem);font-weight:900;margin:0 0 1rem}
+.sig{margin-top:2.5rem;padding-top:1.2rem;border-top:3px solid var(--blue);font-family:"Archivo",Arial,sans-serif;display:flex;flex-direction:column;gap:.15rem;line-height:1.35}
+.sig b{font-size:1.25rem;font-weight:800}
+.sig .org{color:var(--blue);font-weight:700}
+.sources{font-size:.88rem;line-height:1.55;color:var(--muted);padding:2.5rem 0 3rem}
+.sources ul{padding-left:1.1rem}
+
+@media (max-width:720px){
+  .hero-grid{grid-template-columns:1fr;gap:1.5rem}
+  .row{grid-template-columns:7rem 1fr}
+  .costs,.levers{grid-template-columns:1fr}
+  .takeaways{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>Votre IA roule en Ferrari. Qui paie l’essence&nbsp;?</h1>
+      <p class="byline"><strong>Jerome (Jay) Potvin</strong>, directeur, Stratégie commerciale, Innovair Solutions<br>25 octobre 2026</p>
+    </div>
+    <figure class="gauge-card" style="margin:0">
+      <svg viewBox="0 0 300 175" role="img" aria-label="Jauge à essence pointant à 26 %">
+        <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="var(--bar-bg)" stroke-width="22" stroke-linecap="round"/>
+        <path d="M30 150 A120 120 0 0 1 64 66" fill="none" stroke="var(--red)" stroke-width="22" stroke-linecap="round"/>
+        <g font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="18" fill="var(--muted)">
+          <text x="22" y="172">E</text><text x="268" y="172">F</text>
+        </g>
+        <g class="needle"><line x1="150" y1="150" x2="150" y2="44" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/></g>
+        <circle cx="150" cy="150" r="11" fill="var(--ink)"/>
+      </svg>
+      <figcaption class="gauge-caption"><strong>26&nbsp;%</strong>des grandes entreprises américaines voient en temps réel ce que leur IA leur coûte. Les autres roulent sans jauge.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <p class="lede" style="margin-top:2.5rem">On budgète l’IA comme un logiciel. Pourtant, elle se paie à l’usage, en tokens. Une licence se paie une fois par utilisateur. Un token se paie à chaque question, à chaque réponse, à chaque étape d’un agent. Plus le projet réussit, plus le compteur tourne.</p>
+  <p class="note">Source : KPMG, AI Pulse T2 2026, via <a href="https://enterprisedna.co/resources/news/kpmg-ai-cost-visibility-enterprise-agents-q2-2026/">Enterprise DNA</a>.</p>
+
+  <h2>Le prix du litre : le token</h2>
+  <p>Un token est un morceau de texte. Mille tokens représentent environ 750 mots en anglais. Les fournisseurs facturent au million de tokens, avec deux prix : ce que vous envoyez au modèle, et ce qu’il vous répond. La réponse coûte 5 fois plus cher.</p>
+
+  <div class="chart" role="figure" aria-label="Prix de sortie par million de tokens selon le modèle">
+    <p class="chart-title">Le même million de tokens coûte jusqu’à 100 fois plus cher selon le modèle</p>
+    <p class="chart-sub">Prix public de sortie par million de tokens, $ US, octobre 2026</p>
+    <div class="row"><div class="lab">Claude Haiku 5.5</div><div class="track"><div class="bar" style="width:1%"></div><span class="val">0,50 $</span></div></div>
+    <div class="row"><div class="lab">Claude Sonnet 5.5</div><div class="track"><div class="bar" style="width:17%"></div><span class="val">10 $</span></div></div>
+    <div class="row"><div class="lab">Claude Opus 5.5</div><div class="track"><div class="bar" style="width:34%"></div><span class="val">20 $</span></div></div>
+    <div class="row"><div class="lab">Claude Fable 5.1 <small>ou GPT-6 Astra</small></div><div class="track"><div class="bar" style="width:84%;background:var(--ink)"></div><span class="val">50 $</span></div></div>
+  </div>
+  <p>Choisir le modèle est donc une décision financière autant que technique.</p>
+
+  <h2>Ce qui fait tourner le compteur</h2>
+  <p>Le prix au million semble dérisoire. Ce qui fait grimper la facture, c’est le nombre de tokens réellement consommés par tâche. On le sous-estime presque toujours.</p>
+  <ul class="costs">
+    <li><b><span class="n">1</span>La réponse coûte plus cher</b>Un agent bavard coûte plus qu’un agent précis.</li>
+    <li><b><span class="n">2</span>La mémoire se repaie</b>Tout l’historique est renvoyé au modèle à chaque tour.</li>
+    <li><b><span class="n">3</span>Vos données gonflent l’entrée</b>Catalogues et listes de prix voyagent avec chaque question.</li>
+    <li><b><span class="n">4</span>Les agents multiplient les appels</b>Chercher, vérifier, corriger : plusieurs appels pour une tâche.</li>
+    <li><b><span class="n">5</span>La réflexion se facture</b>Même quand le raisonnement n’est pas affiché.</li>
+    <li><b><span class="n">6</span>Les outils ajoutent du texte invisible</b>286 tokens de plus par appel sur Claude 5.5.</li>
+    <li><b><span class="n">7</span>Le français coûte plus cher</b>De 31 % à 58 % plus de tokens que l’anglais pour le même contenu. Une prime de langue sur chaque appel, pour toute entreprise québécoise.</li>
+  </ul>
+
+  <h2>Sur le terrain, on roule sans permis</h2>
+  <p>J’ai discuté avec des distributeurs de matériel électrique et des manufacturiers industriels. La majorité gère l’IA avec un budget global, sans idée claire du coût des tokens selon les modèles. Tous sont en mode test et comptent réajuster le tir quand les factures arriveront.</p>
+  <blockquote>Donner accès à l’IA sans règles ni suivi des coûts, c’est donner les clés d’une Ferrari à quelqu’un qui n’a pas son permis.</blockquote>
+  <p>Les enquêtes de Deloitte, KPMG, Flexera et PagerDuty publiées en 2026 décrivent la même situation, y compris dans les grandes entreprises. Les PME ont toutes les raisons de s’en préoccuper dès maintenant.</p>
+
+  <h2>Où va l’essence d’une seule soumission</h2>
+  <p>Un agent qui monte une soumission CVAC appelle le modèle 8 fois. À chaque appel, il renvoie les instructions, le catalogue et l’historique.</p>
+  <div class="chart" role="figure" aria-label="Répartition de la facture d’une soumission : 80 % entrée, 20 % sortie">
+    <p class="chart-title">Ce n’est pas la réponse qui coûte cher, c’est ce qu’on envoie</p>
+    <p class="chart-sub">Part de la facture d’une soumission, 8 appels au modèle</p>
+    <div class="split"><div style="width:80%;background:var(--ink)">Entrée : 80 %</div><div style="width:20%;background:var(--blue)">20 %</div></div>
+    <p class="note" style="margin:.8rem 0 0">L’entrée domine même si la sortie coûte 5 fois plus cher au token. D’où l’intérêt de la mise en cache : on cesse de repayer plein prix pour le même contexte.</p>
+  </div>
+
+  <h2>Le même trajet, 40 fois plus cher</h2>
+  <p>Hypothèses : 8 appels par soumission, 320 000 tokens d’entrée et 16 000 de sortie, 20 000 soumissions par année.</p>
+  <div class="chart" role="figure" aria-label="Coût annuel en tokens selon le modèle">
+    <p class="chart-title">Même agent, même travail : de 800 $ à 32 000 $ par année</p>
+    <p class="chart-sub">Coût annuel des tokens, $ US, 20 000 soumissions</p>
+    <div class="row"><div class="lab">Haiku 5.5<small>0,04 $ par soumission</small></div><div class="track"><div class="bar" style="width:2%"></div><span class="val">800 $</span></div></div>
+    <div class="row"><div class="lab">Sonnet 5.5 avec cache<small>0,31 $ par soumission</small></div><div class="track"><div class="bar" style="width:16%"></div><span class="val">6 272 $</span></div></div>
+    <div class="row"><div class="lab">Sonnet 5.5 sans cache<small>0,80 $ par soumission</small></div><div class="track"><div class="bar" style="width:42%"></div><span class="val">16 000 $</span></div></div>
+    <div class="row"><div class="lab">Opus 5.5 sans cache<small>1,60 $ par soumission</small></div><div class="track"><div class="bar" style="width:84%;background:var(--ink)"></div><span class="val">32 000 $</span></div></div>
+  </div>
+  <p>Un pilote de 50 soumissions sur Sonnet 5.5 coûte 40 $. En production, le même agent coûte 16 000 $ par année. Le pilote ne dit rien du budget réel.</p>
+</div>
+
+<section class="receipt-zone" aria-labelledby="t-receipt">
+  <div class="wrap">
+    <h2 id="t-receipt">Le concessionnaire ne vous montre que le prix d’achat</h2>
+    <p>Jusqu’ici, on a parlé d’essence. Mais personne n’achète une voiture en regardant seulement le prix du litre. Voici la soumission typique d’un consultant pour ce même agent, sur trois ans.</p>
+    <div class="receipt" id="receipt">
+      <div class="head"><b>SOUMISSION — AGENT IA</b><span>Agent de soumissions CVAC, 3 ans</span></div>
+      <div class="line"><span>Construction</span><span>60 000 $</span></div>
+      <div class="line"><span>Plateforme et licences</span><span>36 000 $</span></div>
+      <div class="line tot"><span>Total soumis</span><span>96 000 $</span></div>
+      <div class="hidden-lines" id="hidden"><div>
+        <div class="line"><span>Le chauffeur : validation humaine</span><span>135 000 $</span></div>
+        <div class="line"><span>Entretien et changements de modèle</span><span>60 000 $</span></div>
+        <div class="line"><span>Accrochages : erreurs à corriger</span><span>27 000 $</span></div>
+        <div class="line"><span>Essence : tokens</span><span>24 461 $</span></div>
+        <div class="line"><span>Assurance : gouvernance, Loi 25</span><span>24 000 $</span></div>
+        <div class="line"><span>Cours de conduite : formation</span><span>16 000 $</span></div>
+        <div class="line tot"><span>Total réel</span><span>382 461 $</span></div>
+        <div class="stamp">× 4</div>
+      </div></div>
+    </div>
+    <button class="reveal" id="reveal" aria-expanded="false" aria-controls="hidden">Afficher ce que la soumission ne dit pas</button>
+
+    <div class="takeaways">
+      <div><b>× 4</b>La vraie facture sur trois ans, comparée à la soumission.</div>
+      <div><b>35 %</b>Le poste le plus lourd est humain : quelqu’un relit et signe chaque soumission.</div>
+      <div><b>6 %</b>Les tokens pèsent peu ici. Sur Opus sans cache, ils passeraient de 25 000 $ à 125 000 $.</div>
+    </div>
+    <p class="note" style="color:var(--bg);opacity:.7;margin-top:2rem">Hypothèses de l’auteur, à remplacer par vos chiffres : 15 minutes par soumission aujourd’hui, 3 minutes de validation avec l’agent, 45 $/h chargé, entretien de 20 000 $/an, gouvernance de 8 000 $/an, formation de 10 000 $ puis 3 000 $/an, 2 % des soumissions à corriger (30 min). Sonnet 5.5 avec cache, plus 30 % de tokens pour tests et réessais. Montants en $ US.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <h2>La voiture qui reste au garage</h2>
+  <p>Le projet se rembourse avec le temps libéré : 12 minutes par soumission. Mais la construction, la plateforme, l’entretien et la gouvernance coûtent la même chose, que l’agent serve 20 000 fois ou 5 000 fois. Faites glisser le curseur.</p>
+
+  <div class="calc">
+    <label for="adopt">Part des soumissions qui passent par l’agent : <span id="adoptVal">100 %</span></label>
+    <input type="range" id="adopt" min="0" max="100" step="5" value="100">
+    <div class="calc-out">
+      <div><small>Gain net cumulé après 3 ans</small><span class="big" id="cum3">+292 539 $</span></div>
+      <div><small>Seuil de rentabilité sur 3 ans</small><span class="big" style="color:var(--muted)">40 %</span></div>
+    </div>
+    <div class="yrs" id="yrs" aria-live="polite"></div>
+  </div>
+  <p>À 100 %, le projet est rentable dès la première année. À 25 %, il laisse une perte d’environ 74 000 $ après trois ans. Même agent, même soumission : seul l’usage a changé.</p>
+  <p>Une mise en garde : le temps libéré ne devient de l’argent que s’il sert à autre chose. Plus de soumissions, plus de suivi client, moins d’heures supplémentaires. Sinon, c’est un gain de confort.</p>
+
+  <h2>Cinq questions avant de signer</h2>
+  <p>Posez-les à votre consultant. Cochez celles qui ont obtenu une réponse claire.</p>
+  <ul class="check" id="check">
+    <li><label><input type="checkbox"><span>Quel est le coût par tâche en production, en tokens et en dollars, et sur quel modèle ?</span></label></li>
+    <li><label><input type="checkbox"><span>Combien de temps humain faut-il pour valider chaque résultat ?</span></label></li>
+    <li><label><input type="checkbox"><span>Qui entretient la solution quand le catalogue, les prix ou le modèle changent, et à quel coût ?</span></label></li>
+    <li><label><input type="checkbox"><span>Quel taux d’adoption votre analyse de rentabilité suppose-t-elle ? Que se passe-t-il à 25 % ?</span></label></li>
+    <li><label><input type="checkbox"><span>Quel est le coût total sur trois ans, et pas seulement celui de la construction ?</span></label></li>
+  </ul>
+  <p class="score" id="score" aria-live="polite">0 réponse sur 5 : on vous vend la voiture sans dire ce qu’elle coûte à faire rouler.</p>
+
+  <h2>Six façons de consommer moins</h2>
+  <p>La plupart des leviers sont techniques. La décision de les exiger revient à la direction.</p>
+  <div class="levers">
+    <div><span class="fig">jusqu’à 100×</span><b>Le bon modèle pour chaque étape</b>Un petit modèle pour trier, un gros pour analyser.</div>
+    <div><span class="fig">−95 %</span><b>Le cache pour ce qui se répète</b>Sur Opus 5.5, 0,20 $ au lieu de 4 $ par million de tokens lus.</div>
+    <div><span class="fig">−50 %</span><b>Les lots pour ce qui peut attendre</b>Rapports de nuit, analyses de prix, nettoyage de données.</div>
+    <div><b>Doser la réflexion</b>Une tâche simple n’a pas besoin d’un raisonnement approfondi.</div>
+    <div><b>Mesurer chaque mois</b>Le coût par tâche, suivi comme n’importe quel indicateur.</div>
+    <div><b>Raccourcir</b>Prompts plus courts, historique résumé, réponses utiles seulement.</div>
+  </div>
+
+  <h2>Qui paie le plein ?</h2>
+  <p>Une licence a un propriétaire clair : les TI. Une facture de tokens, elle, naît dans les ventes, le service client ou les achats, mais atterrit souvent dans le budget des TI. Résultat : personne ne surveille, ou on freine ce qui fonctionne le mieux.</p>
+  <p>La réponse ressemble à ce qu’on fait déjà pour le transport : rattacher le coût à l’activité qui le génère. Chaque cas d’usage a un responsable d’affaires, un coût par tâche suivi chaque mois, et un seuil qui déclenche une révision plutôt qu’une coupure.</p>
+</div>
+
+<section class="finale">
+  <div class="wrap">
+    <p class="display">Le token mérite la même rigueur qu’une marge brute.</p>
+    <p class="lede">Avant d’approuver votre prochain projet IA, sachez ce que coûte une tâche, combien de tâches par année, ce que coûte la même tâche faite par une personne, et ce que coûte le projet complet sur trois ans.</p>
+    <p class="lede" style="font-weight:600">Et vous, connaissez-vous le coût par tâche de vos projets IA&nbsp;?</p>
+    <div class="sig"><b>Jerome (Jay) Potvin</b><span>Directeur, Stratégie commerciale</span><span class="org">Innovair Solutions</span></div>
+  </div>
+</section>
+
+<div class="wrap sources">
+  <h3 style="color:var(--ink)">Sources</h3>
+  <ul>
+    <li><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Anthropic, Claude Sonnet 5.5 (prix, cache, lots)</a></li>
+    <li><a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Anthropic, Claude Opus 5.5 (prix, cache, lots)</a></li>
+    <li><a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Anthropic, Thinking (facturation du raisonnement)</a></li>
+    <li><a href="https://platform.claude.com/docs/build-with-claude/extended-thinking">Anthropic, Extended thinking</a></li>
+    <li><a href="https://platform.claude.com/docs/en/manage-claude/data-residency">Anthropic, résidence des données</a></li>
+    <li><a href="https://www.finout.io/blog/anthropic-api-pricing">Finout, Anthropic API Pricing 2026</a></li>
+    <li><a href="https://mem0.ai/library/llms-and-models/openai-api-pricing">Mem0, OpenAI API Pricing</a></li>
+    <li><a href="https://dev.to/scorpion4ik26lang/claude-api-pricing-per-million-tokens-all-models-oct-2026-2am2">DEV Community, Claude API Pricing</a></li>
+    <li><a href="https://mindstudio.ai/blog/claude-sonnet-5-token-efficiency-cost">MindStudio, coûts cachés des agents</a></li>
+    <li><a href="https://metacto.com/blogs/anthropic-api-pricing-a-full-breakdown-of-costs-and-integration">MetaCTO, tokens et mots</a></li>
+    <li><a href="https://arxiv.org/pdf/2609.39001">Serval (2026), The Invisible Language Tax</a></li>
+    <li><a href="https://www.deloitte.com/global/en/insights/topics/business-strategy-growth/3q-2026-cfo-signals-survey.html">Deloitte, CFO Signals T3 2026</a></li>
+    <li><a href="https://enterprisedna.co/resources/news/kpmg-ai-cost-visibility-enterprise-agents-q2-2026/">Enterprise DNA, KPMG AI Pulse T2 2026</a></li>
+    <li><a href="https://www.pointfive.co/blog/why-companies-overspend-on-ai-the-2026-cost-visibility-gap">PointFive, 2026 Cost Visibility Gap</a></li>
+    <li><a href="https://www.flexera.com/blog/ai/ai-spending-trends/">Flexera, AI spending in 2026</a></li>
+    <li><a href="https://www.pagerduty.com/blog/ai/shadow-ai-workplace-survey-2026/">PagerDuty, Shadow AI Survey 2026</a></li>
+  </ul>
+  <p>Prix publics en dollars américains, sujets à changement. Exemples chiffrés : calculs de l’auteur sur des volumes hypothétiques.</p>
+</div>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('reveal'), rc=document.getElementById('receipt');
+  btn.addEventListener('click',function(){
+    var open=rc.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.textContent=open?'Revenir à la soumission':'Afficher ce que la soumission ne dit pas';
+  });
+
+  function money(v){
+    var s=Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');
+    return (v<0?'−':'+')+s+'\u00a0$';
+  }
+  var slider=document.getElementById('adopt'), yrs=document.getElementById('yrs');
+  var GAIN=225000, VAR=62153.6, FIX=[110000,43000,43000];
+  var PX=0.0004; // px par $
+  function draw(){
+    var a=slider.value/100, cum=0, html='';
+    document.getElementById('adoptVal').textContent=slider.value+'\u00a0%';
+    for(var y=0;y<3;y++){
+      cum+=GAIN*a-(FIX[y]+VAR*a);
+      var h=Math.max(2,Math.abs(cum)*PX), pos=cum>=0;
+      var col=pos?'var(--blue)':'var(--red)';
+      var bar=pos?'bottom:calc(17rem - 9rem);height:'+h+'px':'top:9rem;height:'+h+'px';
+      var lab=pos?'bottom:calc(17rem - 9rem + '+h+'px + .3rem)':'top:calc(9rem + '+h+'px + .3rem)';
+      html+='<div class="yr"><div class="b" style="'+bar+';background:'+col+'"></div><div class="v" style="'+lab+';color:'+col+'">'+money(cum)+'</div><div class="t">Fin an '+(y+1)+'</div></div>';
+    }
+    yrs.innerHTML=html;
+    var c3=document.getElementById('cum3');
+    c3.textContent=money(cum);
+    c3.style.color=cum>=0?'var(--blue)':'var(--red)';
+  }
+  slider.addEventListener('input',draw); draw();
+
+  var boxes=document.querySelectorAll('#check input'), score=document.getElementById('score');
+  var msgs=['on vous vend la voiture sans dire ce qu’elle coûte à faire rouler.','on vous vend la voiture sans dire ce qu’elle coûte à faire rouler.','il manque encore l’essentiel du coût d’exploitation.','le portrait se précise, mais des postes manquent.','presque complet : exigez la dernière réponse.','vous avez le vrai coût. Vous pouvez décider.'];
+  function upd(){
+    var n=0; boxes.forEach(function(b){if(b.checked)n++;});
+    score.textContent=n+(n>1?' réponses':' réponse')+' sur 5 : '+msgs[n];
+    score.style.color=n===5?'var(--green)':'var(--ink)';
+  }
+  boxes.forEach(function(b){b.addEventListener('change',upd);});
+})();
+</script>
+</body>
+</html>

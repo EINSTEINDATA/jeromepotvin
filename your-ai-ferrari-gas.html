@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your AI drives a Ferrari. Who pays for the gas?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F7; --surface:#FFFFFF; --ink:#13293D; --muted:#5A6B78; --line:#D5DCE1;
+  --blue:#2B6FD1; --amber:#E0860F; --red:#C23B2E; --green:#2E8B57;
+  --paper:#FFFFFF; --paper-ink:#1E1E1E; --paper-muted:#6D6D6D;
+  --bar-bg:#E6EBEF;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1A24; --surface:#15232F; --ink:#E6EDF2; --muted:#9AACBA; --line:#2A3B48;
+    --blue:#5B9BEA; --amber:#F2A33A; --red:#E5675A; --green:#4FBF83;
+    --paper:#F2F0EA; --paper-ink:#1E1E1E; --paper-muted:#6A6A6A; --bar-bg:#22323F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1A24; --surface:#15232F; --ink:#E6EDF2; --muted:#9AACBA; --line:#2A3B48;
+  --blue:#5B9BEA; --amber:#F2A33A; --red:#E5675A; --green:#4FBF83;
+  --paper:#F2F0EA; --paper-ink:#1E1E1E; --paper-muted:#6A6A6A; --bar-bg:#22323F;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.1rem;line-height:1.65}
+img{max-width:100%}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{max-width:42rem;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3,.display{font-family:"Archivo","Arial Narrow",Arial,sans-serif;font-stretch:115%;letter-spacing:-.01em;line-height:1.08}
+h2{font-size:clamp(1.6rem,4.5vw,2.25rem);font-weight:800;margin:4.5rem 0 1rem}
+h3{font-size:1.25rem;font-weight:700;margin:2rem 0 .5rem}
+p{margin:0 0 1.1rem}
+.lede{font-size:1.25rem;line-height:1.55}
+.note{font-size:.9rem;color:var(--muted);line-height:1.5}
+
+/* Hero */
+.hero{padding:3.5rem 0 2.5rem;border-bottom:1px solid var(--line);background:var(--surface)}
+.hero-grid{max-width:62rem;margin:0 auto;padding:0 1.25rem;display:grid;grid-template-columns:1.15fr .85fr;gap:2.5rem;align-items:center}
+.hero h1{font-size:clamp(2.2rem,6vw,3.9rem);font-weight:900;font-stretch:108%;margin:0 0 1.25rem}
+.byline{font-family:"Archivo",Arial,sans-serif;font-size:.95rem;color:var(--muted);margin:0}
+.gauge-card{text-align:center}
+.gauge-card svg{width:100%;max-width:22rem;height:auto;display:block;margin:0 auto}
+.gauge-caption{font-family:"Archivo",Arial,sans-serif;font-size:1.05rem;line-height:1.4;margin:.75rem auto 0;max-width:20rem}
+.gauge-caption strong{font-size:1.6rem;display:block;color:var(--red)}
+.needle{transform-origin:150px 150px;transform:rotate(-90deg);animation:sweep 2.4s cubic-bezier(.3,1.4,.5,1) .4s forwards}
+@keyframes sweep{to{transform:rotate(-43deg)}}
+@media (prefers-reduced-motion:reduce){.needle{animation:none;transform:rotate(-43deg)}}
+
+/* Bars */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.4rem 1.25rem 1.1rem;margin:1.5rem 0 2rem}
+.chart-title{font-family:"Archivo",Arial,sans-serif;font-weight:800;font-size:1.25rem;line-height:1.2;margin:0 0 .3rem}
+.chart-sub{font-family:"Archivo",Arial,sans-serif;font-size:.9rem;color:var(--muted);margin:0 0 1.2rem}
+.row{display:grid;grid-template-columns:9.5rem 1fr;gap:.75rem;align-items:center;margin:.55rem 0;font-family:"Archivo",Arial,sans-serif}
+.row .lab{font-size:.92rem;line-height:1.2;font-weight:600}
+.row .lab small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.track{display:flex;align-items:center;gap:.5rem}
+.bar{height:1.35rem;border-radius:3px;background:var(--blue);min-width:3px}
+.val{font-weight:700;font-size:.95rem;white-space:nowrap}
+.split{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;font-family:"Archivo",Arial,sans-serif;font-weight:700;color:#fff;font-size:.95rem}
+.split div{display:flex;align-items:center;padding:0 .8rem}
+.legend{display:flex;flex-wrap:wrap;gap:1.2rem;font-family:"Archivo",Arial,sans-serif;font-size:.88rem;margin:0 0 1rem}
+.legend span::before{content:"";display:inline-block;width:.8rem;height:.8rem;border-radius:2px;margin-right:.4rem;vertical-align:-1px;background:var(--c)}
+
+/* Hidden costs list */
+.costs{list-style:none;padding:0;margin:1.25rem 0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.costs li{background:var(--surface);padding:1rem 1.1rem;font-size:.98rem;line-height:1.45}
+.costs b{display:block;font-family:"Archivo",Arial,sans-serif;font-size:1rem;margin-bottom:.2rem}
+.costs .n{font-family:"Archivo",Arial,sans-serif;font-weight:900;color:var(--amber);margin-right:.35rem}
+.costs li:last-child{grid-column:1/-1}
+
+blockquote{margin:2.5rem 0;padding:0 0 0 1.25rem;border-left:5px solid var(--amber);font-family:"Archivo",Arial,sans-serif;font-stretch:105%;font-size:clamp(1.3rem,3.6vw,1.65rem);font-weight:700;line-height:1.3}
+
+/* Receipt — the memorable moment */
+.receipt-zone{background:var(--ink);color:var(--bg);margin:3rem 0;padding:3.5rem 1.25rem 4rem}
+.receipt-zone h2{color:var(--bg);margin-top:0}
+.receipt-zone p{color:var(--bg);opacity:.9}
+.receipt{background:var(--paper);color:var(--paper-ink);font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.92rem;max-width:26rem;margin:2rem auto 0;padding:1.6rem 1.4rem 2.2rem;
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 100%;
+          mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 100%;
+  box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.receipt .head{text-align:center;border-bottom:1px dashed var(--paper-muted);padding-bottom:.9rem;margin-bottom:.9rem}
+.receipt .head b{display:block;font-size:1.05rem}
+.receipt .head span{color:var(--paper-muted);font-size:.8rem}
+.line{display:flex;justify-content:space-between;gap:1rem;padding:.22rem 0}
+.line span:last-child{white-space:nowrap}
+.tot{border-top:1px dashed var(--paper-muted);margin-top:.6rem;padding-top:.6rem;font-weight:600;font-size:1.05rem}
+.hidden-lines{display:grid;grid-template-rows:0fr;transition:grid-template-rows .9s ease}
+.hidden-lines>div{overflow:hidden}
+.receipt.open .hidden-lines{grid-template-rows:1fr}
+.hidden-lines .line{color:#B5650A}
+.hidden-lines .line:first-child{margin-top:.6rem;border-top:1px dashed var(--paper-muted);padding-top:.7rem}
+.stamp{font-family:"Archivo",Arial,sans-serif;font-weight:900;font-size:1.5rem;color:#B3261E;text-align:center;margin-top:1rem;opacity:0;transform:scale(1.4) rotate(-6deg);transition:opacity .4s ease .8s,transform .4s ease .8s}
+.receipt.open .stamp{opacity:1;transform:scale(1) rotate(-6deg)}
+@media (prefers-reduced-motion:reduce){.hidden-lines,.stamp{transition:none}}
+.reveal{display:block;margin:1.6rem auto 0;font-family:"Archivo",Arial,sans-serif;font-weight:800;font-size:1rem;background:var(--amber);color:#1E1E1E;border:0;border-radius:4px;padding:.9rem 1.4rem;cursor:pointer}
+.reveal[aria-expanded="true"]{background:transparent;color:var(--bg);border:1px solid var(--bg)}
+.takeaways{max-width:42rem;margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.takeaways div{border-top:3px solid var(--amber);padding-top:.7rem;font-size:.98rem;line-height:1.45;color:var(--bg)}
+.takeaways b{display:block;font-family:"Archivo",Arial,sans-serif;font-size:1.5rem;font-weight:900}
+
+/* Calculator */
+.calc{background:var(--surface);border:2px solid var(--ink);border-radius:6px;padding:1.5rem 1.25rem;margin:1.5rem 0 2rem}
+.calc label{font-family:"Archivo",Arial,sans-serif;font-weight:700;display:block;margin-bottom:.4rem}
+.calc input[type=range]{width:100%;accent-color:var(--blue);height:2rem}
+.calc-out{font-family:"Archivo",Arial,sans-serif;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1.5rem;margin:.75rem 0 1.25rem}
+.calc-out .big{font-size:2rem;font-weight:900;line-height:1.1}
+.calc-out small{display:block;color:var(--muted);font-size:.85rem;font-weight:400}
+.yrs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;height:17rem;position:relative;font-family:"Archivo",Arial,sans-serif}
+.yrs::after{content:"";position:absolute;left:0;right:0;top:9rem;border-top:1.5px solid var(--muted)}
+.yr{position:relative}
+.yr .b{position:absolute;left:18%;right:18%;border-radius:3px;transition:all .25s ease}
+.yr .v{position:absolute;left:0;right:0;text-align:center;font-weight:800;font-size:.95rem}
+.yr .t{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:.85rem;color:var(--muted)}
+
+/* Checklist */
+.check{list-style:none;padding:0;margin:1.25rem 0}
+.check li{border-bottom:1px solid var(--line)}
+.check label{display:flex;gap:.9rem;align-items:flex-start;padding:.9rem .25rem;cursor:pointer;font-size:1.05rem;line-height:1.45}
+.check input{width:1.3rem;height:1.3rem;margin-top:.2rem;accent-color:var(--green);flex:none}
+.check input:checked+span{color:var(--muted);text-decoration:line-through}
+.score{font-family:"Archivo",Arial,sans-serif;font-weight:800;font-size:1.05rem;padding:.8rem 1rem;border-radius:4px;background:var(--bar-bg)}
+
+.levers{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 1.75rem;margin:1.25rem 0 2rem}
+.levers div{font-size:.98rem;line-height:1.5}
+.levers b{display:block;font-family:"Archivo",Arial,sans-serif;font-size:1.05rem}
+.levers .fig{font-family:"Archivo",Arial,sans-serif;font-weight:900;color:var(--green);font-size:1.35rem;display:block}
+
+.finale{background:var(--surface);border-top:1px solid var(--line);margin-top:4rem;padding:3.5rem 0}
+.finale .display{font-size:clamp(1.8rem,5vw,2.7rem);font-weight:900;margin:0 0 1rem}
+.sig{margin-top:2.5rem;padding-top:1.2rem;border-top:3px solid var(--blue);font-family:"Archivo",Arial,sans-serif;display:flex;flex-direction:column;gap:.15rem;line-height:1.35}
+.sig b{font-size:1.25rem;font-weight:800}
+.sig .org{color:var(--blue);font-weight:700}
+.sources{font-size:.88rem;line-height:1.55;color:var(--muted);padding:2.5rem 0 3rem}
+.sources ul{padding-left:1.1rem}
+
+@media (max-width:720px){
+  .hero-grid{grid-template-columns:1fr;gap:1.5rem}
+  .row{grid-template-columns:7rem 1fr}
+  .costs,.levers{grid-template-columns:1fr}
+  .takeaways{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>Your AI drives a Ferrari. Who pays for the gas?</h1>
+      <p class="byline"><strong>Jerome (Jay) Potvin</strong>, Director, Commercial Strategy, Innovair Solutions<br>October 25, 2026</p>
+    </div>
+    <figure class="gauge-card" style="margin:0">
+      <svg viewBox="0 0 300 175" role="img" aria-label="Fuel gauge pointing at 26%">
+        <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="var(--bar-bg)" stroke-width="22" stroke-linecap="round"/>
+        <path d="M30 150 A120 120 0 0 1 64 66" fill="none" stroke="var(--red)" stroke-width="22" stroke-linecap="round"/>
+        <g font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="18" fill="var(--muted)">
+          <text x="22" y="172">E</text><text x="268" y="172">F</text>
+        </g>
+        <g class="needle"><line x1="150" y1="150" x2="150" y2="44" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/></g>
+        <circle cx="150" cy="150" r="11" fill="var(--ink)"/>
+      </svg>
+      <figcaption class="gauge-caption"><strong>26%</strong>of large US companies see in real time what their AI is costing them. The rest are driving without a gauge.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <p class="lede" style="margin-top:2.5rem">We budget AI like software. Yet it is paid by usage, in tokens. A license is paid once per user. A token is paid with every question, every answer, every step an agent takes. The more successful the project, the faster the meter runs.</p>
+  <p class="note">Source: KPMG, AI Pulse Q2 2026, via <a href="https://enterprisedna.co/resources/news/kpmg-ai-cost-visibility-enterprise-agents-q2-2026/">Enterprise DNA</a>.</p>
+
+  <h2>The price per gallon: the token</h2>
+  <p>A token is a piece of text. A thousand tokens represent about 750 words in English. Providers bill per million tokens, with two prices: what you send to the model, and what it sends back. The answer costs 5 times more.</p>
+
+  <div class="chart" role="figure" aria-label="Output price per million tokens by model">
+    <p class="chart-title">The same million tokens can cost up to 100 times more depending on the model</p>
+    <p class="chart-sub">Public output price per million tokens, US$, October 2026</p>
+    <div class="row"><div class="lab">Claude Haiku 5.5</div><div class="track"><div class="bar" style="width:1%"></div><span class="val">$0.50</span></div></div>
+    <div class="row"><div class="lab">Claude Sonnet 5.5</div><div class="track"><div class="bar" style="width:17%"></div><span class="val">$10</span></div></div>
+    <div class="row"><div class="lab">Claude Opus 5.5</div><div class="track"><div class="bar" style="width:34%"></div><span class="val">$20</span></div></div>
+    <div class="row"><div class="lab">Claude Fable 5.1 <small>or GPT-6 Astra</small></div><div class="track"><div class="bar" style="width:84%;background:var(--ink)"></div><span class="val">$50</span></div></div>
+  </div>
+  <p>Choosing a model is therefore as much a financial decision as a technical one.</p>
+
+  <h2>What keeps the meter running</h2>
+  <p>The price per million seems trivial. What drives up the bill is the number of tokens actually consumed per task. It is almost always underestimated.</p>
+  <ul class="costs">
+    <li><b><span class="n">1</span>The answer costs more</b>A chatty agent costs more than a precise one.</li>
+    <li><b><span class="n">2</span>Memory is paid for again</b>The whole history is resent to the model on every turn.</li>
+    <li><b><span class="n">3</span>Your data inflates the input</b>Catalogs and price lists ride along with every question.</li>
+    <li><b><span class="n">4</span>Agents multiply the calls</b>Search, check, correct: several calls for one task.</li>
+    <li><b><span class="n">5</span>Thinking is billed</b>Even when the reasoning is not displayed.</li>
+    <li><b><span class="n">6</span>Tools add invisible text</b>286 extra tokens per call on Claude 5.5.</li>
+    <li><b><span class="n">7</span>French costs more</b>31% to 58% more tokens than English for the same content. A language premium on every call for any Quebec company.</li>
+  </ul>
+
+  <h2>In the field, people drive without a license</h2>
+  <p>I spoke with electrical distributors and industrial manufacturers. Most manage AI with an overall budget, with no clear idea of what tokens cost depending on the model. All are in test mode and plan to adjust course when the invoices arrive.</p>
+  <blockquote>Giving access to AI without rules or cost tracking is like handing the keys to a Ferrari to someone without a driver’s license.</blockquote>
+  <p>Surveys by Deloitte, KPMG, Flexera and PagerDuty published in 2026 describe the same situation, including in large companies. SMBs have every reason to address it now.</p>
+
+  <h2>Where the gas goes in a single quote</h2>
+  <p>An agent that builds an HVAC quote calls the model 8 times. On every call, it resends the instructions, the catalog and the history.</p>
+  <div class="chart" role="figure" aria-label="Breakdown of the bill for one quote: 80% input, 20% output">
+    <p class="chart-title">It’s not the answer that’s expensive, it’s what you send</p>
+    <p class="chart-sub">Share of the bill for one quote, 8 calls to the model</p>
+    <div class="split"><div style="width:80%;background:var(--ink)">Input: 80%</div><div style="width:20%;background:var(--blue)">20%</div></div>
+    <p class="note" style="margin:.8rem 0 0">Input dominates even though output costs 5 times more per token. Hence the value of caching: you stop paying full price again for the same context.</p>
+  </div>
+
+  <h2>The same trip, 40 times more expensive</h2>
+  <p>Assumptions: 8 calls per quote, 320,000 input tokens and 16,000 output tokens, 20,000 quotes per year.</p>
+  <div class="chart" role="figure" aria-label="Annual token cost by model">
+    <p class="chart-title">Same agent, same work: from $800 to $32,000 per year</p>
+    <p class="chart-sub">Annual token cost, US$, 20,000 quotes</p>
+    <div class="row"><div class="lab">Haiku 5.5<small>$0.04 per quote</small></div><div class="track"><div class="bar" style="width:2%"></div><span class="val">$800</span></div></div>
+    <div class="row"><div class="lab">Sonnet 5.5 with caching<small>$0.31 per quote</small></div><div class="track"><div class="bar" style="width:16%"></div><span class="val">$6,272</span></div></div>
+    <div class="row"><div class="lab">Sonnet 5.5 without caching<small>$0.80 per quote</small></div><div class="track"><div class="bar" style="width:42%"></div><span class="val">$16,000</span></div></div>
+    <div class="row"><div class="lab">Opus 5.5 without caching<small>$1.60 per quote</small></div><div class="track"><div class="bar" style="width:84%;background:var(--ink)"></div><span class="val">$32,000</span></div></div>
+  </div>
+  <p>A 50-quote pilot on Sonnet 5.5 costs $40. In production, the same agent costs $16,000 per year. The pilot says nothing about the real budget.</p>
+</div>
+
+<section class="receipt-zone" aria-labelledby="t-receipt">
+  <div class="wrap">
+    <h2 id="t-receipt">The dealer only shows you the sticker price</h2>
+    <p>So far, we have talked about gas. But nobody buys a car looking only at the price per gallon. Here is a typical consultant’s quote for this same agent, over three years.</p>
+    <div class="receipt" id="receipt">
+      <div class="head"><b>QUOTE — AI AGENT</b><span>HVAC quoting agent, 3 years</span></div>
+      <div class="line"><span>Build</span><span>$60,000</span></div>
+      <div class="line"><span>Platform and licenses</span><span>$36,000</span></div>
+      <div class="line tot"><span>Quoted total</span><span>$96,000</span></div>
+      <div class="hidden-lines" id="hidden"><div>
+        <div class="line"><span>The driver: human review</span><span>$135,000</span></div>
+        <div class="line"><span>Maintenance and model changes</span><span>$60,000</span></div>
+        <div class="line"><span>Fender benders: errors to fix</span><span>$27,000</span></div>
+        <div class="line"><span>Gas: tokens</span><span>$24,461</span></div>
+        <div class="line"><span>Insurance: governance, Law 25</span><span>$24,000</span></div>
+        <div class="line"><span>Driving lessons: training</span><span>$16,000</span></div>
+        <div class="line tot"><span>Real total</span><span>$382,461</span></div>
+        <div class="stamp">× 4</div>
+      </div></div>
+    </div>
+    <button class="reveal" id="reveal" aria-expanded="false" aria-controls="hidden">Show what the quote doesn’t say</button>
+
+    <div class="takeaways">
+      <div><b>× 4</b>The real bill over three years, compared with the quote.</div>
+      <div><b>35%</b>The heaviest line item is human: someone reviews and signs off every quote.</div>
+      <div><b>6%</b>Tokens weigh little here. On Opus without caching, they would go from $25,000 to $125,000.</div>
+    </div>
+    <p class="note" style="color:var(--bg);opacity:.7;margin-top:2rem">Author’s assumptions, to be replaced with your own figures: 15 minutes per quote today, 3 minutes of review with the agent, $45/h loaded cost, maintenance of $20,000/yr, governance of $8,000/yr, training of $10,000 then $3,000/yr, 2% of quotes to correct (30 min). Sonnet 5.5 with caching, plus 30% tokens for testing and retries. Amounts in US$.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <h2>The car that stays in the garage</h2>
+  <p>The project pays for itself with the time saved: 12 minutes per quote. But the build, platform, maintenance and governance cost the same whether the agent is used 20,000 or 5,000 times. Drag the slider.</p>
+
+  <div class="calc">
+    <label for="adopt">Share of quotes that go through the agent: <span id="adoptVal">100%</span></label>
+    <input type="range" id="adopt" min="0" max="100" step="5" value="100">
+    <div class="calc-out">
+      <div><small>Cumulative net gain after 3 years</small><span class="big" id="cum3">+$292,539</span></div>
+      <div><small>Three-year break-even</small><span class="big" style="color:var(--muted)">40%</span></div>
+    </div>
+    <div class="yrs" id="yrs" aria-live="polite"></div>
+  </div>
+  <p>At 100%, the project is profitable in the first year. At 25%, it leaves a loss of about $74,000 after three years. Same agent, same quote: only usage changed.</p>
+  <p>A word of caution: time saved only becomes money if it is used for something else. More quotes, more customer follow-up, less overtime. Otherwise, it is a comfort gain.</p>
+
+  <h2>Five questions before you sign</h2>
+  <p>Ask them to your consultant. Check the ones that got a clear answer.</p>
+  <ul class="check" id="check">
+    <li><label><input type="checkbox"><span>What is the cost per task in production, in tokens and in dollars, and on which model?</span></label></li>
+    <li><label><input type="checkbox"><span>How much human time does it take to validate each result?</span></label></li>
+    <li><label><input type="checkbox"><span>Who maintains the solution when the catalog, prices or model change, and at what cost?</span></label></li>
+    <li><label><input type="checkbox"><span>What adoption rate does your business case assume? What happens at 25%?</span></label></li>
+    <li><label><input type="checkbox"><span>What is the total cost over three years, not just the cost of the build?</span></label></li>
+  </ul>
+  <p class="score" id="score" aria-live="polite">0 answers out of 5: you’re being sold the car without being told what it costs to drive.</p>
+
+  <h2>Six ways to use less gas</h2>
+  <p>Most levers are technical. The decision to require them belongs to management.</p>
+  <div class="levers">
+    <div><span class="fig">up to 100×</span><b>The right model for each step</b>A small model to sort, a large one to analyze.</div>
+    <div><span class="fig">−95%</span><b>Caching for what repeats</b>On Opus 5.5, $0.20 instead of $4 per million tokens read.</div>
+    <div><span class="fig">−50%</span><b>Batches for what can wait</b>Overnight reports, price analyses, data cleanup.</div>
+    <div><b>Dose the thinking</b>A simple task doesn’t need in-depth reasoning.</div>
+    <div><b>Measure every month</b>Cost per task, tracked like any other indicator.</div>
+    <div><b>Shorten</b>Shorter prompts, summarized history, useful answers only.</div>
+  </div>
+
+  <h2>Who pays to fill the tank?</h2>
+  <p>A license has a clear owner: IT. A token bill, on the other hand, originates in sales, customer service or purchasing, but often lands in the IT budget. Result: nobody is watching, or we slow down what works best.</p>
+  <p>The answer looks like what we already do for freight: tie the cost to the activity that generates it. Each use case has a business owner, a cost per task tracked monthly, and a threshold that triggers a review rather than a cut.</p>
+</div>
+
+<section class="finale">
+  <div class="wrap">
+    <p class="display">The token deserves the same rigor as a gross margin.</p>
+    <p class="lede">Before you approve your next AI project, know what one task costs, how many tasks per year, what the same task costs when done by a person, and what the full project costs over three years.</p>
+    <p class="lede" style="font-weight:600">And you: do you know the cost per task of your AI projects?</p>
+    <div class="sig"><b>Jerome (Jay) Potvin</b><span>Director, Commercial Strategy</span><span class="org">Innovair Solutions</span></div>
+  </div>
+</section>
+
+<div class="wrap sources">
+  <h3 style="color:var(--ink)">Sources</h3>
+  <ul>
+    <li><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Anthropic, Claude Sonnet 5.5 (pricing, caching, batch)</a></li>
+    <li><a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Anthropic, Claude Opus 5.5 (pricing, caching, batch)</a></li>
+    <li><a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Anthropic, Thinking (reasoning billing)</a></li>
+    <li><a href="https://platform.claude.com/docs/build-with-claude/extended-thinking">Anthropic, Extended thinking</a></li>
+    <li><a href="https://platform.claude.com/docs/en/manage-claude/data-residency">Anthropic, data residency</a></li>
+    <li><a href="https://www.finout.io/blog/anthropic-api-pricing">Finout, Anthropic API Pricing 2026</a></li>
+    <li><a href="https://mem0.ai/library/llms-and-models/openai-api-pricing">Mem0, OpenAI API Pricing</a></li>
+    <li><a href="https://dev.to/scorpion4ik26lang/claude-api-pricing-per-million-tokens-all-models-oct-2026-2am2">DEV Community, Claude API Pricing</a></li>
+    <li><a href="https://mindstudio.ai/blog/claude-sonnet-5-token-efficiency-cost">MindStudio, hidden costs of agents</a></li>
+    <li><a href="https://metacto.com/blogs/anthropic-api-pricing-a-full-breakdown-of-costs-and-integration">MetaCTO, tokens and words</a></li>
+    <li><a href="https://arxiv.org/pdf/2609.39001">Serval (2026), The Invisible Language Tax</a></li>
+    <li><a href="https://www.deloitte.com/global/en/insights/topics/business-strategy-growth/3q-2026-cfo-signals-survey.html">Deloitte, CFO Signals Q3 2026</a></li>
+    <li><a href="https://enterprisedna.co/resources/news/kpmg-ai-cost-visibility-enterprise-agents-q2-2026/">Enterprise DNA, KPMG AI Pulse Q2 2026</a></li>
+    <li><a href="https://www.pointfive.co/blog/why-companies-overspend-on-ai-the-2026-cost-visibility-gap">PointFive, 2026 Cost Visibility Gap</a></li>
+    <li><a href="https://www.flexera.com/blog/ai/ai-spending-trends/">Flexera, AI spending in 2026</a></li>
+    <li><a href="https://www.pagerduty.com/blog/ai/shadow-ai-workplace-survey-2026/">PagerDuty, Shadow AI Survey 2026</a></li>
+  </ul>
+  <p>Public prices in US dollars, subject to change. Worked examples: author’s calculations on hypothetical volumes.</p>
+</div>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('reveal'), rc=document.getElementById('receipt');
+  btn.addEventListener('click',function(){
+    var open=rc.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.textContent=open?'Back to the quote':'Show what the quote doesn’t say';
+  });
+
+  function money(v){
+    var s=Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
+    return (v<0?'−':'+')+'$'+s;
+  }
+  var slider=document.getElementById('adopt'), yrs=document.getElementById('yrs');
+  var GAIN=225000, VAR=62153.6, FIX=[110000,43000,43000];
+  var PX=0.0004; // px par $
+  function draw(){
+    var a=slider.value/100, cum=0, html='';
+    document.getElementById('adoptVal').textContent=slider.value+'%';
+    for(var y=0;y<3;y++){
+      cum+=GAIN*a-(FIX[y]+VAR*a);
+      var h=Math.max(2,Math.abs(cum)*PX), pos=cum>=0;
+      var col=pos?'var(--blue)':'var(--red)';
+      var bar=pos?'bottom:calc(17rem - 9rem);height:'+h+'px':'top:9rem;height:'+h+'px';
+      var lab=pos?'bottom:calc(17rem - 9rem + '+h+'px + .3rem)':'top:calc(9rem + '+h+'px + .3rem)';
+      html+='<div class="yr"><div class="b" style="'+bar+';background:'+col+'"></div><div class="v" style="'+lab+';color:'+col+'">'+money(cum)+'</div><div class="t">End of yr '+(y+1)+'</div></div>';
+    }
+    yrs.innerHTML=html;
+    var c3=document.getElementById('cum3');
+    c3.textContent=money(cum);
+    c3.style.color=cum>=0?'var(--blue)':'var(--red)';
+  }
+  slider.addEventListener('input',draw); draw();
+
+  var boxes=document.querySelectorAll('#check input'), score=document.getElementById('score');
+  var msgs=['you’re being sold the car without being told what it costs to drive.','you’re being sold the car without being told what it costs to drive.','most of the operating cost is still missing.','the picture is getting clearer, but line items are missing.','almost complete: insist on the last answer.','you have the real cost. You can decide.'];
+  function upd(){
+    var n=0; boxes.forEach(function(b){if(b.checked)n++;});
+    score.textContent=n+(n===1?' answer':' answers')+' out of 5: '+msgs[n];
+    score.style.color=n===5?'var(--green)':'var(--ink)';
+  }
+  boxes.forEach(function(b){b.addEventListener('change',upd);});
+})();
+</script>
+</body>
+</html>
