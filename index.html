@@ -76,6 +76,20 @@
   .footer{ border-top:1px solid var(--hair); margin-top:20px; padding:32px 24px 56px; text-align:center; }
   .footer p{ font-size:13px; color:var(--muted); margin:0 0 6px; }
   .footer a{ color:var(--copper-bright); text-decoration:none; font-weight:600; }
+
+  .masthead-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .mnav{display:flex;gap:14px;align-items:center;font-size:13px}
+  .mnav a{color:inherit;text-decoration:none;font-weight:600;opacity:.85}
+  .mnav a:hover{opacity:1}
+  .mnav .sep{opacity:.4}
+  .mnav-cta{background:#F5A524;color:#0B1B30!important;opacity:1!important;padding:6px 14px;border-radius:999px}
+  .promo{display:flex;align-items:center;gap:16px;margin-top:30px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(245,165,36,.16),rgba(14,140,140,.14));border:1px solid rgba(245,165,36,.45);color:inherit;text-decoration:none;transition:.2s}
+  .promo:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+  .promo-badge{background:#F5A524;color:#0B1B30;font-weight:800;font-size:11px;letter-spacing:1px;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .promo-txt{font-size:14.5px;line-height:1.5;flex:1}
+  .promo-fr{opacity:.75;font-size:13.5px}
+  .promo-go{font-size:22px;font-weight:800;color:#F5A524}
+  .inline-link{color:#F5A524;font-weight:700;text-decoration:none;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -83,6 +97,7 @@
 <div class="masthead">
   <div class="masthead-inner">
     <div class="brand"><b>JP</b> · Publications</div>
+    <div class="mnav"><a href="projects.html">Projects &amp; demos <span class="sep">/</span> Projets et démos</a><a class="mnav-cta" href="projects.html#contact">Let’s talk <span class="sep">/</span> Discutons</a></div>
   </div>
 </div>
 
@@ -109,6 +124,12 @@
       <div class="circuit-line"></div>
       <div class="circuit-node"></div>
     </div>
+      <a class="promo" href="projects.html">
+      <span class="promo-badge">NEW · NOUVEAU</span>
+      <span class="promo-txt"><b>16 tools I built, 4 live demos</b> — pricing, prescriptive analytics, market intelligence, AI agents.<br><span class="promo-fr"><b>16 outils bâtis, 4 démos en direct</b> — prix, analytique prescriptive, intelligence de marché, agents IA.</span></span>
+      <span class="promo-go">→</span>
+    </a>
+
   </div>
 </div>
 
@@ -287,7 +308,7 @@
           <p class="d-en">How AI is redefining indirect sales — real cases from Wesco, Rexel, Grainger, and Schneider Electric.</p>
         </div>
         <div class="card-footer">
-          <span class="card-format">Innovair Group · 2026 <span class="sep">/</span> Innovair Group · 2026</span>
+          <span class="card-format">Jerome Potvin · 2026 <span class="sep">/</span> Jerome Potvin · 2026</span>
           <div class="chips"><a class="chip" href="https://www.canadianelectricalwholesaler.ca/ai-reshaping-channel-sales-distributor-relationships/">EN <span class="arrow">→</span></a><a class="chip" href="votre-meilleur-representant-fr.html">FR <span class="arrow">→</span></a></div>
         </div>
       </div>
@@ -302,7 +323,7 @@
           <p class="d-en">Tokyo Gas stopped selling stand-alone gas water heaters. What that signals about how fast an industry can pivot.</p>
         </div>
         <div class="card-footer">
-          <span class="card-format">Innovair Group · 2026 <span class="sep">/</span> Innovair Group · 2026</span>
+          <span class="card-format">Jerome Potvin · 2026 <span class="sep">/</span> Jerome Potvin · 2026</span>
           <div class="chips"><a class="chip" href="japan-signal-article-en.html">EN <span class="arrow">→</span></a><a class="chip" href="japan-signal-article.html">FR <span class="arrow">→</span></a></div>
         </div>
       </div>
@@ -329,7 +350,7 @@
       <span class="pillar-num">04</span>
       <span class="pillar-title"><span class="t-fr">Outils & automatisation</span><span class="t-en">Tools & automation</span></span>
     </div>
-    <p class="pillar-sub"><span class="d-en">Interactive tools designed and deployed at Innovair — shown here with fictional data to protect proprietary information.</span><span class="d-fr">Outils interactifs conçus et déployés chez Innovair — présentés ici avec des données fictives pour protéger l'information propriétaire.</span></p>
+    <p class="pillar-sub"><span class="d-en">Interactive tools I designed and deployed in B2B distribution — shown here with fictional data. <a class="inline-link" href="projects.html">See all 16 case studies →</a></span><span class="d-fr">Outils interactifs que j'ai conçus et déployés en distribution B2B — présentés ici avec des données fictives. <a class="inline-link" href="projects.html?lang=fr">Voir les 16 études de cas →</a></span></p>
     <div class="cards">
 
       <a class="card linked" href="projection-ventes-demo.html">
@@ -343,7 +364,7 @@
           <p class="d-en">A commercial planning tool projecting revenue by product line and territory from historical CSV data, with adjustable growth assumptions and uncertainty bands.</p>
         </div>
         <div class="card-footer">
-          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
           <span class="card-link">→</span>
         </div>
       </a>
@@ -359,7 +380,7 @@
           <p class="d-en">Tracks pricing across multiple retailers, flags MAP violations, and surfaces which retailer wins on price most often — built for channel pricing governance.</p>
         </div>
         <div class="card-footer">
-          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
           <span class="card-link">→</span>
         </div>
       </a>
@@ -375,7 +396,7 @@
           <p class="d-en">Maps a heating cable catalogue to competitor equivalents by application and spec, surfacing coverage gaps across product families.</p>
         </div>
         <div class="card-footer">
-          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
           <span class="card-link">→</span>
         </div>
       </a>
@@ -391,7 +412,7 @@
           <p class="d-en">Sizes the addressable market by product, vertical, and channel from housing-start and permit data, tracks competitive positioning, and surfaces account-level opportunities and macro signals for the sales team to act on.</p>
         </div>
         <div class="card-footer">
-          <span class="card-format">Designed & deployed · Innovair <span class="sep">/</span> Conçu et déployé · Innovair</span>
+          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
           <span class="card-link">→</span>
         </div>
       </a>
@@ -402,7 +423,8 @@
 </div>
 
 <div class="footer">
-  <p>Jérôme Potvin · Director, Commercial Strategy <span class="mono">/</span> Directeur, Stratégie Commerciale · Innovair Group</p>
+  <p>Jerome Potvin (Jay) · Commercial strategy × applied AI <span class="mono">/</span> Stratégie commerciale × IA appliquée · Sigma Analytics</p>
+  <p><a href="projects.html">Projects &amp; live demos / Projets et démos →</a></p>
   <p><a href="https://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></p>
 </div>
 
