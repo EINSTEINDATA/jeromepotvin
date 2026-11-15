@@ -1,432 +1,733 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jérôme Potvin — AI & Commercial Strategy Publications / Publications IA & Stratégie Commerciale</title>
-<meta name="description" content="Bilingual portfolio of published AI strategy work. Portfolio bilingue de publications sur l'IA appliquée à la distribution CVAC/électrique.">
+<title>Jerome Potvin (Jay) — AI tools & commercial strategy for B2B distribution</title>
+<meta property="og:title" content="Jerome Potvin — AI tools &amp; commercial strategy for B2B distribution">
+<meta property="og:description" content="Live demos and 16 case studies: pricing engines, prescriptive analytics, market intelligence and AI agents.">
+<meta name="description" content="Selected projects: AI tools, analytics, pricing and commercial strategy, AI governance and training — built for B2B distribution and manufacturing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0F2238; --navy-2:#16314F; --teal:#0E8C8C; --teal-soft:#E3F3F2;
+  --amber:#E89B2D; --amber-soft:#FDF1DE; --ink:#1B2430; --muted:#5B6776;
+  --line:#E3E7EC; --bg:#F7F8FA; --card:#FFFFFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html[data-lang="en"] [lang="fr"]{display:none!important}
+html[data-lang="fr"] [lang="en"]{display:none!important}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
 
-  :root{
-    --ink: #0A1622; --navy: #0F1B33; --navy-2: #182648;
-    --paper: #F2F0E9; --paper-dim: #E7E4DA;
-    --copper: #B96A3C; --copper-bright: #E8622C; --teal: #2E7D6B;
-    --muted: #5B6670; --hair: #D6D2C7;
-  }
-  *{box-sizing:border-box;}
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Newsreader',Georgia,serif; font-size:17px; line-height:1.6; }
-  .mono{ font-family:'Spline Sans Mono',monospace; }
+/* Nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(15,34,56,.96);backdrop-filter:blur(6px)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{color:#fff;font-weight:700;letter-spacing:.2px}
+.brand span{color:var(--amber)}
+.navlinks{display:flex;gap:22px;align-items:center}
+.navlinks a{color:#C9D3DF;font-size:14px;font-weight:500}
+.navlinks a:hover{color:#fff;text-decoration:none}
+.langbtn{background:transparent;border:1px solid #3A5272;color:#fff;border-radius:999px;padding:5px 12px;font:600 12px Inter;cursor:pointer}
+.langbtn:hover{border-color:var(--amber)}
 
-  .masthead{ background:var(--ink); color:var(--paper); border-bottom:1px solid rgba(255,255,255,0.1); }
-  .masthead-inner{ max-width:960px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; }
-  .brand{ font-family:'Spline Sans Mono',monospace; font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; font-weight:600; }
-  .brand b{ color:var(--copper-bright); }
-  .lang-pill{ font-family:'Spline Sans Mono',monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(242,240,233,0.55); border:1px solid rgba(255,255,255,0.18); padding:5px 12px; border-radius:20px; }
+/* Hero */
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 60%,#1B4A5C 100%);color:#fff;padding:72px 0 64px}
+.eyebrow{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:1.6px;text-transform:uppercase}
+h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(34px,5vw,52px);line-height:1.1;margin:14px 0 18px;max-width:820px}
+.lead{font-size:18px;color:#C9D3DF;max-width:760px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+.stat{border-left:3px solid var(--amber);padding:4px 0 4px 14px}
+.stat b{display:block;font-size:30px;font-weight:800}
+.stat small{color:#AEBACA;font-size:13px}
 
-  .hero{ background:linear-gradient(160deg, var(--ink) 0%, var(--navy) 100%); color:var(--paper); padding:56px 0 64px; position:relative; overflow:hidden; }
-  .hero::after{ content:""; position:absolute; right:-80px; top:-80px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle at 30% 30%, var(--copper-bright), transparent 70%); opacity:0.22; }
-  .hero-inner{ max-width:960px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
-  .kicker{ font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--copper-bright); margin:0 0 18px; display:flex; align-items:center; gap:10px; }
-  .kicker::before{ content:""; width:26px; height:1px; background:var(--copper-bright); }
-  .hero h1{ font-size:clamp(26px,4.6vw,38px); font-weight:600; line-height:1.22; margin:0 0 8px; max-width:680px; }
-  .hero h1.fr-sub{ color:rgba(242,240,233,0.62); font-style:italic; font-weight:400; font-size:clamp(18px,3vw,24px); margin-bottom:20px; }
-  .hero p{ font-size:15.5px; color:rgba(242,240,233,0.72); max-width:600px; margin:0 0 6px; }
-  .hero p.fr-sub{ font-style:italic; color:rgba(242,240,233,0.5); }
+/* Sections */
+section{padding:64px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+h2{font-family:"Source Serif 4",Georgia,serif;font-size:32px;color:var(--navy)}
+.sec-sub{color:var(--muted);max-width:640px;margin-top:6px}
 
-  .circuit{ margin-top:32px; display:flex; align-items:center; max-width:680px; }
-  .circuit-line{ flex:1; height:1px; background:rgba(255,255,255,0.18); }
-  .circuit-node{ width:7px; height:7px; border-radius:50%; background:var(--copper-bright); flex-shrink:0; box-shadow:0 0 0 3px rgba(232,98,44,0.18); }
-  .circuit-label{ font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:0.06em; color:rgba(242,240,233,0.5); text-transform:uppercase; padding:0 10px; white-space:nowrap; }
-  .circuit-label .fr-sub{ color:rgba(242,240,233,0.3); }
+/* Filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:600 13px Inter;color:var(--muted);cursor:pointer;transition:.15s}
+.chip:hover{border-color:var(--teal);color:var(--teal)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
 
-  .content{ max-width:960px; margin:0 auto; padding:52px 24px 0; }
+/* Featured */
+.featured{display:grid;grid-template-columns:1.25fr 1fr;gap:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:28px}
+.featured .vis{background:linear-gradient(160deg,var(--navy),#1B4A5C);padding:32px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;min-height:320px}
+.mock{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px}
+.mock-row{display:flex;gap:10px;margin-bottom:10px}
+.kpi{flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:10px}
+.kpi i{display:block;font-style:normal;font-size:11px;color:#AEBACA}
+.kpi b{font-size:18px}
+.bars{display:flex;align-items:flex-end;gap:6px;height:70px}
+.bars div{flex:1;background:var(--teal);border-radius:3px 3px 0 0;opacity:.9}
+.bars div:nth-child(5),.bars div:nth-child(6){background:var(--amber)}
+.featured .txt{padding:32px}
+.tag-feat{display:inline-block;background:var(--amber-soft);color:#9A5B07;font:700 11px Inter;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+.featured h3{font-size:24px;color:var(--navy);margin:12px 0 10px}
 
-  .pillar{ margin-bottom:56px; }
-  .pillar-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
-  .pillar-num{ font-family:'Spline Sans Mono',monospace; font-size:13px; color:var(--copper); font-weight:600; }
-  .pillar-title{ font-size:22px; font-weight:600; }
-  .pillar-title .t-en{ font-size:16px; font-weight:400; font-style:italic; color:var(--muted); margin-left:10px; }
-  .pillar-sub{ color:var(--muted); font-size:14px; margin:4px 0 26px; max-width:620px; line-height:1.55; }
-  .pillar-sub .d-en{ display:block; font-style:italic; color:#8b93a0; margin-top:3px; }
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:.18s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(15,34,56,.08);border-color:#CFD8E2}
+.card .cat{font:700 11px Inter;letter-spacing:1px;text-transform:uppercase;color:var(--teal)}
+.card h3{font-size:18px;color:var(--navy);margin:8px 0 10px;line-height:1.3}
+.card p{font-size:14.5px;color:#3B4654}
+.card dl{margin-top:12px;font-size:13.5px}
+.card dt{font-weight:700;color:var(--navy);margin-top:8px}
+.card dd{color:#3B4654}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:16px}
+.tags span{background:var(--bg);border:1px solid var(--line);color:var(--muted);font-size:12px;border-radius:6px;padding:3px 8px}
+.card .more{margin-top:12px;font-weight:600;font-size:14px}
+.hide{display:none!important}
 
-  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  @media(max-width:680px){ .cards{ grid-template-columns:1fr; } }
+/* Method */
+.method{background:var(--navy);color:#fff}
+.method h2{color:#fff}
+.method .sec-sub{color:#AEBACA}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px}
+.step .n{width:34px;height:34px;border-radius:50%;background:var(--amber);color:var(--navy);display:grid;place-items:center;font-weight:800;margin-bottom:14px}
+.step h4{font-size:16px;margin-bottom:6px}
+.step p{font-size:14px;color:#C9D3DF}
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}
+.pr{border-top:2px solid var(--teal);padding-top:12px;font-size:14px;color:#C9D3DF}
+.pr b{color:#fff;display:block;margin-bottom:4px}
 
-  .card{ background:#fff; border:1px solid var(--hair); border-radius:4px; padding:20px 22px; display:flex; flex-direction:column; gap:9px; }
-  a.card.linked{ text-decoration:none; color:inherit; transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
-  a.card.linked:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(15,22,34,0.08); border-color:var(--copper-bright); }
-  .card-link{ font-family:'Spline Sans Mono',monospace; font-size:14px; font-weight:600; color:var(--copper-bright); flex-shrink:0; }
-  .card-venue{ font-family:'Spline Sans Mono',monospace; font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:var(--teal); font-weight:600; }
-  .card-venue .sep{ color:var(--hair); margin:0 3px; }
-  .card-title{ line-height:1.32; }
-  .card-title .t-fr{ display:block; font-size:16.5px; font-weight:600; color:var(--ink); }
-  .card-title .t-en{ display:block; font-size:13.5px; font-style:italic; color:var(--muted); margin-top:3px; }
-  .card-desc p{ margin:0; font-size:13.5px; line-height:1.5; }
-  .card-desc .d-fr{ color:var(--ink); }
-  .card-desc .d-en{ color:#8b93a0; font-style:italic; margin-top:6px; padding-top:6px; border-top:1px dashed var(--hair); }
-  .card-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:6px; gap:10px; flex-wrap:wrap; }
-  .card-format{ font-family:'Spline Sans Mono',monospace; font-size:9.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; }
-  .card-format .sep{ color:var(--hair); margin:0 3px; }
-  .chips{ display:flex; gap:6px; }
-  .chip{ font-family:'Spline Sans Mono',monospace; font-size:11px; font-weight:600; color:var(--copper-bright); text-decoration:none; border:1px solid var(--copper-bright); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:background 0.15s ease, color 0.15s ease; }
-  .chip:hover{ background:var(--copper-bright); color:#fff; }
-  .chip .arrow{ opacity:0.7; }
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.sk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.sk h4{color:var(--navy);font-size:15px;margin-bottom:10px}
+.sk ul{list-style:none;font-size:14px;color:#3B4654}
+.sk li{padding:4px 0;border-bottom:1px dashed var(--line)}
+.sk li:last-child{border:none}
 
-  .footer{ border-top:1px solid var(--hair); margin-top:20px; padding:32px 24px 56px; text-align:center; }
-  .footer p{ font-size:13px; color:var(--muted); margin:0 0 6px; }
-  .footer a{ color:var(--copper-bright); text-decoration:none; font-weight:600; }
+/* Pubs */
+.pubs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.pub{background:#fff;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:10px;padding:16px 18px}
+.pub small{color:var(--muted);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.pub b{display:block;color:var(--navy);margin-top:4px}
 
-  .masthead-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .mnav{display:flex;gap:14px;align-items:center;font-size:13px}
-  .mnav a{color:inherit;text-decoration:none;font-weight:600;opacity:.85}
-  .mnav a:hover{opacity:1}
-  .mnav .sep{opacity:.4}
-  .mnav-cta{background:#F5A524;color:#0B1B30!important;opacity:1!important;padding:6px 14px;border-radius:999px}
-  .promo{display:flex;align-items:center;gap:16px;margin-top:30px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(245,165,36,.16),rgba(14,140,140,.14));border:1px solid rgba(245,165,36,.45);color:inherit;text-decoration:none;transition:.2s}
-  .promo:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.18)}
-  .promo-badge{background:#F5A524;color:#0B1B30;font-weight:800;font-size:11px;letter-spacing:1px;padding:5px 10px;border-radius:999px;white-space:nowrap}
-  .promo-txt{font-size:14.5px;line-height:1.5;flex:1}
-  .promo-fr{opacity:.75;font-size:13.5px}
-  .promo-go{font-size:22px;font-weight:800;color:#F5A524}
-  .inline-link{color:#F5A524;font-weight:700;text-decoration:none;white-space:nowrap}
+/* CTA */
+.cta{background:linear-gradient(135deg,var(--teal),#0B6F7A);color:#fff;border-radius:18px;padding:40px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.cta h2{color:#fff}
+.btn{display:inline-block;background:var(--amber);color:var(--navy);font-weight:700;padding:12px 22px;border-radius:10px}
+.btn.ghost{background:transparent;border:2px solid rgba(255,255,255,.6);color:#fff;margin-left:8px}
+.btn:hover{text-decoration:none;filter:brightness(1.05)}
+footer{padding:30px 0 40px;color:var(--muted);font-size:13px;text-align:center}
+.note{font-size:13px;color:var(--muted);margin-top:18px;font-style:italic}
+
+
+/* Screenshots */
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-22px -22px 16px;padding:0 12px}
+.shots img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;cursor:zoom-in;border-radius:6px;border:1px solid var(--line);background:#0F2238;transition:.15s}
+.shots img:hover{filter:brightness(1.05);border-color:var(--teal)}
+.shots img:first-child{grid-column:1/-1;width:calc(100% + 24px);margin:0 -12px 4px;border-radius:14px 14px 0 0;border:none;border-bottom:1px solid var(--line)}
+.featured .vis{padding:0;background:#0F2238;min-height:0;justify-content:flex-start}
+.featured .shots{margin:0;grid-template-columns:repeat(4,1fr);padding:0 10px 10px}
+.featured .shots img:first-child{border-radius:0;margin:0 -10px 4px;width:calc(100% + 20px)}
+.featured .shots img:not(:first-child){border-color:rgba(255,255,255,.15)}
+.featured dl{margin-top:12px;font-size:14.5px}.featured dt{font-weight:700;color:var(--navy);margin-top:6px}.featured dd{color:#3B4654}
+.shot-count{font:600 12px Inter;color:var(--muted);margin:-8px 0 10px}
+.anon{display:inline-flex;gap:8px;align-items:center;background:var(--teal-soft);color:#0B5F60;border-radius:10px;padding:10px 14px;font-size:13.5px;margin-bottom:22px}
+/* Lightbox */
+#lb{position:fixed;inset:0;background:rgba(8,16,28,.92);display:none;z-index:99;align-items:center;justify-content:center;flex-direction:column;padding:24px}
+#lb.on{display:flex}
+#lb img{max-width:min(1500px,94vw);max-height:82vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff}
+#lb .cap{color:#C9D3DF;margin-top:14px;font-size:14px;text-align:center}
+#lb button{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;width:46px;height:46px;border-radius:50%;font-size:22px;cursor:pointer}
+#lb button:hover{background:rgba(255,255,255,.2)}
+#lb .x{top:20px;right:20px}#lb .pv{left:20px;top:50%}#lb .nx{right:20px;top:50%}
+
+@media(max-width:960px){
+  .grid,.skills{grid-template-columns:repeat(2,1fr)}
+  .steps,.principles{grid-template-columns:repeat(2,1fr)}
+  .featured{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .navlinks a{display:none}
+}
+@media(max-width:620px){
+  .grid,.skills,.steps,.principles,.pubs{grid-template-columns:1fr}
+  section{padding:48px 0}
+}
+
+/* ======== v2 premium layer ======== */
+:root{--amber:#F5A524;--amber-d:#D9860B;--grad:linear-gradient(135deg,#0B1B30 0%,#12304F 55%,#0E4A55 100%)}
+html{scroll-behavior:smooth}
+body{background:#F6F7F9}
+nav{background:rgba(11,27,48,.88);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.brand{text-decoration:none}.brand:hover{text-decoration:none}
+.navcta{background:var(--amber);color:#0B1B30!important;font-weight:700!important;padding:8px 16px;border-radius:999px;transition:.15s}
+.navcta:hover{background:#FFB940;transform:translateY(-1px)}
+header{position:relative;overflow:hidden;background:var(--grad);padding:84px 0 56px}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at 70% 30%,#000 30%,transparent 75%)}
+header:after{content:"";position:absolute;width:620px;height:620px;right:-160px;top:-200px;background:radial-gradient(circle,rgba(245,165,36,.22),transparent 65%);pointer-events:none}
+.hero-inner{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;z-index:1}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#D7E1EC;font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#3DDC97;box-shadow:0 0 0 4px rgba(61,220,151,.18);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(61,220,151,0)}}
+header h1{font-size:clamp(32px,4.4vw,54px);line-height:1.08;margin:20px 0 18px;letter-spacing:-.5px}
+header h1 em{font-style:normal;background:linear-gradient(90deg,#FFC35A,#F5A524);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:#0B1B30;font-weight:700;padding:14px 24px;border-radius:12px;box-shadow:0 10px 30px rgba(245,165,36,.25);transition:.18s;text-decoration:none!important}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(245,165,36,.35);filter:none}
+.btn.ghost{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.35);color:#fff;box-shadow:none;margin-left:0}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.trust{margin-top:26px;font-size:13px;color:#9FB0C3}.trust b{color:#E6EDF5;font-weight:600}
+.hero-visual{position:relative;height:420px}
+.hero-visual img{position:absolute;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);width:78%;transition:transform .6s}
+.hv1{right:0;top:0;transform:rotate(2deg)}
+.hv2{left:0;top:110px;transform:rotate(-3deg);z-index:2}
+.hv3{right:6%;top:230px;width:62%!important;transform:rotate(1.5deg);z-index:3}
+.hero-visual:hover .hv1{transform:rotate(3deg) translateY(-6px)}.hero-visual:hover .hv2{transform:rotate(-4deg) translateX(-6px)}
+.stats{margin-top:52px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:22px 26px;backdrop-filter:blur(6px)}
+.stat{border-left:3px solid var(--amber)}
+.eyebrow2{color:var(--teal);font-weight:800;font-size:12.5px;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:8px}
+h2{font-family:Inter,system-ui,sans-serif;font-weight:800;letter-spacing:-.4px;font-size:clamp(26px,3vw,36px)}
+/* live demos */
+.live{background:#fff;border-bottom:1px solid var(--line)}
+.demos{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.demo{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;color:inherit;text-decoration:none!important;transition:.2s}
+.demo:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(11,27,48,.12);border-color:var(--teal)}
+.demo-img{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0B1B30}
+.demo-img img{width:100%;height:100%;object-fit:cover;object-position:top left;transition:transform .5s}
+.demo:hover .demo-img img{transform:scale(1.05)}
+.live-badge{position:absolute;top:10px;left:10px;background:#0B1B30;color:#3DDC97;font:800 10.5px Inter;letter-spacing:1px;padding:4px 9px;border-radius:999px}
+.demo-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.demo-body h3{font-size:16.5px;color:var(--navy);margin:6px 0 6px}
+.demo-body p{font-size:13.5px;color:#4A5563;flex:1}
+.demo .cat{font:700 10.5px Inter;letter-spacing:1px;text-transform:uppercase;color:var(--teal)}
+.go{margin-top:12px;font-weight:700;color:var(--amber-d);font-size:14px}
+/* proof + demo buttons */
+.proof{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.proof>span{background:linear-gradient(135deg,#FFF6E6,#FDECCB);color:#8A5300;border:1px solid #F6D89C;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.demo-btn{display:inline-flex;align-items:center;gap:6px;margin-top:14px;align-self:flex-start;background:#0B1B30;color:#fff!important;font-weight:700;font-size:13.5px;padding:9px 16px;border-radius:10px;text-decoration:none!important;transition:.15s}
+.demo-btn:hover{background:var(--teal);transform:translateY(-1px)}
+.card{border-radius:16px}
+.card:hover{box-shadow:0 16px 36px rgba(11,27,48,.10)}
+.featured{border-radius:18px;box-shadow:0 14px 40px rgba(11,27,48,.08)}
+/* services */
+.services{background:#fff;border-top:1px solid var(--line)}
+.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.offer{position:relative;background:#F8FAFC;border:1px solid var(--line);border-radius:18px;padding:28px}
+.offer.hot{background:var(--grad);color:#fff;border:none;box-shadow:0 20px 50px rgba(11,27,48,.25)}
+.offer .num{font:800 13px Inter;color:var(--amber-d);letter-spacing:1px}
+.offer.hot .num{color:var(--amber)}
+.offer h3{font-size:21px;margin:8px 0 10px;color:var(--navy)}.offer.hot h3{color:#fff}
+.offer p{font-size:14.5px;color:#4A5563}.offer.hot p{color:#C9D6E3}
+.offer ul{list-style:none;margin-top:14px;font-size:14px}
+.offer li{padding:6px 0 6px 24px;position:relative;border-top:1px dashed var(--line)}
+.offer.hot li{border-color:rgba(255,255,255,.12);color:#E6EDF5}
+.offer li:before{content:"✓";position:absolute;left:0;color:var(--teal);font-weight:800}.offer.hot li:before{color:#3DDC97}
+.ribbon{position:absolute;top:18px;right:18px;background:var(--amber);color:#0B1B30;font:800 11px Inter;padding:4px 10px;border-radius:999px}
+/* contact */
+.cta{background:var(--grad);border-radius:22px;padding:44px;position:relative;overflow:hidden}
+.cta:after{content:"";position:absolute;width:400px;height:400px;right:-120px;bottom:-200px;background:radial-gradient(circle,rgba(245,165,36,.25),transparent 65%)}
+.cta>div{position:relative;z-index:1;max-width:620px}
+.cta p{color:#C9D6E3;margin-top:8px}
+.cta-btns{display:flex;flex-direction:column;gap:10px;max-width:none!important}
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+@media(max-width:1060px){.demos{grid-template-columns:repeat(2,1fr)}.hero-inner{grid-template-columns:1fr}.hero-visual{height:320px;max-width:620px}}
+@media(max-width:760px){.offers{grid-template-columns:1fr}.hero-visual{display:none}}
+@media(max-width:960px){.navlinks a.navcta{display:inline-flex}}
+header h1{font-family:Inter,system-ui,sans-serif;font-weight:800}
+@media(max-width:560px){.demos{grid-template-columns:1fr}.cta{padding:28px}}
+
+.pubsec{background:#fff;border-top:1px solid var(--line)}
+.pubgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pubcard{background:#F8FAFC;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:14px;padding:20px;display:flex;flex-direction:column}
+.pubcard .pv{font:700 11px Inter;letter-spacing:.8px;text-transform:uppercase;color:var(--teal)}
+.pubcard h3{font-size:16.5px;color:var(--navy);margin:8px 0;line-height:1.3}
+.pubcard p{font-size:14px;color:#4A5563;flex:1}
+.plinks{display:flex;gap:8px;margin-top:14px}
+.plinks a{font:700 12.5px Inter;border:1.5px solid var(--amber);color:var(--amber-d);padding:5px 12px;border-radius:999px;text-decoration:none}
+.plinks a:hover{background:var(--amber);color:#0B1B30}
+@media(max-width:960px){.pubgrid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.pubgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<div class="masthead">
-  <div class="masthead-inner">
-    <div class="brand"><b>JP</b> · Publications</div>
-    <div class="mnav"><a href="projects.html">Projects &amp; demos <span class="sep">/</span> Projets et démos</a><a class="mnav-cta" href="projects.html#contact">Let’s talk <span class="sep">/</span> Discutons</a></div>
-  </div>
-</div>
-
-<div class="hero">
-  <div class="hero-inner">
-    <div class="kicker">Commercial Strategy × Applied AI <span style="opacity:.5">/</span> Stratégie Commerciale × IA Appliquée</div>
-    <h1>Writing the bridge between the field and artificial intelligence</h1>
-    <h1 class="fr-sub">Écrire le pont entre le terrain et l'intelligence artificielle</h1>
-    <p>A selection of published articles and analyses on AI governance, adoption, and commercial impact in HVAC/electrical distribution.</p>
-    <p class="fr-sub">Une sélection d'articles et d'analyses publiés sur la gouvernance, l'adoption et l'impact commercial de l'IA dans la distribution CVAC/électrique.</p>
-
-    <div class="circuit">
-      <div class="circuit-node"></div>
-      <div class="circuit-line"></div>
-      <div class="circuit-label">Governance <span class="fr-sub">/ Gouvernance</span></div>
-      <div class="circuit-line"></div>
-      <div class="circuit-node"></div>
-      <div class="circuit-line"></div>
-      <div class="circuit-label">Adoption <span class="fr-sub">/ Adoption</span></div>
-      <div class="circuit-line"></div>
-      <div class="circuit-node"></div>
-      <div class="circuit-line"></div>
-      <div class="circuit-label">Impact <span class="fr-sub">/ Impact</span></div>
-      <div class="circuit-line"></div>
-      <div class="circuit-node"></div>
-    </div>
-      <a class="promo" href="projects.html">
-      <span class="promo-badge">NEW · NOUVEAU</span>
-      <span class="promo-txt"><b>16 tools I built, 4 live demos</b> — pricing, prescriptive analytics, market intelligence, AI agents.<br><span class="promo-fr"><b>16 outils bâtis, 4 démos en direct</b> — prix, analytique prescriptive, intelligence de marché, agents IA.</span></span>
-      <span class="promo-go">→</span>
-    </a>
-
-  </div>
-</div>
-
-<div class="content">
-
-  <div class="pillar">
-    <div class="pillar-head">
-      <span class="pillar-num">01</span>
-      <span class="pillar-title"><span class="t-fr">Gouvernance & confiance</span><span class="t-en">Governance & trust</span></span>
-    </div>
-    <p class="pillar-sub"><span class="d-en">Why the gap between AI adoption and AI governance is the real risk to manage.</span><span class="d-fr">Pourquoi l'écart entre l'adoption de l'IA et sa gouvernance est le vrai risque à gérer.</span></p>
-    <div class="cards">
-      <div class="card">
-        <div class="card-venue">Analysis · Interactive calculator <span class="sep">/</span> Analyse · Calculateur interactif</div>
-        <div class="card-title">
-          <span class="t-fr">Votre IA roule en Ferrari. Qui paie l'essence ?</span>
-          <span class="t-en">Your AI drives a Ferrari. Who pays for the gas?</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Seulement 26 % des grandes entreprises voient en temps réel ce que leur IA leur coûte. Sur trois ans, la vraie facture d'un agent IA atteint 4 fois la soumission — avec un calculateur de rentabilité interactif.</p>
-          <p class="d-en">Only 26% of large companies see in real time what their AI costs them. Over three years, an AI agent's real bill reaches 4 times the quote — with an interactive break-even calculator.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">AI cost & ROI · 2026 <span class="sep">/</span> Coût et rendement de l'IA · 2026</span>
-          <div class="chips"><a class="chip" href="your-ai-ferrari-gas.html">EN <span class="arrow">→</span></a><a class="chip" href="ia-ferrari-essence.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Feature article <span class="sep">/</span> Article de fond</div>
-        <div class="card-title">
-          <span class="t-fr">L'intelligence artificielle à la croisée de la cybersécurité et de la gouvernance</span>
-          <span class="t-en">Artificial Intelligence at the Crossroads of Cybersecurity and Governance</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">94% des dirigeants en cybersécurité voient l'IA comme le principal facteur de risque numérique en 2026 — et les violations liées à l'IA coûtent près d'un million de plus.</p>
-          <p class="d-en">94% of cybersecurity leaders call AI the top driver of digital risk in 2026 — and AI-related breaches cost nearly $1M more.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Manufacturing, distribution, electricity & plumbing <span class="sep">/</span> Manufacturier, distribution, électricité et plomberie</span>
-          <div class="chips"><a class="chip" href="ai_cybersecurity_governance_en.html">EN <span class="arrow">→</span></a><a class="chip" href="ai_cybersecurity_governance_fr.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Governance essay <span class="sep">/</span> Essai de gouvernance</div>
-        <div class="card-title">
-          <span class="t-fr">« On lui fait confiance » : la phrase qui a coulé plus de projets d'agents IA que n'importe quel bug</span>
-          <span class="t-en">"We trust them": the sentence that has sunk more AI agent projects than any bug</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Plus de 80% des projets d'IA échouent — deux fois le taux des projets TI classiques — et 84% des échecs sont d'origine décisionnelle, pas technique.</p>
-          <p class="d-en">More than 80% of AI projects fail — twice the rate of conventional IT projects — and 84% of failures are decision-driven, not technical.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">AI agent governance <span class="sep">/</span> Gouvernance d'agents IA</span>
-          <div class="chips"><a class="chip" href="Blind%20Spots%20in%20Agentic%20AI.html">EN <span class="arrow">→</span></a><a class="chip" href="Angles%20morts%20de%20l'IA%20agentique.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Le monde de l'électricité <span class="sep">/</span> Le monde de l'électricité</div>
-        <div class="card-title">
-          <span class="t-fr">Sous tension : pourquoi la gouvernance de l'IA est le circuit manquant</span>
-          <span class="t-en">Wired for Trust: Why AI Governance Is the Missing Circuit</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">88% des organisations utilisent l'IA — seulement 8% ont un cadre de gouvernance complet. Ce que Schneider Electric fait différemment.</p>
-          <p class="d-en">88% of organizations use AI — only 8% maintain a comprehensive governance framework. What Schneider Electric does differently.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Article + carousel <span class="sep">/</span> Article + carrousel</span>
-          <div class="chips"><a class="chip" href="wired-for-trust-article.html">EN <span class="arrow">→</span></a><a class="chip" href="https://www.lemondedelelectricite.ca/articles/sous-tension-la-gouvernance-potvin/" target="_blank" rel="noopener">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Canadian Electrical Wholesaler <span class="sep">/</span> Le monde de l'électricité</div>
-        <div class="card-title">
-          <span class="t-fr">L'IA ne fait pas peur à vos clients. Elle fait peur à vos employés.</span>
-          <span class="t-en">Your Customers Aren't Afraid of AI. Your Employees Are.</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Le vrai risque de l'IA agentique n'est pas technologique — c'est la confiance. 5 principes pour déployer sans creuser le fossé.</p>
-          <p class="d-en">The real risk of agentic AI isn't technological — it's trust. 5 principles for deploying without widening the gap.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Article + carousel <span class="sep">/</span> Article + carrousel</span>
-          <div class="chips"><a class="chip" href="https://www.canadianelectricalwholesaler.ca/your-customers-arent-afraid-of-ai-your-employees-are/">EN <span class="arrow">→</span></a><a class="chip" href="https://www.lemondedelelectricite.ca/articles/lia-ne-fait-pas-peur-a-vos-clients-elle-fait-peur-a-vos-employes/">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Analysis · 25 verified sources <span class="sep">/</span> Analyse · 25 sources vérifiées</div>
-        <div class="card-title">
-          <span class="t-fr">Autopsie d'une soumission perdue</span>
-          <span class="t-en">Anatomy of a Wrong Quote</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Une soumission « perdue sur le prix » ? Quatre liens de données sur six étaient brisés. Pourquoi la gouvernance des données est votre stratégie commerciale — avec un outil interactif pour noter vos propres soumissions.</p>
-          <p class="d-en">A quote "lost on price"? Four of six data links were broken. Why data governance is your commercial strategy — with an interactive tool to score your own quotes.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">LinkedIn · 2026 <span class="sep">/</span> LinkedIn · 2026</span>
-          <div class="chips"><a class="chip" href="anatomy-of-a-wrong-quote.html#en">EN <span class="arrow">→</span></a><a class="chip" href="anatomy-of-a-wrong-quote.html#fr">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Jerome Potvin <span>·</span> Jay</a>
+    <div class="navlinks">
+      <a href="#live"><span lang="en">Live demos</span><span lang="fr">Démos</span></a>
+      <a href="#work"><span lang="en">Case studies</span><span lang="fr">Études de cas</span></a>
+      <a href="#services"><span lang="en">Services</span><span lang="fr">Services</span></a>
+      <a href="#publications"><span lang="en">Publications</span><span lang="fr">Publications</span></a>
+      <button class="langbtn" id="langbtn" aria-label="Switch language">FR</button>
+      <a class="navcta" href="#contact"><span lang="en">Let’s talk</span><span lang="fr">Discutons</span></a>
     </div>
   </div>
+</nav>
 
-  <div class="pillar">
-    <div class="pillar-head">
-      <span class="pillar-num">02</span>
-      <span class="pillar-title"><span class="t-fr">Adoption humaine & leadership</span><span class="t-en">Human adoption & leadership</span></span>
+<header id="top">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy reveal">
+      <div class="pill"><span class="dot"></span><span lang="en">Available for mandates · remote · FR / EN</span><span lang="fr">Disponible pour des mandats · à distance · FR / EN</span></div>
+      <h1><span lang="en">I turn your sales data into <em>decisions</em> — and build the AI tools that make them stick.</span><span lang="fr">Je transforme vos données de ventes en <em>décisions</em> — et je bâtis les outils IA qui les font durer.</span></h1>
+      <p class="lead"><span lang="en">25 years leading sales and commercial strategy in B2B distribution. Today I design and ship the tools myself: pricing engines, prescriptive analytics, market intelligence apps and AI agents — in weeks, not quarters.</span><span lang="fr">25 ans à diriger les ventes et la stratégie commerciale en distribution B2B. Aujourd’hui, je conçois et livre moi-même les outils : moteurs de prix, analytique prescriptive, applications d’intelligence de marché et agents IA — en semaines, pas en trimestres.</span></p>
+      <div class="hero-ctas">
+        <a class="btn" href="#live"><span lang="en">▶ Try a live demo</span><span lang="fr">▶ Essayer une démo</span></a>
+        <a class="btn ghost" href="#work"><span lang="en">See the case studies</span><span lang="fr">Voir les études de cas</span></a>
+      </div>
+      <div class="trust"><span lang="en">Published in</span><span lang="fr">Publié dans</span> <b>Canadian Electrical Wholesaler</b> · <b>Le Monde de l’électricité</b> &nbsp;|&nbsp; EMBA · Lean Six Sigma · Harvard Business School Online (AI)</div>
     </div>
-    <p class="pillar-sub"><span class="d-en">Technology changes nothing without the teams who adopt it — and the structures that prepare them.</span><span class="d-fr">La technologie ne change rien sans les équipes qui l'adoptent — et les structures qui les préparent.</span></p>
-    <div class="cards">
-      <div class="card">
-        <div class="card-venue">Article · Same Voltage Series <span class="sep">/</span> Article · Série Same Voltage</div>
-        <div class="card-title">
-          <span class="t-fr">Promus pour échouer : le principe de Peter va enfin trouver son égal</span>
-          <span class="t-en">Promoted to Fail: Why the Peter Principle Is About to Meet Its Match</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">65% des gestionnaires promus le sont pour les mauvaises raisons. Ce que l'IA change vraiment — et ce qu'elle ne change pas.</p>
-          <p class="d-en">65% of managers are promoted for the wrong reasons. What AI actually changes — and what it doesn't.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Article + carousel <span class="sep">/</span> Article + carrousel</span>
-          <div class="chips"><a class="chip" href="HR peter principle-ai-article-eng.html">EN <span class="arrow">→</span></a><a class="chip" href="HR principe peter-ai-article-fr.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Canadian Electrical Wholesaler <span class="sep">/</span> Le monde de l'électricité</div>
-        <div class="card-title">
-          <span class="t-fr">Même tension, deux résultats : pourquoi l'IA en distribution électrique se gagne sur le changement, pas la technologie</span>
-          <span class="t-en">Same Voltage, Two Outcomes: Why AI in Electrical Distribution Is Won on Change, Not Technology</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">70% des transformations échouent à cause de la résistance humaine — 6× plus de succès avec une gestion du changement rigoureuse.</p>
-          <p class="d-en">70% of transformations fail due to human resistance — 6× more success with excellent change management.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Canadian Electrical Wholesaler <span class="sep">/</span> Le monde de l'électricité</span>
-          <div class="chips"><a class="chip" href="https://www.lemondedelelectricite.ca/articles/meme-tension-deux-resultats-pourquoi-dans-le-domaine-de-la-distribution-electrique-le-succes-de-lia-repose-sur-le-changement-et-non-sur-la-technologie/">FR <span class="arrow">→</span></a><a class="chip" href="https://www.canadianelectricalwholesaler.ca/ai-in-electrical-distribution-potvin/">EN <span class="arrow">→</span></a></div>
-        </div>
-      </div>
+    <div class="hero-visual reveal" aria-hidden="true">
+      <img class="hv1" src="img/rx-overview-en.jpg" data-src-en="img/rx-overview-en.jpg" data-src-fr="img/rx-overview-fr.jpg" alt="">
+      <img class="hv2" src="img/demo-market-intelligence-en.jpg" data-src-en="img/demo-market-intelligence-en.jpg" data-src-fr="img/demo-market-intelligence-fr.jpg" alt="">
+      <img class="hv3" src="img/price-monitor-exec-en.jpg" data-src-en="img/price-monitor-exec-en.jpg" data-src-fr="img/price-monitor-exec-fr.jpg" alt="">
     </div>
   </div>
-
-  <div class="pillar">
-    <div class="pillar-head">
-      <span class="pillar-num">03</span>
-      <span class="pillar-title"><span class="t-fr">Impact commercial & distribution</span><span class="t-en">Commercial impact & distribution</span></span>
-    </div>
-    <p class="pillar-sub"><span class="d-en">Measurable outcomes — forecasting, partner retention, sales team productivity.</span><span class="d-fr">Des résultats mesurables — prévisions, rétention de partenaires, productivité des équipes de vente.</span></p>
-    <div class="cards">
-      <div class="card">
-        <div class="card-venue">Article · Published in <span class="sep">/</span> Article · Publié dans</div>
-        <div class="card-title">
-          <span class="t-fr">De l'instinct à l'intelligence</span>
-          <span class="t-en">From Instinct to Intelligence</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Les directeurs des ventes canadiens perdent 8-14h/semaine en tâches administratives. Comment l'IA leur redonne leur temps — et leurs équipes.</p>
-          <p class="d-en">Canadian sales directors lose 8–14 hrs/week to admin work. How AI gives them their time — and their teams — back.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Electrical Trade Magazine · 2026 <span class="sep">/</span> Electrical Trade Magazine · 2026</span>
-          <div class="chips"><a class="chip" href="de-linstinct-a-lintelligence-fr.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Canadian Electrical Wholesaler</div>
-        <div class="card-title">
-          <span class="t-fr">Votre meilleur représentant ne peut pas se souvenir de 10 000 comptes. L'IA, oui.</span>
-          <span class="t-en">Your Best Rep Can't Remember 10,000 Accounts. AI Can.</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Comment l'IA redéfinit les ventes indirectes — cas réels de Wesco, Rexel, Grainger et Schneider Electric.</p>
-          <p class="d-en">How AI is redefining indirect sales — real cases from Wesco, Rexel, Grainger, and Schneider Electric.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Jerome Potvin · 2026 <span class="sep">/</span> Jerome Potvin · 2026</span>
-          <div class="chips"><a class="chip" href="https://www.canadianelectricalwholesaler.ca/ai-reshaping-channel-sales-distributor-relationships/">EN <span class="arrow">→</span></a><a class="chip" href="votre-meilleur-representant-fr.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Analysis — international signal <span class="sep">/</span> Analyse — signal international</div>
-        <div class="card-title">
-          <span class="t-fr">Le signal du Japon : la fin du chauffe-eau au gaz autonome</span>
-          <span class="t-en">Japan's Signal: The End of the Stand-Alone Gas Water Heater</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Tokyo Gas a cessé de vendre des chauffe-eaux au gaz autonomes. Ce que ça signale sur la vitesse de transformation d'une industrie.</p>
-          <p class="d-en">Tokyo Gas stopped selling stand-alone gas water heaters. What that signals about how fast an industry can pivot.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Jerome Potvin · 2026 <span class="sep">/</span> Jerome Potvin · 2026</span>
-          <div class="chips"><a class="chip" href="japan-signal-article-en.html">EN <span class="arrow">→</span></a><a class="chip" href="japan-signal-article.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-venue">Analysis · 47 verified sources <span class="sep">/</span> Analyse · 47 sources vérifiées</div>
-        <div class="card-title">
-          <span class="t-fr">L'IA seule ne rendra pas votre entreprise plus productive</span>
-          <span class="t-en">AI Alone Won't Make Your Company More Productive</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Statistique Canada démontre que la prime de productivité de l'IA fond dès qu'on contrôle pour la maturité des données — un tour du monde, un tour du Canada, un arrêt au Québec.</p>
-          <p class="d-en">Statistics Canada shows the AI productivity premium melts away once you control for data readiness — a world tour, a Canada tour, a stop in Quebec.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">LinkedIn · 2026 <span class="sep">/</span> LinkedIn · 2026</span>
-          <div class="chips"><a class="chip" href="ai-productivity-data-strategy-en.html">EN <span class="arrow">→</span></a><a class="chip" href="ia-productivite-strategie-donnees-fr.html">FR <span class="arrow">→</span></a></div>
-        </div>
-      </div>
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><b data-count="25">25</b><small lang="en">years in B2B sales leadership</small><small lang="fr">ans en direction des ventes B2B</small></div>
+      <div class="stat"><b data-count="16">16</b><small lang="en">tools &amp; programs shipped in 2026</small><small lang="fr">outils et programmes livrés en 2026</small></div>
+      <div class="stat"><b data-count="4">4</b><small lang="en">live demos you can try now</small><small lang="fr">démos à essayer maintenant</small></div>
+      <div class="stat"><b data-count="10">10</b><small lang="en">articles in trade publications</small><small lang="fr">articles en presse spécialisée</small></div>
     </div>
   </div>
+</header>
 
-  <div class="pillar">
-    <div class="pillar-head">
-      <span class="pillar-num">04</span>
-      <span class="pillar-title"><span class="t-fr">Outils & automatisation</span><span class="t-en">Tools & automation</span></span>
+<section id="live" class="live">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow2"><span lang="en">Don’t take my word for it</span><span lang="fr">Ne me croyez pas sur parole</span></div>
+        <h2><span lang="en">Try the tools live</span><span lang="fr">Essayez les outils en direct</span></h2>
+        <p class="sec-sub"><span lang="en">Fully working versions with fictional data. Click, filter, explore — exactly as my users did.</span><span lang="fr">Versions complètes avec données fictives. Cliquez, filtrez, explorez — exactement comme mes utilisateurs.</span></p>
+      </div>
     </div>
-    <p class="pillar-sub"><span class="d-en">Interactive tools I designed and deployed in B2B distribution — shown here with fictional data. <a class="inline-link" href="projects.html">See all 16 case studies →</a></span><span class="d-fr">Outils interactifs que j'ai conçus et déployés en distribution B2B — présentés ici avec des données fictives. <a class="inline-link" href="projects.html?lang=fr">Voir les 16 études de cas →</a></span></p>
-    <div class="cards">
-
-      <a class="card linked" href="projection-ventes-demo.html">
-        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
-        <div class="card-title">
-          <span class="t-fr">Moteur de projection des ventes</span>
-          <span class="t-en">Sales Projection Engine</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Un outil de planification commerciale qui projette le chiffre d'affaires par ligne de produit et territoire à partir de données CSV historiques, avec hypothèses de croissance ajustables et bandes d'incertitude.</p>
-          <p class="d-en">A commercial planning tool projecting revenue by product line and territory from historical CSV data, with adjustable growth assumptions and uncertainty bands.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
-          <span class="card-link">→</span>
-        </div>
+    <div class="demos">
+      <a class="demo reveal" href="market-intelligence-demo.html" target="_blank" rel="noopener">
+        <div class="demo-img"><img src="img/demo-market-intelligence-en.jpg" data-src-en="img/demo-market-intelligence-en.jpg" data-src-fr="img/demo-market-intelligence-fr.jpg" alt="Market Intelligence" data-alt-en="Market Intelligence" data-alt-fr="Intelligence de marché" loading="lazy"><span class="live-badge">● LIVE</span></div>
+        <div class="demo-body"><div class="cat"><span lang="en">React · Public data</span><span lang="fr">React · Données publiques</span></div>
+        <h3><span lang="en">Market Intelligence</span><span lang="fr">Intelligence de marché</span></h3>
+        <p><span lang="en">Market sizing, competitive share, opportunities and key accounts — anchored on CMHC and StatCan.</span><span lang="fr">Taille du marché, parts concurrentielles, opportunités et comptes clés — ancré sur SCHL et StatCan.</span></p>
+        <span class="go"><span lang="en">Open the demo</span><span lang="fr">Ouvrir la démo</span> →</span></div>
       </a>
-
-      <a class="card linked" href="comparateur-prix-demo.html">
-        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
-        <div class="card-title">
-          <span class="t-fr">Tableau de bord comparateur de prix détaillants</span>
-          <span class="t-en">Retailer Price Comparison Dashboard</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Suit les prix chez plusieurs détaillants, signale les violations de prix MAP, et identifie quel détaillant l'emporte le plus souvent sur le prix — conçu pour la gouvernance des prix en distribution.</p>
-          <p class="d-en">Tracks pricing across multiple retailers, flags MAP violations, and surfaces which retailer wins on price most often — built for channel pricing governance.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
-          <span class="card-link">→</span>
-        </div>
+      <a class="demo reveal" href="comparateur-prix-demo.html" target="_blank" rel="noopener">
+        <div class="demo-img"><img src="img/demo-price-comparator-en.jpg" data-src-en="img/demo-price-comparator-en.jpg" data-src-fr="img/demo-price-comparator-fr.jpg" alt="Retailer price comparator" data-alt-en="Retailer price comparator" data-alt-fr="Comparateur de prix détaillants" loading="lazy"><span class="live-badge">● LIVE</span></div>
+        <div class="demo-body"><div class="cat"><span lang="en">Pricing · MAP governance</span><span lang="fr">Prix · Gouvernance MAP</span></div>
+        <h3><span lang="en">Retailer price comparator</span><span lang="fr">Comparateur de prix détaillants</span></h3>
+        <p><span lang="en">Who is cheapest, how often, and which prices break MAP — with proof for every price.</span><span lang="fr">Qui est le moins cher, à quelle fréquence, et quels prix brisent le MAP — avec preuve pour chaque prix.</span></p>
+        <span class="go"><span lang="en">Open the demo</span><span lang="fr">Ouvrir la démo</span> →</span></div>
       </a>
-
-      <a class="card linked" href="cross-reference-cables-demo.html">
-        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
-        <div class="card-title">
-          <span class="t-fr">Outil de cross-référence concurrentielle</span>
-          <span class="t-en">Competitive Cross-Reference Tool</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Fait correspondre un catalogue de câbles chauffants aux équivalents concurrents par application et spécification, révélant les lacunes de couverture par famille de produits.</p>
-          <p class="d-en">Maps a heating cable catalogue to competitor equivalents by application and spec, surfacing coverage gaps across product families.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
-          <span class="card-link">→</span>
-        </div>
+      <a class="demo reveal" href="projection-ventes-demo.html" target="_blank" rel="noopener">
+        <div class="demo-img"><img src="img/demo-sales-projection-en.jpg" data-src-en="img/demo-sales-projection-en.jpg" data-src-fr="img/demo-sales-projection-fr.jpg" alt="Sales projection engine" data-alt-en="Sales projection engine" data-alt-fr="Moteur de projection des ventes" loading="lazy"><span class="live-badge">● LIVE</span></div>
+        <div class="demo-body"><div class="cat"><span lang="en">Forecasting · Planning</span><span lang="fr">Prévision · Planification</span></div>
+        <h3><span lang="en">Sales projection engine</span><span lang="fr">Moteur de projection des ventes</span></h3>
+        <p><span lang="en">Load a CSV, adjust growth and targeted assumptions, get a forecast with uncertainty bands.</span><span lang="fr">Chargez un CSV, ajustez la croissance et les hypothèses ciblées, obtenez une prévision avec bandes d’incertitude.</span></p>
+        <span class="go"><span lang="en">Open the demo</span><span lang="fr">Ouvrir la démo</span> →</span></div>
       </a>
-
-      <a class="card linked" href="market-intelligence-demo.html">
-        <div class="card-venue">Interactive tool · Demo data <span class="sep">/</span> Outil interactif · Données démo</div>
-        <div class="card-title">
-          <span class="t-fr">Tableau de bord d'intelligence de marché</span>
-          <span class="t-en">Market Intelligence Dashboard</span>
-        </div>
-        <div class="card-desc">
-          <p class="d-fr">Dimensionne le marché adressable par produit, vertical et canal à partir des données de mises en chantier et de permis, suit le positionnement concurrentiel, et fait ressortir les opportunités par compte et les signaux macro pour l'équipe de vente.</p>
-          <p class="d-en">Sizes the addressable market by product, vertical, and channel from housing-start and permit data, tracks competitive positioning, and surfaces account-level opportunities and macro signals for the sales team to act on.</p>
-        </div>
-        <div class="card-footer">
-          <span class="card-format">Designed & deployed · Live demo <span class="sep">/</span> Conçu et déployé · Démo en direct</span>
-          <span class="card-link">→</span>
-        </div>
+      <a class="demo reveal" href="cross-reference-cables-demo.html" target="_blank" rel="noopener">
+        <div class="demo-img"><img src="img/demo-crossref-en.jpg" data-src-en="img/demo-crossref-en.jpg" data-src-fr="img/demo-crossref-fr.jpg" alt="Competitive cross-reference" data-alt-en="Competitive cross-reference" data-alt-fr="Équivalences concurrentielles" loading="lazy"><span class="live-badge">● LIVE</span></div>
+        <div class="demo-body"><div class="cat"><span lang="en">Sales enablement</span><span lang="fr">Habilitation des ventes</span></div>
+        <h3><span lang="en">Competitive cross-reference</span><span lang="fr">Équivalences concurrentielles</span></h3>
+        <p><span lang="en">Find the equivalent of any competitor part number in seconds — guided, direct or advanced search.</span><span lang="fr">Trouvez l’équivalent de n’importe quel numéro concurrent en quelques secondes — recherche guidée, directe ou avancée.</span></p>
+        <span class="go"><span lang="en">Open the demo</span><span lang="fr">Ouvrir la démo</span> →</span></div>
       </a>
-
     </div>
   </div>
+</section>
 
-</div>
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow2"><span lang="en">16 case studies</span><span lang="fr">16 études de cas</span></div>
+        <h2><span lang="en">What I built — and what it changed</span><span lang="fr">Ce que j’ai bâti — et ce que ça a changé</span></h2>
+        <p class="sec-sub"><span lang="en">Each case: the business problem, what I built, and the result. Client data and company names are withheld — the method and the outcome are what matter.</span><span lang="fr">Pour chaque cas : le problème d’affaires, ce que j’ai bâti et le résultat. Les données clients et les noms d’entreprise sont omis — c’est la méthode et le résultat qui comptent.</span></p>
+      </div>
+      <div class="filters" id="filters">
+        <button class="chip on" data-f="all"><span lang="en">All</span><span lang="fr">Tout</span></button>
+        <button class="chip" data-f="tools"><span lang="en">AI tools &amp; apps</span><span lang="fr">Outils et apps IA</span></button>
+        <button class="chip" data-f="analytics"><span lang="en">Analytics &amp; BI</span><span lang="fr">Analytique et BI</span></button>
+        <button class="chip" data-f="pricing"><span lang="en">Pricing &amp; strategy</span><span lang="fr">Prix et stratégie</span></button>
+        <button class="chip" data-f="ai"><span lang="en">AI governance &amp; training</span><span lang="fr">Gouvernance et formation IA</span></button>
+      </div>
+    </div>
 
-<div class="footer">
-  <p>Jerome Potvin (Jay) · Commercial strategy × applied AI <span class="mono">/</span> Stratégie commerciale × IA appliquée · Sigma Analytics</p>
-  <p><a href="projects.html">Projects &amp; live demos / Projets et démos →</a></p>
-  <p><a href="https://linkedin.com/in/jeromepotvin" target="_blank">linkedin.com/in/jeromepotvin</a></p>
-</div>
+    <div class="anon">🔒 <span lang="en">Real screens from tools I built, shown in English or French with the page. Organizations and distributors are replaced by letters (Organization A, Distributor B…); click any image to enlarge.</span><span lang="fr">Écrans réels des outils que j’ai bâtis, affichés en français ou en anglais selon la page. Organisations et distributeurs remplacés par des lettres (Organisation A, Distributeur B…) ; cliquez sur une image pour l’agrandir.</span></div>
+    <!-- FEATURED -->
+    <div class="featured" data-cat="tools analytics">
+      <div class="vis"><div class="shots" data-g="mi"><img src="img/mi-radar-en.jpg" data-src-en="img/mi-radar-en.jpg" data-src-fr="img/mi-radar-fr.jpg" alt="Market IQ — opportunity radar by branch" data-alt-en="Market IQ — opportunity radar by branch" data-alt-fr="Market IQ — radar d’opportunités par succursale" loading="lazy"><img src="img/mi-indicators-en.jpg" data-src-en="img/mi-indicators-en.jpg" data-src-fr="img/mi-indicators-fr.jpg" alt="Market indicators: housing starts, energy prices, rates" data-alt-en="Market indicators: housing starts, energy prices, rates" data-alt-fr="Indicateurs de marché : mises en chantier, prix de l’énergie, taux" loading="lazy"><img src="img/mi-competitive-en.jpg" data-src-en="img/mi-competitive-en.jpg" data-src-fr="img/mi-competitive-fr.jpg" alt="Competitive intelligence: share by brand" data-alt-en="Competitive intelligence: share by brand" data-alt-fr="Intelligence concurrentielle : parts par marque" loading="lazy"><img src="img/mi-accounts-en.jpg" data-src-en="img/mi-accounts-en.jpg" data-src-fr="img/mi-accounts-fr.jpg" alt="Key-account penetration and wallet share" data-alt-en="Key-account penetration and wallet share" data-alt-fr="Pénétration des comptes clés et part du portefeuille" loading="lazy"><img src="img/mi-market-en.jpg" data-src-en="img/mi-market-en.jpg" data-src-fr="img/mi-market-fr.jpg" alt="Market sizing by province" data-alt-en="Market sizing by province" data-alt-fr="Taille du marché par province" loading="lazy"></div></div>
+      <div class="txt">
+        <span class="tag-feat"><span lang="en">Featured · live demo</span><span lang="fr">En vedette · démo en direct</span></span>
+        <h3><span lang="en">A market-intelligence app for HVAC sales, built with AI in one working session</span><span lang="fr">Une app d’intelligence de marché pour les ventes CVAC, bâtie avec l’IA en une séance de travail</span></h3>
+        <p><span lang="en">Sales teams had no single view of the market. I designed and built a 7-module app (macro indicators, market sizing, HVAC, opportunities, competition, key accounts, methodology) anchored on public Canadian data (CMHC, StatCan, HRAI, NRCan), with year-by-year projections to 2030 and a 60-second PDF opportunity report from a phone.</span><span lang="fr">Les ventes n’avaient aucune vue unifiée du marché. J’ai conçu et bâti une app à 7 modules (indicateurs macro, taille du marché, CVAC, opportunités, concurrence, comptes clés, méthodologie), ancrée sur des données publiques canadiennes (SCHL, StatCan, HRAI, RNCan), avec projections jusqu’en 2030 et un rapport PDF d’opportunités généré en 60 secondes depuis un téléphone.</span></p>
+        <dl>
+          <dt lang="en">Outcome</dt><dt lang="fr">Résultat</dt>
+          <dd lang="en">Working prototype with zero budget, no server, no subscription — the basis for a phase 2 roadmap presented to the executive committee.</dd>
+          <dd lang="fr">Prototype fonctionnel sans budget, sans serveur ni abonnement — base d’une feuille de route phase 2 présentée au comité de direction.</dd>
+        </dl>
+        <div class="tags"><span>React</span><span>Generative AI</span><span>Market sizing</span><span>Public data</span><span>PWA</span></div>
+        <div class="proof"><span><span lang="en">7 modules</span><span lang="fr">7 modules</span></span><span><span lang="en">8 macro indicators</span><span lang="fr">8 indicateurs macro</span></span><span><span lang="en">PDF report in 60 s</span><span lang="fr">Rapport PDF en 60 s</span></span></div>
+        <a class="demo-btn" href="market-intelligence-demo.html" target="_blank" rel="noopener">▶ <span lang="en">Try the live demo</span><span lang="fr">Essayer la démo en direct</span></a>
+      </div>
+    </div>
 
+    <div class="grid" id="grid">
+
+      <!-- 1 Price crawler -->
+      <article class="card" data-cat="tools pricing">
+        <div class="shots" data-g="price"><img src="img/price-monitor-exec-en.jpg" data-src-en="img/price-monitor-exec-en.jpg" data-src-fr="img/price-monitor-exec-fr.jpg" alt="Executive view: KPIs and retailer ranking vs MAP" data-alt-en="Executive view: KPIs and retailer ranking vs MAP" data-alt-fr="Vue Direction : indicateurs et classement des bannières vs MAP" loading="lazy"><img src="img/price-monitor-actions-en.jpg" data-src-en="img/price-monitor-actions-en.jpg" data-src-fr="img/price-monitor-actions-fr.jpg" alt="Action list: prices below MAP, with proof link" data-alt-en="Action list: prices below MAP, with proof link" data-alt-fr="Liste d’action : prix sous le MAP, avec lien de preuve" loading="lazy"><img src="img/price-monitor-field-en.jpg" data-src-en="img/price-monitor-field-en.jpg" data-src-fr="img/price-monitor-field-fr.jpg" alt="Field view: price by SKU and retailer, with proof" data-alt-en="Field view: price by SKU and retailer, with proof" data-alt-fr="Vue Terrain : prix par SKU et par bannière, avec preuve" loading="lazy"></div>
+        <div class="cat"><span lang="en">AI tool · Pricing</span><span lang="fr">Outil IA · Prix</span></div>
+        <h3><span lang="en">Retail price-monitoring app with proof for every price</span><span lang="fr">App de veille des prix en ligne, avec preuve pour chaque prix</span></h3>
+        <p><span lang="en">Manually checking retailer prices against minimum advertised price (MAP) was slow and disputed. I built a web app that reads prices on retailer sites, keeps the URL, timestamp and page extract as evidence, and flags violations.</span><span lang="fr">Vérifier à la main les prix des détaillants face au prix minimum annoncé (MAP) était lent et contesté. J’ai bâti une app web qui lit les prix sur les sites des détaillants, conserve l’URL, l’heure et un extrait de page comme preuve, et signale les écarts.</span></p>
+        <dl>
+          <dt lang="en">Built</dt><dt lang="fr">Livré</dt>
+          <dd lang="en">Field view + executive view (6 KPIs, retailer ranking, below-MAP action list), double-read rules for outliers, polite crawling, Excel export, automated tests; deployable on ~15 workstations or in the cloud (Docker).</dd>
+          <dd lang="fr">Vue terrain + vue direction (6 indicateurs, classement des bannières, liste d’action sous le MAP), double lecture des valeurs aberrantes, collecte respectueuse des sites, export Excel, tests automatisés ; déployable sur ~15 postes ou en nuage (Docker).</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">1,060 prices tracked</span><span lang="fr">1 060 prix suivis</span></span><span><span lang="en">12 retailers</span><span lang="fr">12 détaillants</span></span><span><span lang="en">90 below-MAP alerts</span><span lang="fr">90 alertes sous le MAP</span></span></div>
+        <div class="tags"><span>Python</span><span>Flask</span><span>Docker</span><span>Web scraping</span><span>MAP</span></div>
+        <a class="demo-btn" href="comparateur-prix-demo.html" target="_blank" rel="noopener">▶ <span lang="en">Try the live demo</span><span lang="fr">Essayer la démo en direct</span></a>
+      </article>
+
+      <!-- 2 Prescriptive -->
+      <article class="card" data-cat="analytics tools">
+        <div class="shots" data-g="rx"><img src="img/rx-overview-en.jpg" data-src-en="img/rx-overview-en.jpg" data-src-fr="img/rx-overview-fr.jpg" alt="Pilot dashboard: alerts, risks, attachment, forecast" data-alt-en="Pilot dashboard: alerts, risks, attachment, forecast" data-alt-fr="Tableau de bord pilote : alertes, risques, attachement, prévision" loading="lazy"><img src="img/rx-score-en.jpg" data-src-en="img/rx-score-en.jpg" data-src-fr="img/rx-score-fr.jpg" alt="Predictive score: probability an account drops" data-alt-en="Predictive score: probability an account drops" data-alt-fr="Score prédictif : probabilité qu’un compte décroche" loading="lazy"><img src="img/rx-recommendations-en.jpg" data-src-en="img/rx-recommendations-en.jpg" data-src-fr="img/rx-recommendations-fr.jpg" alt="Role-based recommendations with confidence" data-alt-en="Role-based recommendations with confidence" data-alt-fr="Recommandations par rôle, avec niveau de confiance" loading="lazy"><img src="img/rx-forecast-en.jpg" data-src-en="img/rx-forecast-en.jpg" data-src-fr="img/rx-forecast-fr.jpg" alt="Winter forecast with 80% range" data-alt-en="Winter forecast with 80% range" data-alt-fr="Prévision d’hiver avec fourchette à 80 %" loading="lazy"></div>
+        <div class="cat"><span lang="en">Analytics · Prescriptive</span><span lang="fr">Analytique · Prescriptive</span></div>
+        <h3><span lang="en">Prescriptive analytics engine: from sales history to next best action</span><span lang="fr">Moteur d’analytique prescriptive : de l’historique de ventes à la prochaine action</span></h3>
+        <p><span lang="en">Reports described the past; nobody told reps, buyers or category managers what to do next. I designed a single engine combining descriptive, predictive and prescriptive layers with market signals (degree-days, housing starts, incentives, competitor prices).</span><span lang="fr">Les rapports décrivaient le passé ; personne ne disait aux représentants, acheteurs ou gestionnaires de catégorie quoi faire ensuite. J’ai conçu un moteur unique qui combine descriptif, prédictif et prescriptif avec des signaux de marché (degrés-jours, mises en chantier, subventions, prix concurrents).</span></p>
+        <dl>
+          <dt lang="en">Built</dt><dt lang="fr">Livré</dt>
+          <dd lang="en">Python engine (v0.1 → v0.2), retrospective back-test, churn-risk module, role-based recommendations, pilot dashboards for 3 user profiles and a closed-loop decision log (accepted / refused / measured).</dd>
+          <dd lang="fr">Moteur Python (v0.1 → v0.2), test rétrospectif, module de risque d’attrition, recommandations par rôle, tableaux de bord pilotes pour 3 profils et journal de décisions en boucle fermée (acceptée / refusée / mesurée).</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">44 predictive alerts</span><span lang="fr">44 alertes prédictives</span></span><span><span lang="en">88 recommendations</span><span lang="fr">88 recommandations</span></span><span><span lang="en">12.5% forecast error</span><span lang="fr">12,5 % d’erreur de prévision</span></span></div>
+        <div class="tags"><span>Python</span><span>Forecasting</span><span>Churn</span><span>Decision log</span></div>
+      </article>
+
+      <!-- 3 Power BI governance -->
+      <article class="card" data-cat="analytics">
+        <div class="cat"><span lang="en">BI · Data governance</span><span lang="fr">BI · Gouvernance des données</span></div>
+        <h3><span lang="en">Power BI turnaround plan for a group growing by acquisitions</span><span lang="fr">Plan de redressement Power BI pour un groupe en croissance par acquisitions</span></h3>
+        <p><span lang="en">Each acquired site reported its own numbers; committees spent time reconciling instead of deciding. I audited the reporting landscape and proposed one central data model with a single definition per KPI, deployed in waves alongside existing reports.</span><span lang="fr">Chaque site acquis produisait ses propres chiffres ; les comités réconciliaient au lieu de décider. J’ai audité l’environnement de rapports et proposé un modèle central avec une définition unique par KPI, déployé par vagues en parallèle des rapports actuels.</span></p>
+        <dl>
+          <dt lang="en">Built</dt><dt lang="fr">Livré</dt>
+          <dd lang="en">Architecture diagnostic, A3 project charter, customer master-data cleansing (impact report vs ERP), unassigned-active-accounts analysis, 20-slide executive deck.</dd>
+          <dd lang="fr">Diagnostic d’architecture, charte A3, nettoyage des données maîtres clients (rapport d’impact vs ERP), analyse des clients actifs non assignés, présentation de 20 diapos à la direction.</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">1 KPI dictionary</span><span lang="fr">1 dictionnaire de KPI</span></span><span><span lang="en">A3 charter</span><span lang="fr">Charte A3</span></span><span><span lang="en">Exec plan</span><span lang="fr">Plan à la direction</span></span></div>
+        <div class="tags"><span>Power BI</span><span>Master data</span><span>KPI dictionary</span><span>A3</span></div>
+      </article>
+
+      <!-- 4 Rebate harmonization -->
+      <article class="card" data-cat="pricing analytics">
+        <div class="cat"><span lang="en">Commercial strategy · M&amp;A</span><span lang="fr">Stratégie commerciale · Fusion</span></div>
+        <h3><span lang="en">Harmonizing two brands’ distributor rebate programs after a merger</span><span lang="fr">Harmoniser les programmes de rabais distributeurs de deux marques après une fusion</span></h3>
+        <p><span lang="en">Two merged brands ran different rebate programs with the same national buying group. I modeled a single combined grid, weighted by actual purchase volume so neither side is favoured, and reproducing past rebates to the dollar at the merge date.</span><span lang="fr">Deux marques fusionnées offraient des programmes de rabais différents au même regroupement d’achat national. J’ai modélisé une grille unique, pondérée par le volume réel d’achats pour n’avantager aucune partie, et reproduisant au dollar près les rabais au moment de la fusion.</span></p>
+        <dl>
+          <dt lang="en">Built</dt><dt lang="fr">Livré</dt>
+          <dd lang="en">Parametric Excel model and simulator, two viable options (immediate vs progressive), before/after terms, draft agreement, executive summary and VP deck.</dd>
+          <dd lang="fr">Modèle Excel paramétrable et simulateur, deux options viables (immédiate vs progressive), conditions avant/après, ébauche d’entente, sommaire exécutif et présentation VP.</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">1 combined grid</span><span lang="fr">1 grille combinée</span></span><span><span lang="en">2 viable options</span><span lang="fr">2 options viables</span></span><span><span lang="en">Reproduces past rebates to the $</span><span lang="fr">Reproduit les rabais au $ près</span></span></div>
+        <div class="tags"><span>Excel modeling</span><span>Rebates</span><span>Negotiation</span><span>Post-merger</span></div>
+      </article>
+
+      <!-- 5 Pricing -->
+      <article class="card" data-cat="pricing analytics">
+        <div class="cat"><span lang="en">Pricing · Lean</span><span lang="fr">Prix · Lean</span></div>
+        <h3><span lang="en">Unified pricing architecture and price-increase impact analysis</span><span lang="fr">Architecture de prix unifiée et analyse d’impact des hausses de prix</span></h3>
+        <p><span lang="en">Overlapping price lists, project discounts and contractor rebates across two brands created leakage. I mapped the full pricing chain, aligned project-discount charts and quantified the real gain of a price increase on actual volumes.</span><span lang="fr">Des listes de prix, escomptes de projets et rabais installateurs qui se chevauchaient entre deux marques créaient de la fuite de marge. J’ai cartographié toute la chaîne de prix, aligné les grilles d’escompte de projets et chiffré le gain réel d’une hausse sur les volumes réels.</span></p>
+        <dl>
+          <dt lang="en">Built</dt><dt lang="fr">Livré</dt>
+          <dd lang="en">Swim-lane process map (Lean Six Sigma), price-variation analysis tool by product family (Excel/VBA), common project-discount chart, test-market pricing strategy.</dd>
+          <dd lang="fr">Cartographie en couloirs (Lean Six Sigma), outil d’analyse des variations de prix par famille (Excel/VBA), grille d’escompte de projets commune, stratégie de prix en marché test.</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">End-to-end pricing map</span><span lang="fr">Chaîne de prix cartographiée</span></span><span><span lang="en">Excel/VBA tool</span><span lang="fr">Outil Excel/VBA</span></span><span><span lang="en">Test-market strategy</span><span lang="fr">Stratégie marché test</span></span></div>
+        <div class="tags"><span>Pricing</span><span>Swim lanes</span><span>VBA</span><span>Margin</span></div>
+      </article>
+
+      <!-- 6 Heat map -->
+      <article class="card" data-cat="analytics tools">
+        <div class="shots" data-g="heat"><img src="img/heatmap-map-en.jpg" data-src-en="img/heatmap-map-en.jpg" data-src-fr="img/heatmap-map-fr.jpg" alt="Regional drill-down: banners and branches" data-alt-en="Regional drill-down: banners and branches" data-alt-fr="Zoom régional : bannières et succursales" loading="lazy"><img src="img/heatmap-top-en.jpg" data-src-en="img/heatmap-top-en.jpg" data-src-fr="img/heatmap-top-fr.jpg" alt="Banner search, rebate ROI and performance" data-alt-en="Banner search, rebate ROI and performance" data-alt-fr="Recherche par bannière, ROI des rabais et performance" loading="lazy"></div>
+        <div class="cat"><span lang="en">Market intelligence · Geo</span><span lang="fr">Intelligence de marché · Géo</span></div>
+        <h3><span lang="en">Canada-wide distributor branch heat map and coverage database</span><span lang="fr">Carte de chaleur et base de couverture des succursales de distribution au Canada</span></h3>
+        <p><span lang="en">Three separate BI extracts gave three different answers on market coverage. With an account manager, we reconciled them into one master file and an interactive heat map showing coverage and white space by branch and province.</span><span lang="fr">Trois extraits BI donnaient trois réponses différentes sur la couverture du marché. Avec un chargé de compte, nous les avons réconciliés dans un fichier maître et une carte de chaleur interactive montrant la couverture et les zones à développer par succursale et province.</span></p>
+        <dl>
+          <dt lang="en">Outcome</dt><dt lang="fr">Résultat</dt>
+          <dd lang="en">For the first time, sales could state accessible-market coverage and prioritize branches with data.</dd>
+          <dd lang="fr">Pour la première fois, les ventes pouvaient chiffrer leur couverture du marché accessible et prioriser les succursales avec des données.</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">773 branches</span><span lang="fr">773 succursales</span></span><span><span lang="en">100 banners</span><span lang="fr">100 bannières</span></span><span><span lang="en">Rebate ROI by banner</span><span lang="fr">ROI des rabais par bannière</span></span></div>
+        <div class="tags"><span>Data reconciliation</span><span>Heat map</span><span>JavaScript</span></div>
+      </article>
+
+      <!-- 7 Cross-reference -->
+      <article class="card" data-cat="tools">
+        <div class="shots" data-g="xref"><img src="img/crossref-en.jpg" data-src-en="img/crossref-en.jpg" data-src-fr="img/crossref-fr.jpg" alt="Find the equivalent: guided, direct and advanced search" data-alt-en="Find the equivalent: guided, direct and advanced search" data-alt-fr="Trouver l’équivalent : recherche guidée, directe et avancée" loading="lazy"></div>
+        <div class="cat"><span lang="en">Sales enablement</span><span lang="fr">Habilitation des ventes</span></div>
+        <h3><span lang="en">Competitive cross-reference tool and technical sales training</span><span lang="fr">Outil d’équivalences concurrentielles et formation de vente technique</span></h3>
+        <p><span lang="en">Agents struggled to quote a technical product line (heat-tracing cable) against competitors. I built a bilingual interactive equivalence tool, pocket field cards and a 22-slide training built around customer outcomes, not part numbers.</span><span lang="fr">Les agents peinaient à soumissionner une gamme technique (câble chauffant) face à la concurrence. J’ai bâti un outil d’équivalences interactif bilingue, des aide-mémoire terrain et une formation de 22 diapos axée sur les résultats client, pas sur les numéros de pièce.</span></p>
+        <div class="proof"><span><span lang="en">Guided · direct · advanced search</span><span lang="fr">Recherche guidée · directe · avancée</span></span><span><span lang="en">Bilingual</span><span lang="fr">Bilingue</span></span></div>
+        <div class="tags"><span>HTML tool</span><span>Bilingual</span><span>Training</span><span>Competitive intel</span></div>
+        <a class="demo-btn" href="cross-reference-cables-demo.html" target="_blank" rel="noopener">▶ <span lang="en">Try the live demo</span><span lang="fr">Essayer la démo en direct</span></a>
+      </article>
+
+      <!-- 8 Governance -->
+      <article class="card" data-cat="ai">
+        <div class="cat"><span lang="en">AI governance</span><span lang="fr">Gouvernance IA</span></div>
+        <h3><span lang="en">Generative-AI governance policy for an industrial group</span><span lang="fr">Politique de gouvernance de l’IA générative pour un groupe industriel</span></h3>
+        <p><span lang="en">Two competing AI policy drafts existed. I ran a comparative analysis, built a non-redundancy filter and a target document architecture, and structured proposals by audience (executives, managers, reps) for an executive decision.</span><span lang="fr">Deux ébauches de politique IA coexistaient. J’ai mené une analyse comparative, bâti un filtre de non-redondance et une architecture documentaire cible, et structuré les propositions par palier (direction, gestionnaires, représentants) pour décision du comité de direction.</span></p>
+        <div class="proof"><span><span lang="en">2 drafts reconciled</span><span lang="fr">2 ébauches réconciliées</span></span><span><span lang="en">Tiered by audience</span><span lang="fr">Par palier d’audience</span></span></div>
+        <div class="tags"><span>AI policy</span><span>Risk</span><span>Change management</span></div>
+      </article>
+
+      <!-- 9 AI practice -->
+      <article class="card" data-cat="ai">
+        <div class="shots" data-g="practice"><img src="img/ai-qualification-en.jpg" data-src-en="img/ai-qualification-en.jpg" data-src-fr="img/ai-qualification-fr.jpg" alt="AI use-case qualification grid" data-alt-en="AI use-case qualification grid" data-alt-fr="Grille de qualification des cas d’usage IA" loading="lazy"><img src="img/ai-swimlane-en.jpg" data-src-en="img/ai-swimlane-en.jpg" data-src-fr="img/ai-swimlane-fr.jpg" alt="AI project swimlane: DMAIC tollgates by role" data-alt-en="AI project swimlane: DMAIC tollgates by role" data-alt-fr="Couloirs de projet IA : jalons DMAIC par rôle" loading="lazy"></div>
+        <div class="cat"><span lang="en">AI strategy</span><span lang="fr">Stratégie IA</span></div>
+        <h3><span lang="en">Building an internal AI practice: from policy to measurable value</span><span lang="fr">Bâtir une pratique IA interne : de la politique à la valeur mesurable</span></h3>
+        <p><span lang="en">“Governance gives the right to use AI; the practice gives the means to get value from it.” A 4-pillar framework, roadmap and operating model, plus an interactive grid to qualify and prioritize AI use cases.</span><span lang="fr">« La gouvernance donne le droit d’utiliser l’IA ; la pratique donne les moyens d’en tirer de la valeur. » Un cadre à 4 piliers, une feuille de route et un modèle opérationnel, plus une grille interactive pour qualifier et prioriser les cas d’usage IA.</span></p>
+        <div class="proof"><span><span lang="en">4 pillars</span><span lang="fr">4 piliers</span></span><span><span lang="en">Use-case scoring grid</span><span lang="fr">Grille de qualification</span></span><span><span lang="en">DMAIC tollgates</span><span lang="fr">Jalons DMAIC</span></span></div>
+        <div class="tags"><span>AI roadmap</span><span>Use-case scoring</span><span>Operating model</span></div>
+      </article>
+
+      <!-- 10 Playbook -->
+      <article class="card" data-cat="ai">
+        <div class="cat"><span lang="en">AI training</span><span lang="fr">Formation IA</span></div>
+        <h3><span lang="en">AI Sales Playbook: 127 slides, trainer manual and three learning paths</span><span lang="fr">Sales Playbook IA : 127 diapos, guide du formateur et trois parcours</span></h3>
+        <p><span lang="en">A reference program taking sales teams from AI basics to agents and workflow automation — with separate paths for reps (≈4 h, usable the next morning), AI champions and leadership/IT, Copilot guides, a prompt library and a 30-day follow-up plan.</span><span lang="fr">Un programme de référence qui mène les équipes de vente des bases de l’IA jusqu’aux agents et à l’automatisation — avec des parcours distincts pour représentants (≈4 h, applicable dès le lendemain), champions IA et direction/TI, guides Copilot, bibliothèque de prompts et plan de suivi de 30 jours.</span></p>
+        <div class="proof"><span><span lang="en">127 slides</span><span lang="fr">127 diapos</span></span><span><span lang="en">3 learning paths</span><span lang="fr">3 parcours</span></span><span><span lang="en">30-day follow-up</span><span lang="fr">Suivi de 30 jours</span></span></div>
+        <div class="tags"><span>Copilot</span><span>Prompting</span><span>Agentic AI</span><span>Adult learning</span></div>
+      </article>
+
+      <!-- 11 Business case -->
+      <article class="card" data-cat="ai pricing">
+        <div class="cat"><span lang="en">Business case</span><span lang="fr">Dossier d’affaires</span></div>
+        <h3><span lang="en">AI Sales &amp; CX: a 90-day pilot business case for the CEO</span><span lang="fr">IA Ventes et CX : dossier d’affaires d’un pilote de 90 jours pour le PDG</span></h3>
+        <p><span lang="en">Not just automating quotes: creating the group’s first commercial data layer — capture, accelerate (FR/EN/ES answers), convert, learn — without forcing a heavy CRM on reps.</span><span lang="fr">Pas seulement automatiser les soumissions : créer la première couche de données commerciales du groupe — capter, accélérer (réponses FR/EN/ES), convertir, apprendre — sans imposer un CRM lourd aux représentants.</span></p>
+        <div class="proof"><span><span lang="en">90-day pilot</span><span lang="fr">Pilote de 90 jours</span></span><span>FR / EN / ES</span><span><span lang="en">Data layer, not a heavy CRM</span><span lang="fr">Couche de données, pas un CRM lourd</span></span></div>
+        <div class="tags"><span>CX</span><span>CRM</span><span>Pilot design</span><span>ROI</span></div>
+      </article>
+
+      <!-- Vertical site analysis -->
+      <article class="card" data-cat="tools">
+        <div class="shots" data-g="vert"><img src="img/vertical-site-analysis-en.jpg" data-src-en="img/vertical-site-analysis-en.jpg" data-src-fr="img/vertical-site-analysis-fr.jpg" alt="Site analysis: priority products by vertical market" data-alt-en="Site analysis: priority products by vertical market" data-alt-fr="Analyse de site : produits prioritaires par marché vertical" loading="lazy"></div>
+        <div class="cat"><span lang="en">Sales enablement · Verticals</span><span lang="fr">Habilitation · Marchés verticaux</span></div>
+        <h3><span lang="en">Site-analysis tool by vertical market</span><span lang="fr">Outil d’analyse de site par marché vertical</span></h3>
+        <p><span lang="en">Reps pick a building type (warehouse, airport, multi-unit, industrial…), point at what they see on site, and get the priority products, the sales angle, who to talk to and the right timing — printable as a one-page brief.</span><span lang="fr">Le représentant choisit un type de bâtiment (entrepôt, aéroport, multilogement, industriel…), pointe ce qu’il voit sur place et obtient les produits prioritaires, l’angle de vente, à qui parler et le bon moment — imprimable en fiche d’une page.</span></p>
+        <div class="proof"><span><span lang="en">6 building types</span><span lang="fr">6 types de bâtiments</span></span><span><span lang="en">Printable 1-page brief</span><span lang="fr">Fiche imprimable d’une page</span></span></div>
+        <div class="tags"><span>Interactive HTML</span><span>Vertical markets</span><span>Field sales</span></div>
+      </article>
+
+      <!-- 12 Automations -->
+      <article class="card" data-cat="tools">
+        <div class="shots" data-g="agents"><img src="img/agent-ecosystem-en.jpg" data-src-en="img/agent-ecosystem-en.jpg" data-src-fr="img/agent-ecosystem-fr.jpg" alt="Interactive map of a multi-agent ecosystem" data-alt-en="Interactive map of a multi-agent ecosystem" data-alt-fr="Carte interactive d’un écosystème multi-agents" loading="lazy"></div>
+        <div class="cat"><span lang="en">Automation · Agents</span><span lang="fr">Automatisation · Agents</span></div>
+        <h3><span lang="en">AI agents and automated workflows (n8n)</span><span lang="fr">Agents IA et flux automatisés (n8n)</span></h3>
+        <p><span lang="en">A weekly competitive-intelligence agent tracking distributor pricing, and a weekly French-language AI news digest — plus an agent-ecosystem map showing where agents fit across sales, pricing and operations.</span><span lang="fr">Un agent hebdomadaire de veille concurrentielle sur les prix des distributeurs et un condensé hebdomadaire des nouvelles IA en français — plus une carte de l’écosystème d’agents montrant leur place dans les ventes, les prix et les opérations.</span></p>
+        <div class="proof"><span><span lang="en">Weekly agents</span><span lang="fr">Agents hebdomadaires</span></span><span>n8n + LLM</span></div>
+        <div class="tags"><span>n8n</span><span>LLM agents</span><span>Scheduling</span></div>
+      </article>
+
+      <!-- 13 Forecast -->
+      <article class="card" data-cat="analytics">
+        <div class="cat"><span lang="en">Forecasting</span><span lang="fr">Prévision</span></div>
+        <h3><span lang="en">Driver-based budget forecast for heating and heat-pump sales</span><span lang="fr">Prévision budgétaire par facteurs pour le chauffage et les thermopompes</span></h3>
+        <p><span lang="en">An Excel model linking sales to explicit drivers (weather, construction, incentives, pricing) so budget conversations move from opinions to assumptions that can be tested.</span><span lang="fr">Un modèle Excel qui relie les ventes à des facteurs explicites (météo, construction, subventions, prix) pour que les discussions budgétaires passent des opinions à des hypothèses vérifiables.</span></p>
+        <div class="proof"><span><span lang="en">Explicit drivers</span><span lang="fr">Facteurs explicites</span></span><span><span lang="en">Testable assumptions</span><span lang="fr">Hypothèses vérifiables</span></span></div>
+        <div class="tags"><span>Excel</span><span>Driver model</span><span>Budget</span></div>
+        <a class="demo-btn" href="projection-ventes-demo.html" target="_blank" rel="noopener">▶ <span lang="en">Try the live demo</span><span lang="fr">Essayer la démo en direct</span></a>
+      </article>
+
+      <!-- 14 Category -->
+      <article class="card" data-cat="pricing">
+        <div class="cat"><span lang="en">Category management</span><span lang="fr">Gestion de catégories</span></div>
+        <h3><span lang="en">Category management playbook, from beginner to strategic level</span><span lang="fr">Playbook de gestion de catégories, du débutant au niveau stratégique</span></h3>
+        <p><span lang="en">A 27-slide playbook with four maturity levels: foundations, vocabulary and frameworks, technical analyses and governance — applicable in both B2B and B2C.</span><span lang="fr">Un playbook de 27 diapos sur quatre paliers de maturité : fondements, vocabulaire et cadres, analyses techniques et gouvernance — applicable en B2B comme en B2C.</span></p>
+        <div class="proof"><span><span lang="en">27 slides</span><span lang="fr">27 diapos</span></span><span><span lang="en">4 maturity levels</span><span lang="fr">4 paliers de maturité</span></span></div>
+        <div class="tags"><span>Category mgmt</span><span>Assortment</span><span>B2B / B2C</span></div>
+      </article>
+
+    </div>
+    <p class="note"><span lang="en">Live walkthroughs available on request. All work shown was produced in 2026.</span><span lang="fr">Démonstrations en direct disponibles sur demande. Tous les travaux présentés ont été réalisés en 2026.</span></p>
+  </div>
+</section>
+
+<section id="method" class="method">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2><span lang="en">How I work</span><span lang="fr">Ma façon de travailler</span></h2>
+        <p class="sec-sub"><span lang="en">Strategy first, tools second. I am an integrator: domain context + data + AI, delivered fast and documented so your team can own it.</span><span lang="fr">La stratégie d’abord, l’outil ensuite. Je suis un intégrateur : contexte d’affaires + données + IA, livrés rapidement et documentés pour que votre équipe se les approprie.</span></p>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4 lang="en">Frame the decision</h4><h4 lang="fr">Cadrer la décision</h4><p lang="en">Business question, decision owner, scope and what is out of scope.</p><p lang="fr">Question d’affaires, responsable de la décision, périmètre et hors périmètre.</p></div>
+      <div class="step"><div class="n">2</div><h4 lang="en">Map &amp; clean the data</h4><h4 lang="fr">Cartographier et nettoyer</h4><p lang="en">Source register, reconciliation, master data. Lean process mapping where needed.</p><p lang="fr">Registre des sources, réconciliation, données maîtres. Cartographie Lean au besoin.</p></div>
+      <div class="step"><div class="n">3</div><h4 lang="en">Build fast with AI</h4><h4 lang="fr">Bâtir vite avec l’IA</h4><p lang="en">Working prototype in days, not months — model, app or agent.</p><p lang="fr">Prototype fonctionnel en jours, pas en mois — modèle, app ou agent.</p></div>
+      <div class="step"><div class="n">4</div><h4 lang="en">Adopt &amp; measure</h4><h4 lang="fr">Faire adopter et mesurer</h4><p lang="en">Training, playbooks and a decision log so value is tracked, not assumed.</p><p lang="fr">Formation, playbooks et journal de décisions : la valeur est mesurée, pas supposée.</p></div>
+    </div>
+    <div class="principles">
+      <div class="pr"><b lang="en">Full traceability</b><b lang="fr">Traçabilité totale</b><span lang="en">Every number links back to a source file, tab and cell.</span><span lang="fr">Chaque chiffre renvoie à un fichier, un onglet et une cellule.</span></div>
+      <div class="pr"><b lang="en">Fact · Calculation · Hypothesis</b><b lang="fr">Fait · Calcul · Hypothèse</b><span lang="en">Three labels — an assumption is never shown as a finding.</span><span lang="fr">Trois étiquettes — une hypothèse n’est jamais présentée comme un constat.</span></div>
+      <div class="pr"><b lang="en">Reproducible</b><b lang="fr">Reproductible</b><span lang="en">A third party can rerun the analysis and get the same result.</span><span lang="fr">Un tiers peut refaire l’analyse et obtenir le même résultat.</span></div>
+      <div class="pr"><b lang="en">Declared limits</b><b lang="fr">Limites déclarées</b><span lang="en">What the data cannot conclude is written down, in the deck too.</span><span lang="fr">Ce que les données ne permettent pas de conclure est écrit, jusque dans la présentation.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><div><h2><span lang="en">Skills &amp; credentials</span><span lang="fr">Compétences et formations</span></h2></div></div>
+    <div class="skills">
+      <div class="sk"><h4 lang="en">Commercial strategy</h4><h4 lang="fr">Stratégie commerciale</h4><ul>
+        <li lang="en">Pricing &amp; rebate design</li><li lang="fr">Conception de prix et de rabais</li>
+        <li lang="en">Channel &amp; distributor programs</li><li lang="fr">Programmes canal et distributeurs</li>
+        <li lang="en">Category management</li><li lang="fr">Gestion de catégories</li>
+        <li lang="en">Post-merger harmonization</li><li lang="fr">Harmonisation post-fusion</li></ul></div>
+      <div class="sk"><h4 lang="en">Data &amp; analytics</h4><h4 lang="fr">Données et analytique</h4><ul>
+        <li>Power BI · SQL · Excel / VBA</li>
+        <li lang="en">Descriptive → prescriptive</li><li lang="fr">Du descriptif au prescriptif</li>
+        <li lang="en">Master data &amp; governance</li><li lang="fr">Données maîtres et gouvernance</li>
+        <li lang="en">Forecasting &amp; market sizing</li><li lang="fr">Prévision et taille de marché</li></ul></div>
+      <div class="sk"><h4 lang="en">Applied AI</h4><h4 lang="fr">IA appliquée</h4><ul>
+        <li lang="en">Generative &amp; agentic AI</li><li lang="fr">IA générative et agentique</li>
+        <li lang="en">AI-built apps (React, Python)</li><li lang="fr">Apps bâties avec l’IA (React, Python)</li>
+        <li>n8n · Copilot · Claude</li>
+        <li lang="en">AI governance &amp; adoption</li><li lang="fr">Gouvernance et adoption de l’IA</li></ul></div>
+      <div class="sk"><h4 lang="en">Credentials</h4><h4 lang="fr">Formations</h4><ul>
+        <li lang="en">EMBA — Université de Sherbrooke</li><li lang="fr">EMBA — Université de Sherbrooke</li>
+        <li lang="en">Grad. diploma, Business Intelligence</li><li lang="fr">DESS en intelligence d’affaires</li>
+        <li lang="en">Lean Six Sigma Green Belt</li><li lang="fr">Lean Six Sigma ceinture verte</li>
+        <li lang="en">Harvard Business School Online — AI</li><li lang="fr">Harvard Business School Online — IA</li>
+        <li lang="en">CRM lecturer since 2019</li><li lang="fr">Chargé de cours CRM depuis 2019</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="publications" class="pubsec">
+  <div class="wrap">
+    <div class="sec-head reveal"><div>
+      <div class="eyebrow2"><span lang="en">Thought leadership</span><span lang="fr">Prises de parole</span></div>
+      <h2><span lang="en">Published in the trade press</span><span lang="fr">Publié dans la presse spécialisée</span></h2>
+      <p class="sec-sub"><span lang="en">Canadian Electrical Wholesaler, Le Monde de l’électricité and LinkedIn — on AI governance, adoption and commercial impact.</span><span lang="fr">Canadian Electrical Wholesaler, Le Monde de l’électricité et LinkedIn — sur la gouvernance, l’adoption et l’impact commercial de l’IA.</span></p>
+    </div><a class="demo-btn" href="articles.html"><span lang="en">All articles →</span><span lang="fr">Tous les articles →</span></a></div>
+    <div class="pubgrid">
+      <article class="pubcard reveal"><div class="pv"><span lang="en">Canadian Electrical Wholesaler</span><span lang="fr">Le monde de l'électricité</span></div>
+        <h3><span lang="en">Same Voltage, Two Outcomes: Why AI in Electrical Distribution Is Won on Change, Not Technology</span><span lang="fr">Même tension, deux résultats : pourquoi l'IA en distribution électrique se gagne sur le changement, pas la technologie</span></h3>
+        <p><span lang="en">70% of transformations fail due to human resistance — 6× more success with excellent change management.</span><span lang="fr">70% des transformations échouent à cause de la résistance humaine — 6× plus de succès avec une gestion du changement rigoureuse.</span></p>
+        <div class="plinks"><a href="https://www.canadianelectricalwholesaler.ca/ai-in-electrical-distribution-potvin/" target=_blank rel=noopener>EN →</a><a href="https://www.lemondedelelectricite.ca/articles/meme-tension-deux-resultats-pourquoi-dans-le-domaine-de-la-distribution-electrique-le-succes-de-lia-repose-sur-le-changement-et-non-sur-la-technologie/" target=_blank rel=noopener>FR →</a></div></article>
+      <article class="pubcard reveal"><div class="pv"><span lang="en">Canadian Electrical Wholesaler</span><span lang="fr">Canadian Electrical Wholesaler</span></div>
+        <h3><span lang="en">Your Best Rep Can't Remember 10,000 Accounts. AI Can.</span><span lang="fr">Votre meilleur représentant ne peut pas se souvenir de 10 000 comptes. L'IA, oui.</span></h3>
+        <p><span lang="en">How AI is redefining indirect sales — real cases from Wesco, Rexel, Grainger, and Schneider Electric.</span><span lang="fr">Comment l'IA redéfinit les ventes indirectes — cas réels de Wesco, Rexel, Grainger et Schneider Electric.</span></p>
+        <div class="plinks"><a href="https://www.canadianelectricalwholesaler.ca/ai-reshaping-channel-sales-distributor-relationships/" target=_blank rel=noopener>EN →</a><a href="votre-meilleur-representant-fr.html">FR →</a></div></article>
+      <article class="pubcard reveal"><div class="pv"><span lang="en">Canadian Electrical Wholesaler</span><span lang="fr">Le monde de l'électricité</span></div>
+        <h3><span lang="en">Your Customers Aren't Afraid of AI. Your Employees Are.</span><span lang="fr">L'IA ne fait pas peur à vos clients. Elle fait peur à vos employés.</span></h3>
+        <p><span lang="en">The real risk of agentic AI isn't technological — it's trust. 5 principles for deploying without widening the gap.</span><span lang="fr">Le vrai risque de l'IA agentique n'est pas technologique — c'est la confiance. 5 principes pour déployer sans creuser le fossé.</span></p>
+        <div class="plinks"><a href="https://www.canadianelectricalwholesaler.ca/your-customers-arent-afraid-of-ai-your-employees-are/" target=_blank rel=noopener>EN →</a><a href="https://www.lemondedelelectricite.ca/articles/lia-ne-fait-pas-peur-a-vos-clients-elle-fait-peur-a-vos-employes/" target=_blank rel=noopener>FR →</a></div></article>
+      <article class="pubcard reveal"><div class="pv"><span lang="en">Le monde de l'électricité</span><span lang="fr">Le monde de l'électricité</span></div>
+        <h3><span lang="en">Wired for Trust: Why AI Governance Is the Missing Circuit</span><span lang="fr">Sous tension : pourquoi la gouvernance de l'IA est le circuit manquant</span></h3>
+        <p><span lang="en">88% of organizations use AI — only 8% maintain a comprehensive governance framework. What Schneider Electric does differently.</span><span lang="fr">88% des organisations utilisent l'IA — seulement 8% ont un cadre de gouvernance complet. Ce que Schneider Electric fait différemment.</span></p>
+        <div class="plinks"><a href="wired-for-trust-article.html">EN →</a></div></article>
+      <article class="pubcard reveal"><div class="pv"><span lang="en">Analysis · Interactive calculator</span><span lang="fr">Analyse · Calculateur interactif</span></div>
+        <h3><span lang="en">Your AI drives a Ferrari. Who pays for the gas?</span><span lang="fr">Votre IA roule en Ferrari. Qui paie l'essence ?</span></h3>
+        <p><span lang="en">Only 26% of large companies see in real time what their AI costs them. Over three years, an AI agent's real bill reaches 4 times the quote — with an interactive break-even calculator.</span><span lang="fr">Seulement 26 % des grandes entreprises voient en temps réel ce que leur IA leur coûte. Sur trois ans, la vraie facture d'un agent IA atteint 4 fois la soumission — avec un calculateur de rentabilité interactif.</span></p>
+        <div class="plinks"><a href="your-ai-ferrari-gas.html">EN →</a><a href="ia-ferrari-essence.html">FR →</a></div></article>
+      <article class="pubcard reveal"><div class="pv"><span lang="en">Analysis · 25 verified sources</span><span lang="fr">Analyse · 25 sources vérifiées</span></div>
+        <h3><span lang="en">Anatomy of a Wrong Quote</span><span lang="fr">Autopsie d'une soumission perdue</span></h3>
+        <p><span lang="en">A quote "lost on price"? Four of six data links were broken. Why data governance is your commercial strategy — with an interactive tool to score your own quotes.</span><span lang="fr">Une soumission « perdue sur le prix » ? Quatre liens de données sur six étaient brisés. Pourquoi la gouvernance des données est votre stratégie commerciale — avec un outil interactif pour noter vos propres soumissions.</span></p>
+        <div class="plinks"><a href="anatomy-of-a-wrong-quote.html#en">EN →</a><a href="anatomy-of-a-wrong-quote.html#fr">FR →</a></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services">
+  <div class="wrap">
+    <div class="sec-head reveal"><div>
+      <div class="eyebrow2"><span lang="en">How I can help</span><span lang="fr">Comment je peux vous aider</span></div>
+      <h2><span lang="en">From messy data to tools your team actually uses</span><span lang="fr">Des données éparses aux outils que votre équipe utilise vraiment</span></h2>
+      <p class="sec-sub"><span lang="en">Three ways to work together — start small, prove value, then scale.</span><span lang="fr">Trois façons de travailler ensemble — commencer petit, prouver la valeur, puis déployer.</span></p>
+    </div></div>
+    <div class="offers">
+      <div class="offer reveal"><div class="num">01</div>
+        <h3><span lang="en">Diagnose &amp; roadmap</span><span lang="fr">Diagnostic et feuille de route</span></h3>
+        <p><span lang="en">Audit of your sales data, KPIs and processes. You get a prioritized data &amp; AI roadmap with quick wins and business cases.</span><span lang="fr">Audit de vos données de ventes, KPI et processus. Vous obtenez une feuille de route données et IA priorisée, avec gains rapides et dossiers d’affaires.</span></p>
+        <ul><li lang="en">Data &amp; KPI audit</li><li lang="fr">Audit des données et KPI</li><li lang="en">Use-case scoring</li><li lang="fr">Qualification des cas d’usage</li><li lang="en">90-day plan</li><li lang="fr">Plan de 90 jours</li></ul></div>
+      <div class="offer hot reveal"><div class="num">02</div><div class="ribbon"><span lang="en">Fastest to value</span><span lang="fr">Valeur la plus rapide</span></div>
+        <h3><span lang="en">Build the tool</span><span lang="fr">Bâtir l’outil</span></h3>
+        <p><span lang="en">A working prototype in days: pricing &amp; MAP monitoring, prescriptive dashboards, forecasting, market intelligence or AI agents.</span><span lang="fr">Un prototype fonctionnel en quelques jours : veille des prix et MAP, tableaux de bord prescriptifs, prévision, intelligence de marché ou agents IA.</span></p>
+        <ul><li lang="en">Prototype → pilot → rollout</li><li lang="fr">Prototype → pilote → déploiement</li><li lang="en">Power BI · Python · n8n · LLMs</li><li lang="fr">Power BI · Python · n8n · LLM</li><li lang="en">Documented, yours to keep</li><li lang="fr">Documenté, il vous appartient</li></ul></div>
+      <div class="offer reveal"><div class="num">03</div>
+        <h3><span lang="en">Train &amp; drive adoption</span><span lang="fr">Former et faire adopter</span></h3>
+        <p><span lang="en">Playbooks, workshops and AI governance so your sales team uses the tools — and the value shows up in the numbers.</span><span lang="fr">Playbooks, ateliers et gouvernance IA pour que vos équipes utilisent les outils — et que la valeur apparaisse dans les chiffres.</span></p>
+        <ul><li lang="en">Sales AI playbook</li><li lang="fr">Playbook IA des ventes</li><li lang="en">Hands-on workshops</li><li lang="fr">Ateliers pratiques</li><li lang="en">AI policy &amp; governance</li><li lang="fr">Politique et gouvernance IA</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta reveal">
+      <div>
+        <div class="eyebrow2" style="color:#FFD08A"><span lang="en">Free 30-minute call</span><span lang="fr">Appel gratuit de 30 minutes</span></div>
+        <h2><span lang="en">Got a pricing, forecasting or AI adoption problem?</span><span lang="fr">Un enjeu de prix, de prévision ou d’adoption de l’IA?</span></h2>
+        <p><span lang="en">Tell me what is slowing your sales team down. You will leave the call with at least one concrete idea — whether we work together or not.</span><span lang="fr">Dites-moi ce qui ralentit votre équipe de ventes. Vous repartirez avec au moins une idée concrète — que l’on travaille ensemble ou non.</span></p>
+      </div>
+      <div class="cta-btns">
+        <a class="btn" href="https://www.linkedin.com/in/jeromepotvin/" target="_blank" rel="noopener"><span lang="en">Message me on LinkedIn</span><span lang="fr">M’écrire sur LinkedIn</span></a>
+        <a class="btn ghost" href="mailto:j_potvin@videotron.ca">j_potvin@videotron.ca</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Jerome Potvin (Jay) · Sigma Analytics · <span lang="en">Turn data into action</span><span lang="fr">Transformer les données en action</span></footer>
+
+<div id="lb" role="dialog" aria-modal="true"><button class="x" aria-label="Close">×</button><button class="pv" aria-label="Previous">‹</button><img alt=""><div class="cap"></div><button class="nx" aria-label="Next">›</button></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),im=lb.querySelector('img'),cap=lb.querySelector('.cap'),list=[],ix=0;
+  function show(){im.src=list[ix].src;cap.textContent=list[ix].alt+'  ·  '+(ix+1)+' / '+list.length;lb.querySelector('.pv').style.display=lb.querySelector('.nx').style.display=list.length>1?'':'none'}
+  document.querySelectorAll('.shots img').forEach(function(img){img.addEventListener('click',function(){list=[].slice.call(img.parentNode.querySelectorAll('img'));ix=list.indexOf(img);show();lb.classList.add('on')})});
+  function close(){lb.classList.remove('on')}
+  lb.querySelector('.x').onclick=close; lb.onclick=function(e){if(e.target===lb)close()};
+  lb.querySelector('.pv').onclick=function(){ix=(ix-1+list.length)%list.length;show()};
+  lb.querySelector('.nx').onclick=function(){ix=(ix+1)%list.length;show()};
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowRight')lb.querySelector('.nx').click();if(e.key==='ArrowLeft')lb.querySelector('.pv').click()});
+})();
+(function(){
+  var html=document.documentElement, btn=document.getElementById('langbtn');
+  function setLang(l){html.setAttribute('data-lang',l);html.lang=l;document.querySelectorAll('img[data-src-'+l+']').forEach(function(i){i.src=i.getAttribute('data-src-'+l);i.alt=i.getAttribute('data-alt-'+l)});btn.textContent=l==='en'?'FR':'EN';try{localStorage.setItem('jp-lang',l)}catch(e){}}
+  var saved=null;try{saved=localStorage.getItem('jp-lang')}catch(e){}
+  var q=new URLSearchParams(location.search).get('lang');
+  setLang(q||saved||'en');
+  btn.addEventListener('click',function(){setLang(html.getAttribute('data-lang')==='en'?'fr':'en')});
+
+  var chips=document.querySelectorAll('.chip'), items=document.querySelectorAll('.card,.featured');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('on')}); c.classList.add('on');
+    var f=c.dataset.f;
+    items.forEach(function(it){it.classList.toggle('hide', f!=='all' && it.dataset.cat.split(' ').indexOf(f)<0)});
+  })});
+})();
+
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+  document.querySelectorAll('.card,.featured').forEach(function(c){c.classList.add('reveal');io.observe(c)});
+  var cs=document.querySelectorAll('[data-count]');
+  var cio=new IntersectionObserver(function(es){es.forEach(function(en){if(!en.isIntersecting)return;var el=en.target,n=+el.getAttribute('data-count'),t0=null;
+    function step(t){t0=t0||t;var k=Math.min(1,(t-t0)/1100);el.textContent=Math.round(n*(1-Math.pow(1-k,3)))+(el.getAttribute('data-count')==='25'||el.getAttribute('data-count')==='10'?'+':'');if(k<1)requestAnimationFrame(step)}
+    requestAnimationFrame(step);cio.unobserve(el)})},{threshold:.6});
+  cs.forEach(function(c){cio.observe(c)});
+})();
+</script>
 </body>
 </html>
