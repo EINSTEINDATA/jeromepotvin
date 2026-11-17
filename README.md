@@ -32,4 +32,4 @@ Data & AI roadmap · sales analytics and AI tools · training and adoption — r
 - Upwork: https://www.upwork.com/freelancers/~01ef9896e6cfdf76f9
 
 **Stack:** Python · SQL · Power BI · Salesforce · n8n · Claude API · React · Excel/VBA
-**Credentials:** EMBA · Graduate diploma in Business Intelligence · Lean Six Sigma Green Belt · Harvard Business School Online (AI) · MIT Professional Education (in progress)
+**Credentials:** EMBA · Graduate diploma in Business Intelligence · Lean Six Sigma Green Belt · Harvard Business School Online (AI) · MIT Professional Education — Applied Agentic AI for Organizational Transformation · Generative AI and Agentic AI (in progress)
