@@ -14,9 +14,17 @@ I turn sales data into decisions — and build the AI tools that make them stick
 | Sales projection engine | Load a CSV, adjust assumptions, get a forecast with uncertainty bands | [Open](https://einsteindata.github.io/jeromepotvin/projection-ventes-demo.html) |
 | Competitive cross-reference | Find the equivalent of any competitor part number in seconds | [Open](https://einsteindata.github.io/jeromepotvin/cross-reference-cables-demo.html) |
 
+## Download the tools (Excel, fictitious data)
+
+| Tool | What it does | Download |
+|---|---|---|
+| AI Sales Use-Case Prioritization Toolkit | 34 AI use cases scored on 5 weighted criteria, top-10 dashboard, value-vs-effort matrix, 18-month roadmap, governance | [xlsx](downloads/AI_Sales_UseCase_Prioritization_Toolkit_DEMO.xlsx) |
+| Sales Execution & Profit Management Playbook | One-page execution plan with live status, account segmentation, return on customer investment, call checklist | [xlsx](downloads/Sales_Execution_Profit_Management_Playbook_DEMO.xlsx) |
+| Seasonal Sales Forecast Model | Transparent time-series decomposition, trend regression, MAPE, scenario lever and bands | [xlsx](downloads/Seasonal_Sales_Forecast_Model_DEMO.xlsx) |
+
 ## Case studies
 
-16 case studies with real (anonymized) screens: prescriptive analytics engine, price & MAP monitoring app, Power BI governance, post-merger rebate harmonization, pricing architecture, AI governance and AI sales playbook.
+19 case studies with real (anonymized) screens: prescriptive analytics engine, price & MAP monitoring app, Power BI governance, post-merger rebate harmonization, pricing architecture, AI governance and AI sales playbook.
 → https://einsteindata.github.io/jeromepotvin/#work
 
 ## Publications
