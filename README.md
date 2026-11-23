@@ -21,10 +21,12 @@ I turn sales data into decisions — and build the AI tools that make them stick
 | AI Sales Use-Case Prioritization Toolkit | 34 AI use cases scored on 5 weighted criteria, top-10 dashboard, value-vs-effort matrix, 18-month roadmap, governance | [xlsx](downloads/AI_Sales_UseCase_Prioritization_Toolkit_DEMO.xlsx) |
 | Sales Execution & Profit Management Playbook | One-page execution plan with live status, account segmentation, return on customer investment, call checklist | [xlsx](downloads/Sales_Execution_Profit_Management_Playbook_DEMO.xlsx) |
 | Seasonal Sales Forecast Model | Transparent time-series decomposition, trend regression, MAPE, scenario lever and bands | [xlsx](downloads/Seasonal_Sales_Forecast_Model_DEMO.xlsx) |
+| Sales Talent Development Toolkit (EN/FR) | Call scorecard, competency tracker with radar, automatic coaching plan, 70-20-10 IDP | [EN](downloads/Sales_Talent_Development_Toolkit_DEMO_EN.xlsx) · [FR](downloads/Sales_Talent_Development_Toolkit_DEMO_FR.xlsx) |
+| Commercial KPI Cockpit (EN/FR) | YTD sales vs last year by channel with alerts, margin vs target, SG&A %, win-back tracker | [EN](downloads/Commercial_KPI_Cockpit_DEMO_EN.xlsx) · [FR](downloads/Commercial_KPI_Cockpit_DEMO_FR.xlsx) |
 
 ## Case studies
 
-19 case studies with real (anonymized) screens: prescriptive analytics engine, price & MAP monitoring app, Power BI governance, post-merger rebate harmonization, pricing architecture, AI governance and AI sales playbook.
+21 case studies with real (anonymized) screens: prescriptive analytics engine, price & MAP monitoring app, Power BI governance, post-merger rebate harmonization, pricing architecture, AI governance and AI sales playbook.
 → https://einsteindata.github.io/jeromepotvin/#work
 
 ## Publications
