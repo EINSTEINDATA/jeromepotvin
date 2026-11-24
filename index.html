@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jerome Potvin (Jay) — AI tools & commercial strategy for B2B distribution</title>
 <meta property="og:title" content="Jerome Potvin — AI tools &amp; commercial strategy for B2B distribution">
-<meta property="og:description" content="Live demos and 21 case studies: pricing engines, prescriptive analytics, market intelligence and AI agents.">
+<meta property="og:description" content="Live demos and 22 case studies: pricing engines, prescriptive analytics, market intelligence and AI agents.">
 <meta name="description" content="Selected projects: AI tools, analytics, pricing and commercial strategy, AI governance and training — built for B2B distribution and manufacturing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
@@ -293,7 +293,7 @@ header h1{font-family:Inter,system-ui,sans-serif;font-weight:800}
   <div class="wrap">
     <div class="stats reveal">
       <div class="stat"><b data-count="25">25</b><small lang="en">years in B2B sales leadership</small><small lang="fr">ans en direction des ventes B2B</small></div>
-      <div class="stat"><b data-count="21">21</b><small lang="en">tools &amp; programs shipped in 2026</small><small lang="fr">outils et programmes livrés en 2026</small></div>
+      <div class="stat"><b data-count="22">22</b><small lang="en">tools &amp; programs shipped in 2026</small><small lang="fr">outils et programmes livrés en 2026</small></div>
       <div class="stat"><b data-count="4">4</b><small lang="en">live demos you can try now</small><small lang="fr">démos à essayer maintenant</small></div>
       <div class="stat"><b data-count="10">10</b><small lang="en">articles in trade publications</small><small lang="fr">articles en presse spécialisée</small></div>
     </div>
@@ -346,7 +346,7 @@ header h1{font-family:Inter,system-ui,sans-serif;font-weight:800}
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <div class="eyebrow2"><span lang="en">21 case studies</span><span lang="fr">21 études de cas</span></div>
+        <div class="eyebrow2"><span lang="en">22 case studies</span><span lang="fr">22 études de cas</span></div>
         <h2><span lang="en">What I built — and what it changed</span><span lang="fr">Ce que j’ai bâti — et ce que ça a changé</span></h2>
         <p class="sec-sub"><span lang="en">Each case: the business problem, what I built, and the result. Client data and company names are withheld — the method and the outcome are what matter.</span><span lang="fr">Pour chaque cas : le problème d’affaires, ce que j’ai bâti et le résultat. Les données clients et les noms d’entreprise sont omis — c’est la méthode et le résultat qui comptent.</span></p>
       </div>
@@ -379,6 +379,24 @@ header h1{font-family:Inter,system-ui,sans-serif;font-weight:800}
     </div>
 
     <div class="grid" id="grid">
+
+      <!-- 22 Discord AI agent (MIT course project) -->
+      <article class="card" data-cat="tools ai">
+        <div class="shots" data-g="discord"><img src="img/discord-agent-ask.jpg" data-src-en="img/discord-agent-ask.jpg" data-src-fr="img/discord-agent-ask.jpg" alt="!ask: product question answered with list prices and hand-off to a sales rep" data-alt-en="!ask: product question answered with list prices and hand-off to a sales rep" data-alt-fr="!ask : question produit avec prix de liste et renvoi à un représentant" loading="lazy"><img src="img/discord-agent-market.jpg" data-src-en="img/discord-agent-market.jpg" data-src-fr="img/discord-agent-market.jpg" alt="!market: request and start of the market analysis" data-alt-en="!market: request and start of the market analysis" data-alt-fr="!market : demande et début de l’analyse de marché" loading="lazy"><img src="img/discord-agent-sources.jpg" data-src-en="img/discord-agent-sources.jpg" data-src-fr="img/discord-agent-sources.jpg" alt="!market: key facts with source links" data-alt-en="!market: key facts with source links" data-alt-fr="!market : faits clés avec liens vers les sources" loading="lazy"><img src="img/discord-agent-errors.jpg" data-src-en="img/discord-agent-errors.jpg" data-src-fr="img/discord-agent-errors.jpg" alt="Test log: error messages from the free AI service before a successful answer" data-alt-en="Test log: error messages from the free AI service before a successful answer" data-alt-fr="Tests : messages d’erreur du service IA gratuit avant une réponse réussie" loading="lazy"></div>
+        <div class="cat"><span class="tag-feat" style="margin-right:6px;padding:2px 8px;font-size:10px">NEW</span><span lang="en">AI agents · Prototype · MIT course project</span><span lang="fr">Agents IA · Prototype · Projet de cours MIT</span></div>
+        <h3><span lang="en">A Discord AI agent that answers product questions and drafts market briefs</span><span lang="fr">Un agent IA sur Discord qui répond aux questions produits et prépare des analyses de marché</span></h3>
+        <p><span lang="en">Sales teams answer the same product and price questions every day, and managers rarely have time to put together a market brief. As a project for my MIT Professional Education program, I built Jay AI agent, a Discord bot with two commands. <b>!ask</b> answers product and list-price questions and refers discounts, contract pricing, safety and compatibility questions to a sales rep. <b>!market</b> returns a market analysis in a fixed format: summary, key facts with sources, opportunities, risks and points to verify.</span><span lang="fr">Les équipes de ventes répondent chaque jour aux mêmes questions sur les produits et les prix, et les gestionnaires ont rarement le temps de préparer une analyse de marché. Dans le cadre de mon programme MIT Professional Education, j’ai bâti Jay AI agent, un bot Discord avec deux commandes. <b>!ask</b> répond aux questions sur les produits et les prix de liste, et renvoie les questions d’escompte, de prix contractuels, de sécurité et de compatibilité à un représentant. <b>!market</b> produit une analyse de marché selon un format fixe : sommaire, faits clés avec sources, opportunités, risques et points à vérifier.</span></p>
+        <dl>
+          <dt lang="en">Built</dt><dt lang="fr">Livré</dt>
+          <dd lang="en">A Python bot using the OpenAI library connected to OpenRouter free models, with no paid AI subscription. Tested in two channels: product questions in one, management analysis in the other.</dd>
+          <dd lang="fr">Un bot Python qui utilise la librairie OpenAI branchée sur les modèles gratuits d’OpenRouter, sans abonnement IA payant. Testé dans deux canaux : questions produits dans l’un, analyse pour la direction dans l’autre.</dd>
+          <dt lang="en">What testing showed</dt><dt lang="fr">Ce que les tests ont montré</dt>
+          <dd lang="en">The bot answered 2 of 6 requests; three ended with an error message and one got no reply. For real use, it needs a reliable paid model, and a person must still check prices and sources.</dd>
+          <dd lang="fr">Le bot a répondu à 2 demandes sur 6 ; trois se sont terminées par un message d’erreur et une est restée sans réponse. Pour un usage réel, il faut un modèle payant fiable, et une personne doit encore valider les prix et les sources.</dd>
+        </dl>
+        <div class="proof"><span><span lang="en">2 agents in 1 bot</span><span lang="fr">2 agents dans 1 bot</span></span><span><span lang="en">Free AI models</span><span lang="fr">Modèles IA gratuits</span></span><span><span lang="en">Hand-off to a sales rep</span><span lang="fr">Renvoi à un représentant</span></span></div>
+        <div class="tags"><span>Python</span><span>Discord</span><span>OpenRouter</span><span>Agentic AI</span><span>Prompt design</span></div>
+      </article>
 
       <!-- 15 AI use-case prioritization toolkit (downloadable) -->
       <article class="card" data-cat="ai tools">
